@@ -11,7 +11,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -31,6 +33,11 @@ public class Estado implements Serializable{
     private String est_nome;
     @Column(name="est_uf", nullable = false, length = 3)//RJ, MG, SP
     private String est_uf;
+    
+    @ManyToOne(optional = false)
+    @ForeignKey(name = "Estado_Cidade")
+    private Estado estado;
+    
 
     public Estado() {
     }
