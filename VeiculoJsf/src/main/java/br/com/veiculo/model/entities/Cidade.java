@@ -25,6 +25,8 @@ import org.hibernate.annotations.ForeignKey;
 @Table(name="TB_CIDADE")
 public class Cidade implements Serializable{
     
+    private static  final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue
     @Column(name="cid_id", nullable = false)

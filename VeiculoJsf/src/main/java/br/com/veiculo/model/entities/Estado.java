@@ -7,11 +7,15 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -36,7 +40,12 @@ public class Estado implements Serializable{
     
     @ManyToOne(optional = false)
     @ForeignKey(name = "Estado_Cidade")
-    private Estado estado;
+    @JoinColumn(name="cid_id", referencedColumnName = "cid_id")
+    private Cidade cidade;
+    
+    @OneToMany(mappedBy = "TB_PESSOA", fetch = FetchType.LAZY)
+    @ForeignKey(name = "Pais_Estado")
+    private List<Pais> paises;
     
 
     public Estado() {
@@ -65,6 +74,25 @@ public class Estado implements Serializable{
     public void setEst_uf(String est_uf) {
         this.est_uf = est_uf;
     }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
+
+    public List<Pais> getPaises() {
+        return paises;
+    }
+
+    public void setPaises(List<Pais> paises) {
+        this.paises = paises;
+    }
+    
+    
+    
 
     @Override
     public int hashCode() {
