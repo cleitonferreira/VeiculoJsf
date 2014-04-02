@@ -179,15 +179,15 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>4.0.11</version>
+            <version>4.0</version>
         </dependency>
         
         <!-- ##### DEPENDÊNCIAS DO PRIMEFACES MOBILE ##### -->
-        <dependency>  
+        <!--<dependency>  
             <groupId>org.primefaces</groupId>  
             <artifactId>primefaces-mobile</artifactId>  
             <version>0.9.4</version>  
-        </dependency>  
+        </dependency>-->  
 
         
         <!-- ######## TEMAS DO PRIMEFACES ######### -->        
