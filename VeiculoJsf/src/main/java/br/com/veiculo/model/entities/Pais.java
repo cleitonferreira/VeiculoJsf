@@ -7,12 +7,13 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -30,21 +31,20 @@ public class Pais implements Serializable{
     @GeneratedValue
     @Column(name="pa_id", nullable = false)
     private Integer pa_id;
-    @Column(name="pa_nome", unique = true, nullable = false, length = 255)
+    @Column(name="pa_nome", nullable = false, length = 255)
     private String pa_nome;
-    @Column(name="pa_sigla", unique = true, nullable = false, length = 3)
+    @Column(name="pa_sigla", nullable = false, length = 3)
     private String pa_sigla;
-
-    @ManyToOne(optional = false)
+    
+    @OneToMany(mappedBy = "TB_PAIS", fetch = FetchType.LAZY)
     @ForeignKey(name = "Pais_Estado")
-    @JoinColumn(name="est_id", referencedColumnName = "est_id")
-    private Estado estado;
+    private List<Estado> estados;
     
-    
-    
+ 
     public Pais() {
     }
 
+    
     public Integer getPa_id() {
         return pa_id;
     }
@@ -69,13 +69,15 @@ public class Pais implements Serializable{
         this.pa_sigla = pa_sigla;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public List<Estado> getEstados() {
+        return estados;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEstados(List<Estado> estados) {
+        this.estados = estados;
     }
+
+ 
     
     
 

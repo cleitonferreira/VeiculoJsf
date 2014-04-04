@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
@@ -24,31 +23,35 @@ import org.hibernate.annotations.ForeignKey;
  * @author XPredator
  */
 @Entity
-@Table(name="TB_PESSOA")
-public class Estado implements Serializable{
-    
-    private static  final long serialVersionUID = 1L;
-    
+@Table(name = "TB_ESTADO")
+public class Estado implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
-    @Column(name="est_id", nullable = false)
+    @Column(name = "est_id", nullable = false)
     private Integer est_id;
-    @Column(name="est_nome", nullable = false, length = 255)
+    @Column(name = "est_nome", nullable = false, length = 255)
     private String est_nome;
-    @Column(name="est_uf", nullable = false, length = 3)//RJ, MG, SP
+    @Column(name = "est_uf", nullable = false, length = 3)//RJ, MG, SP
     private String est_uf;
-    
+
     @ManyToOne(optional = false)
-    @ForeignKey(name = "Estado_Cidade")
-    @JoinColumn(name="cid_id", referencedColumnName = "cid_id")
-    private Cidade cidade;
-    
-    @OneToMany(mappedBy = "TB_PESSOA", fetch = FetchType.LAZY)
     @ForeignKey(name = "Pais_Estado")
-    private List<Pais> paises;
-    
+    @JoinColumn(name = "pa_id", referencedColumnName = "pa_id")
+    private Pais pais;
+
+    @OneToMany(mappedBy = "TB_ESTADO", fetch = FetchType.LAZY)
+    @ForeignKey(name = "Estado_Cidade")
+    private List<Cidade> cidades;
+
+    @OneToMany(mappedBy = "TB_PESSOA", fetch = FetchType.LAZY)
+    @ForeignKey(name = "Estado_Pessoa")
+    private List<Pessoa> pessoas;
 
     public Estado() {
+        this.pais = new Pais();
     }
 
     public Integer getEst_id() {
@@ -75,24 +78,29 @@ public class Estado implements Serializable{
         this.est_uf = est_uf;
     }
 
-    public Cidade getCidade() {
-        return cidade;
+    public List<Cidade> getCidades() {
+        return cidades;
     }
 
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
     }
 
-    public List<Pais> getPaises() {
-        return paises;
+    public Pais getPais() {
+        return pais;
     }
 
-    public void setPaises(List<Pais> paises) {
-        this.paises = paises;
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
-    
-    
-    
+
+    public List<Pessoa> getPessoas() {
+        return pessoas;
+    }
+
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
+    }
 
     @Override
     public int hashCode() {
@@ -116,8 +124,4 @@ public class Estado implements Serializable{
         return true;
     }
 
-    
-    
-    
-    
 }
