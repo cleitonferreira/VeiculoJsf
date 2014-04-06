@@ -7,6 +7,7 @@ package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ import org.hibernate.annotations.ForeignKey;
  * @author XPredator
  */
 @Entity
-@Table(name = "TB_ESTADO")
+@Table(name = "estado")
 public class Estado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,19 +37,22 @@ public class Estado implements Serializable {
     private String est_nome;
     @Column(name = "est_uf", nullable = false, length = 3)//RJ, MG, SP
     private String est_uf;
-
-    @ManyToOne(optional = false)
-    @ForeignKey(name = "Pais_Estado")
+    
+    //relacionamento com pais
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ForeignKey(name = "PaisEstado")
     @JoinColumn(name = "pa_id", referencedColumnName = "pa_id")
     private Pais pais;
+    
 
-    @OneToMany(mappedBy = "TB_ESTADO", fetch = FetchType.LAZY)
-    @ForeignKey(name = "Estado_Cidade")
-    private List<Cidade> cidades;
-
-    @OneToMany(mappedBy = "TB_PESSOA", fetch = FetchType.LAZY)
-    @ForeignKey(name = "Estado_Pessoa")
+    @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
+    @ForeignKey(name = "EstadoPessoa")
     private List<Pessoa> pessoas;
+    
+    @OneToMany(mappedBy="estado", fetch = FetchType.LAZY)
+    @ForeignKey(name = "EstadoCidade")
+    private List<Cidade> cidades;
+    
 
     public Estado() {
         this.pais = new Pais();
@@ -101,6 +105,13 @@ public class Estado implements Serializable {
     public void setPessoas(List<Pessoa> pessoas) {
         this.pessoas = pessoas;
     }
+
+    
+    
+
+
+    
+    
 
     @Override
     public int hashCode() {

@@ -18,11 +18,11 @@
         <groovy-all.version>1.7.5</groovy-all.version>
         <hibernate.version>4.0.1.Final</hibernate.version>
         <slf4j.version>1.6.4</slf4j.version>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server> 
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>   
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+    
     <repositories>
         
         <!-- PRIMEFACES REPOSITORY -->
@@ -132,13 +132,25 @@
 
     <dependencies>
         <dependency>
+            <artifactId>commons-logging</artifactId>
+            <groupId>commons-logging</groupId>
+            <type>jar</type>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <artifactId>log4j</artifactId>
+            <groupId>log4j</groupId>
+            <type>jar</type>
+            <version>1.2.16</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
         
-                <!-- || DEPENDÊNCIAS DO JAVA SERVER FACES || -->                        
+        <!-- || DEPENDÊNCIAS DO JAVA SERVER FACES || -->                        
         <!-- ############## JSF-API ################ -->
         <dependency>
             <groupId>com.sun.faces</groupId>
@@ -179,16 +191,8 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>4.0</version>
+            <version>3.4.2</version>
         </dependency>
-        
-        <!-- ##### DEPENDÊNCIAS DO PRIMEFACES MOBILE ##### -->
-        <!--<dependency>  
-            <groupId>org.primefaces</groupId>  
-            <artifactId>primefaces-mobile</artifactId>  
-            <version>0.9.4</version>  
-        </dependency>-->  
-
         
         <!-- ######## TEMAS DO PRIMEFACES ######### -->        
         <dependency>              
@@ -524,49 +528,28 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>6.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
             </plugin>
-        </plugins>
+        </plugins>         
     </build>
+       
 
 </project>

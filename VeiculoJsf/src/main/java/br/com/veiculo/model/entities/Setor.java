@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
@@ -23,7 +21,7 @@ import org.hibernate.annotations.ForeignKey;
  * @author XPredator
  */
 @Entity
-@Table(name = "TB_SETOR")
+@Table(name = "setor")
 public class Setor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,8 +37,8 @@ public class Setor implements Serializable {
     @Column(name = "set_responsavel", nullable = false, length = 50)
     private String set_responsavel;
 
-    @OneToMany(mappedBy = "TB_SETOR", fetch = FetchType.LAZY)
-    @ForeignKey(name = "Setor_Usuario")
+    @OneToMany(mappedBy = "setor", fetch = FetchType.LAZY)
+    @ForeignKey(name = "SetorUsuario")
     private List<Usuario> usuarios;
 
     public Setor() {
@@ -85,6 +83,8 @@ public class Setor implements Serializable {
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
+
+    
 
 
 

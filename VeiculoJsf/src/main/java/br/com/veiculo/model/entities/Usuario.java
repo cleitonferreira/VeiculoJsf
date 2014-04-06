@@ -6,7 +6,6 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -23,7 +21,7 @@ import org.hibernate.annotations.ForeignKey;
  * @author XPredator
  */
 @Entity
-@Table(name = "TB_USUARIO")
+@Table(name = "usuario")
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,8 +42,8 @@ public class Usuario implements Serializable {
     private String usu_cel;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "Setor_Usuario")
-    @JoinColumn(name = "set_id", nullable = false)
+    @ForeignKey(name = "SetorUsuario")
+    @JoinColumn(name = "set_id", referencedColumnName = "set_id")
     private Setor setor;
 
     public Usuario() {
@@ -108,6 +106,7 @@ public class Usuario implements Serializable {
         this.setor = setor;
     }
 
+    
 
 
     @Override

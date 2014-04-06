@@ -24,7 +24,7 @@ import org.hibernate.annotations.ForeignKey;
  * @author XPredator
  */
 @Entity
-@Table(name = "TB_VEICULO")
+@Table(name = "veiculo")
 public class Veiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,18 +43,18 @@ public class Veiculo implements Serializable {
 
     //Relacionamento 1 / 1
     @OneToOne(optional = true, fetch = FetchType.LAZY)
-    @ForeignKey(name = "Veiculo_Pessoa")
+    @ForeignKey(name = "VeiculoPessoa")
     @JoinColumn(name = "pes_id", referencedColumnName = "pes_id")
     private Pessoa pessoa;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "Veiculo_Marca")
-    @JoinColumn(name = "mar_id", nullable = false)
+    @ForeignKey(name = "VeiculoMarca")
+    @JoinColumn(name = "mar_id", referencedColumnName = "mar_id")
     private Marca marca;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "Veiculo_Modelo")
-    @JoinColumn(name = "mod_id", nullable = false)
+    @ForeignKey(name = "VeiculoModelo")
+    @JoinColumn(name = "mod_id", referencedColumnName = "mod_id")
     private Modelo modelo;
 
     public Veiculo() {
@@ -119,7 +119,7 @@ public class Veiculo implements Serializable {
         this.modelo = modelo;
     }
 
-
+    
 
     
 

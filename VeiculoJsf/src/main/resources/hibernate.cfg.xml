@@ -31,14 +31,15 @@
         <property name="c3p0.idle_test_period">300</property>
         
         <!-- LISTA DE ENTIDADES -->
+        <mapping class="br.com.veiculo.model.entities.Veiculo"/>
+        <mapping class="br.com.veiculo.model.entities.Pessoa"/>
         <mapping class="br.com.veiculo.model.entities.Cidade"/>           
         <mapping class="br.com.veiculo.model.entities.Estado"/>      
         <mapping class="br.com.veiculo.model.entities.Marca"/>               
         <mapping class="br.com.veiculo.model.entities.Modelo"/>
         <mapping class="br.com.veiculo.model.entities.Pais"/>
-        <mapping class="br.com.veiculo.model.entities.Pessoa"/>
         <mapping class="br.com.veiculo.model.entities.Setor"/>
         <mapping class="br.com.veiculo.model.entities.Usuario"/>
-        <mapping class="br.com.veiculo.model.entities.Veiculo"/>
+        
     </session-factory>
 </hibernate-configuration>

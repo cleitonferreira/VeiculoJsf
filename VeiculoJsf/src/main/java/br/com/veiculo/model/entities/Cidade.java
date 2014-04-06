@@ -6,6 +6,7 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +23,7 @@ import org.hibernate.annotations.ForeignKey;
  * @author XPredator
  */
 @Entity
-@Table(name = "TB_CIDADE")
+@Table(name = "cidade")
 public class Cidade implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,15 +35,17 @@ public class Cidade implements Serializable {
     @Column(name = "cid_nome", nullable = false, length = 255)
     private String cid_nome;
 
-    @ManyToOne(optional = false)
-    @ForeignKey(name = "Estado_Cidade")
+    //relacionamento com estado
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ForeignKey(name = "EstadoCidade")
     @JoinColumn(name = "est_id", referencedColumnName = "est_id")
     private Estado estado;
 
-    @OneToMany(mappedBy = "TB_CIDADE", fetch = FetchType.LAZY)
-    @ForeignKey(name = "Cidade_Pessoa")
-    private Pessoa pessoa;
-
+    @OneToMany(mappedBy = "cidade", fetch = FetchType.LAZY)
+    @ForeignKey(name = "CidadePessoa")
+    private List<Pessoa> pessoas;
+    
+    
     public Cidade() {
         this.estado = new Estado();
     }
@@ -63,14 +66,6 @@ public class Cidade implements Serializable {
         this.cid_nome = cid_nome;
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
     public Estado getEstado() {
         return estado;
     }
@@ -78,6 +73,16 @@ public class Cidade implements Serializable {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    public List<Pessoa> getPessoas() {
+        return pessoas;
+    }
+
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
+    }
+    
+    
 
     @Override
     public int hashCode() {

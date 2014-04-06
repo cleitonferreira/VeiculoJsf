@@ -15,8 +15,9 @@ import org.hibernate.criterion.DetachedCriteria;
 /**
  *
  * @author XPredator
+ * @param <T>
  */
-public class HibernateDAO<T> implements InterfaceDAO<T>, Serializable{
+public class HibernateDAO<T> implements InterfaceDAO<T>, Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -30,8 +31,7 @@ public class HibernateDAO<T> implements InterfaceDAO<T>, Serializable{
     }
     
     
-    
-     @Override
+    @Override
     public void save(T entity) {
         session.save(entity);
     }
@@ -79,6 +79,6 @@ public class HibernateDAO<T> implements InterfaceDAO<T>, Serializable{
     public List<T> getEntities() {
         List<T> enties = (List<T>) session.createCriteria(classe).list();
         return enties;
-    } 
+    }    
     
 }

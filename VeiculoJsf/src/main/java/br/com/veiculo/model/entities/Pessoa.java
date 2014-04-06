@@ -6,7 +6,6 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
@@ -24,7 +22,7 @@ import org.hibernate.annotations.ForeignKey;
  * @author XPredator
  */
 @Entity
-@Table(name = "TB_PESSSOA")
+@Table(name = "pessoa")
 public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,19 +42,19 @@ public class Pessoa implements Serializable {
     @Column(name = "usu_cel", nullable = false, length = 15)
     private String pes_cel;
 
-    //Relacionamento 1 / 1
-    @OneToOne(mappedBy = "TB_PESSSOA", fetch = FetchType.LAZY)
-    @ForeignKey(name = "Veiculo_Pessoa")
+    //Relacionamento 1 / 1 com veiculo
+    @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)
+    @ForeignKey(name = "VeiculoPessoa")
     private Veiculo veiculo;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "Estado_Pessoa")
-    @JoinColumn(name = "est_id", nullable = false)
+    @ForeignKey(name = "EstadoPessoa")
+    @JoinColumn(name = "est_id", referencedColumnName = "est_id")
     private Estado estado;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @ForeignKey(name = "Cidade_Pessoa")
-    @JoinColumn(name = "cid_id", nullable = false)
+    @ForeignKey(name = "CidadePessoa")
+    @JoinColumn(name = "cid_id", referencedColumnName = "cid_id")
     private Cidade cidade;
 
     public Pessoa() {
@@ -135,6 +133,11 @@ public class Pessoa implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
+
+    
+ 
+
+
     
     
     

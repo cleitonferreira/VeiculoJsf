@@ -6,6 +6,7 @@
 
 package br.com.veiculo.util;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -17,7 +18,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class HibernateUtil {
     
-     private static final SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
     public static final String HIBERNATE_SESSION = "hibernate_session";
     
     static{
@@ -26,7 +27,7 @@ public class HibernateUtil {
             
             System.out.println("Tentando configurar a SF");
             
-            org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration().configure();
+            Configuration configuration = new Configuration().configure();
             
             ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().
                 applySettings(configuration.getProperties()).buildServiceRegistry();
@@ -34,7 +35,7 @@ public class HibernateUtil {
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             
             System.out.println("Session factory criada corretamente");
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             System.out.println("Ocorreu um  erro ao iniciar a SF. " + ex);
             throw new ExceptionInInitializerError(ex);
         }
@@ -45,6 +46,5 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
-    
     
 }

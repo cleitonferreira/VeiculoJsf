@@ -22,7 +22,7 @@ import org.hibernate.annotations.ForeignKey;
  * @author XPredator
  */
 @Entity
-@Table(name="TB_PAIS")
+@Table(name="pais")
 public class Pais implements Serializable{
     
     private static  final long serialVersionUID = 1L;
@@ -36,11 +36,12 @@ public class Pais implements Serializable{
     @Column(name="pa_sigla", nullable = false, length = 3)
     private String pa_sigla;
     
-    @OneToMany(mappedBy = "TB_PAIS", fetch = FetchType.LAZY)
-    @ForeignKey(name = "Pais_Estado")
+ 
+    @OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
+    @ForeignKey(name = "PaisEstado")
     private List<Estado> estados;
     
- 
+    
     public Pais() {
     }
 
@@ -77,6 +78,7 @@ public class Pais implements Serializable{
         this.estados = estados;
     }
 
+    
  
     
     
