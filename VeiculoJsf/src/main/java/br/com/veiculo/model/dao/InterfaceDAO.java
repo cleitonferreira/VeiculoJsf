@@ -26,4 +26,5 @@ public interface InterfaceDAO<T> {
     List<T> getEntities();
     List<T> getListByDetachedCriteria(DetachedCriteria criteria);    
     
+    
 }

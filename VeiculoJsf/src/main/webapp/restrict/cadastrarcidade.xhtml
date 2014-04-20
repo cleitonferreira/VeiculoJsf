@@ -15,85 +15,85 @@
                 <p:tab title="Cidade">
                     <h:form prependId="false" id="formCidade">
                         <p:growl id="msg0"/>
-                        <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid" id="grid0">
-                            
+                        <h:panelGrid styleClass="panelGrid" id="grid0">
+
                             <h:outputLabel/>
-                            <h:inputHidden id="idcidade" value="#{mbCidade.cidade.cid_id}"/>
-                            
-                            <h:outputLabel for="est_id" value="Estado.:"/>
-                            <p:selectOneMenu id="est_id" value="#{mbCidade.cidade.estado.est_id}">
+                            <h:inputHidden id="idcidade" value="#{mbCidade.cidade.cid_id}"/> 
+
+                            <h:outputText value="Estado.:"/>
+                            <p:selectOneMenu id="est_id" value="#{mbCidade.cidade.estado.est_id}" required="true" requiredMessage="O campo [Estado] obrigatório" >
+                                <f:selectItem itemLabel="Selecione" />
                                 <f:selectItems value="#{bbEstado.estados}" var="estado"
                                                itemValue="#{estado.est_id}" itemLabel="#{estado.est_nome}"/>
-                                </p:selectOneMenu>
-                            
-                            <h:outputLabel for="nomecidade" value="Nome.:"/>
-                            <p:inputText id="nomecidade" size="50" value="#{mbCidade.cidade.cid_nome}"
-                                required="true"
-                                requiredMessage="O campo [Nome] é obrigatório."/>
-                            
-                            <p:panel>
-                                <p:commandButton value="Salvar" action="#{mbCidade.addCidade}"
-                                    image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                            </p:selectOneMenu>
+
+                            <br/>
+
+                            <h:outputText value="Cidade.:"/>
+                            <p:inputText id="nomecidade" size="40" maxlength="225" value="#{mbCidade.cidade.cid_nome}"
+                                         required="true"
+                                         requiredMessage="O campo [Cidade] é obrigatório."/>
+                            <br/><br/>
+                            <p:panel style="text-align: center">
+                                <p:commandButton value="Salvar" action="#{mbCidade.addCidade()}"
+                                                 image="ui-icon ui-icon-disk" update="@form :formtable"/>
                                 <p:commandButton value="Cancelar" actionListener="#{mbCidade.limpCidade()}" 
-                                    image="ui-icon ui-icon-close" update="@form"/>
+                                                 image="ui-icon ui-icon-close" update="@form"/>
                             </p:panel>
                         </h:panelGrid>
                     </h:form>
                 </p:tab>
             </p:tabView>
-            
+
             <h:form id="formtable">
                 <p:growl id="msg1"/>
                 <p:dataTable id="idTabela" var="cidade" value="#{mbCidade.cidades}"
                              paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15,50,100,200">
-                
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+
                     <f:facet name="header">Lista de Cidades</f:facet>
-                    
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Id"/>
                         </f:facet>
                         <h:outputText value="#{cidade.cid_id}"/>
                     </p:column>
-                    
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Nome"/>
                         </f:facet>
                         <h:outputText value="#{cidade.cid_nome}"/>
                     </p:column>
-                    
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Estado"/>
                         </f:facet>
                         <h:outputText value="#{cidade.estado.est_uf}"/>
                     </p:column>
-                    
+
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Ações"/>
                         </f:facet>
                         <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
-                                process="@this" update=":tbv1:formCidade">
+                                         process="@this" update=":tbv1:formCidade">
                             <f:setPropertyActionListener target="#{mbCidade.cidade}"
-                                value="#{cidade}"/>
+                                                         value="#{cidade}"/>
                         </p:commandButton>
-                        <p:commandButton value="Remover" action="#{mbCidade.deleteCidade}"
-                                image="ui-icon ui-icon-close" update="@form">
+                        <p:commandButton value="Remover" action="#{mbCidade.deleteCidade()}"
+                                         image="ui-icon ui-icon-close" update="@form">
                             <f:setPropertyActionListener target="#{mbCidade.cidade}"
-                                value="#{cidade}"/>
+                                                         value="#{cidade}"/>
                         </p:commandButton>
-                        
+
                     </p:column>
-                    
+
                 </p:dataTable>
-                
+
             </h:form>
-            
+
         </p:fieldset>
     </ui:define>
 

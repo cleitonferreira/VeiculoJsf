@@ -11,24 +11,40 @@
     <h:head>
         <title>VeiculoJsf - Sistema JSF e Maven</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="./../resources/restrict/css/semeru.css" rel="stylesheet" type="text/css" />
-        <link href="./../resources/restrict/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />    
+        <link href="./../resources/restrict/css/layout.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/restrict/images/faviconn.ico" rel="shortcut icon" type="image/x-icon" />
+        <!--        <link href="./../resources/restrict/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+                <link href="./../resources/restrict/bootstrap/js/bootstrap.js" type="text/javascript" />
+                <link href="./../resources/restrict/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />-->
     </h:head>
 
     <h:body>
 
         <div id="topo">
-            <a href="http://www.veiculojsf.com.br/"><div id="logotipo"></div></a>            
-                        
+            <a href="http://www.veiculojsf.com.br/">
+                <div id="logotipo"></div>
+            </a>            
         </div>  
+
+
+<!--        <div style="float: right; margin-top: -125px;"><p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" /></div>-->
+
 
         <div id="menu"><!-- Menu ########################################## Menu-->
             <h:form>    
                 <p:menubar styleClass="labelmenu">
 
-                    <p:submenu label="Cadastros">  
-                        <p:menuitem value="Cidades" url="/restrict/cadastrarcidade.faces"/>                        
-                        <p:menuitem value="Pessoas" url="/restrict/cadastrarpessoas.faces" ajax="false"/>                        
+                    <p:menuitem  value="Home" url="/restrict/home.faces"/>
+                    <p:submenu label="Cadastros">
+                        <p:menuitem  value="Setores" url="/restrict/cadastrarsetor.faces"/>
+                        <p:menuitem  value="Usuarios" url="/restrict/cadastrarusuario.faces"/>
+                        <p:menuitem  value="Paises" url="/restrict/cadastrarpais.faces"/>
+                        <p:menuitem  value="Estados" url="/restrict/cadastrarestado.faces"/>
+                        <p:menuitem  value="Cidades" url="/restrict/cadastrarcidade.faces"/>
+                        <p:menuitem  value="Marcas" url="/restrict/cadastrarmarca.faces"/>
+                        <p:menuitem  value="Modelos" url="/restrict/cadastrarmodelo.faces"/>  
+                        <p:menuitem  value="Pessoas" url="/restrict/cadastrarpessoa.faces" ajax="false"/>
+                        <p:menuitem  value="Teste" url="/restrict/teste.faces" ajax="false"/>
                     </p:submenu> 
                     <p:submenu label="Consultas">  
                         <p:menuitem value="Pessoas" url="/restrict/consultarpessoas.faces"/>  
@@ -39,18 +55,27 @@
 
         <!-- Menu ########################################## Menu -->
 
+        <!--        <br/><br/><br/><br/>
+                <center><a href="#"><img src="./../resources/restrict/images/Analise_Sistemas.png" /></a></center>-->
+
         <div id="tarefas">
             <ui:insert name="tarefas"></ui:insert>
         </div>
 
-        <div id="rodape">
-            <a href="http://www.veiculojsf.com.br/"><img src="./../resources/restrict/images/logo_mini.png" /></a>
-
-            <div id="copyright">                  
-                <a href="http://www.veiculojsf.com.br/">VeiculoJsf - An&aacute;lise e Desenvolvimento de Sistemas - &copy; Copyright TI FAA 2014</a>
-            </div>
-        </div> <!--Fim da div rodape -->
 
     </h:body>
 
+
+    <!--            <div id="footer">
+    
+                <a href="http://www.veiculojsf.com.br/"><img width="10%" height="10%" src="./../resources/restrict/images/Analise_Sistemas.png" /></a>
+    
+                <div class="container">
+                    <center> <p class="muted credit"> <a href="#">VeiculoJsf - An&aacute;lise e Desenvolvimento de Sistemas - &copy; Copyright TI FAA 2014</a></p></center>
+                </div>
+            </div>-->
+
+
+
 </html>
+

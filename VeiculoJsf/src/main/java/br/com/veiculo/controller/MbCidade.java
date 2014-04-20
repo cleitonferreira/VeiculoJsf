@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.com.veiculo.controller;
 
 import br.com.veiculo.model.dao.HibernateDAO;
@@ -17,28 +16,32 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-
 /**
  *
  * @author XPredator
  */
-@ManagedBean(name="mbCidade")
+@ManagedBean(name = "mbCidade")
 @SessionScoped
-public class MbCidade implements Serializable{
-    
+public class MbCidade implements Serializable {
+
     private static final long serialVersionUID = 1L;
-        
+
     private Cidade cidade = new Cidade();
-    private List<Cidade> cidades;
+    public List<Cidade> cidades;
 
     public MbCidade() {
     }
-    
-    private InterfaceDAO<Cidade> cidadeDAO(){
+
+    private InterfaceDAO<Cidade> cidadeDAO() {
         InterfaceDAO<Cidade> cidadeDAO = new HibernateDAO<Cidade>(Cidade.class, FacesContextUtil.getRequestSession());
         return cidadeDAO;
     }
     
+
+        
+
+    
+
     public String limpCidade() {
         cidade = new Cidade();
         return editCidade();
@@ -70,12 +73,12 @@ public class MbCidade implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
     }
-    
-    public void deleteCidade(){
-        cidadeDAO().remove(cidade);        
+
+    public void deleteCidade() {
+        cidadeDAO().remove(cidade);
     }
-    
-    public List<Cidade> getCidades() {       
+
+    public List<Cidade> getCidades() {
         cidades = cidadeDAO().getEntities();
         return cidades;
     }
@@ -91,5 +94,5 @@ public class MbCidade implements Serializable{
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
-        
+
 }
