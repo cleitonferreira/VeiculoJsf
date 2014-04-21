@@ -12,6 +12,7 @@ import br.com.veiculo.model.dao.MeuDaoImpl;
 import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Pessoa;
+import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
 import java.util.List;
@@ -33,8 +34,10 @@ public class MbPessoa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Pessoa pessoa = new Pessoa();
+    private Veiculo veiculo = new Veiculo();
     private List<Pessoa> pessoas;
-    
+    private List<Veiculo> veiculos;
+
     ///// Objetos para os ComBos \\\\\
     private final MeuDao dao = new MeuDaoImpl();
     private List<Estado> estados;
@@ -42,32 +45,37 @@ public class MbPessoa implements Serializable {
     private Cidade cidade;
     private Estado estado;
     //////////////////////////////////
-    
 
     public MbPessoa() {
     }
-    
-        @PostConstruct
+
+    @PostConstruct
     public void init() {
-                estados = dao.consultaTodosEstados();
+        estados = dao.consultaTodosEstados();
     }
-        public void listaCidades(AjaxBehaviorEvent event) {
+
+    public void listaCidades(AjaxBehaviorEvent event) {
         cidades = dao.consultaCidades(estado);
     }
-    
 
     private InterfaceDAO<Pessoa> pessoaDAO() {
         InterfaceDAO<Pessoa> pessoaDAO = new HibernateDAO<Pessoa>(Pessoa.class, FacesContextUtil.getRequestSession());
         return pessoaDAO;
     }
 
+    private InterfaceDAO<Veiculo> veiculoDAO() {
+        InterfaceDAO<Veiculo> veiculoDAO = new HibernateDAO<Veiculo>(Veiculo.class, FacesContextUtil.getRequestSession());
+        return veiculoDAO;
+    }
+
     public String limpPessoa() {
         pessoa = new Pessoa();
+        veiculo = new Veiculo();
         return editPessoa();
     }
 
     public String editPessoa() {
-        return "/restrict/cadastrarPessoa.faces";
+        return "/restrict/cadastrarpessoa.faces";
     }
 
     public String addPessoa() {
@@ -95,12 +103,23 @@ public class MbPessoa implements Serializable {
 
     public void deletePessoa() {
         pessoaDAO().remove(pessoa);
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
     }
 
+    //tomar cuidado com esses dois get aqui
+    //realizar as modificações.
     public List<Pessoa> getPessoas() {
         pessoas = pessoaDAO().getEntities();
         return pessoas;
     }
+
+    public List<Veiculo> getVeiculos() {
+        veiculos = veiculoDAO().getEntities();
+        return veiculos;
+    }
+    
+    ////////////////////////////////////////////
 
     public void setPessoas(List<Pessoa> pessoas) {
         this.pessoas = pessoas;
@@ -145,8 +164,17 @@ public class MbPessoa implements Serializable {
     public void setCidades(List<Cidade> cidades) {
         this.cidades = cidades;
     }
-    
-    
-    
+
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
+
+    public void setVeiculos(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
+    }
 
 }
