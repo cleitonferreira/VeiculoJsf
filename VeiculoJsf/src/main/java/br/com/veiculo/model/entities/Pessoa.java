@@ -39,8 +39,6 @@ public class Pessoa implements Serializable {
     private String pes_rg;
     @Column(name = "pes_tel", nullable = false, length = 14)//(34)-8888-8888
     private String pes_tel;
-    @Column(name = "usu_cel", nullable = false, length = 15)
-    private String pes_cel;
 
     //Relacionamento 1 / 1 com veiculo
     @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)
@@ -100,14 +98,6 @@ public class Pessoa implements Serializable {
 
     public void setPes_tel(String pes_tel) {
         this.pes_tel = pes_tel;
-    }
-
-    public String getPes_cel() {
-        return pes_cel;
-    }
-
-    public void setPes_cel(String pes_cel) {
-        this.pes_cel = pes_cel;
     }
 
     public Veiculo getVeiculo() {

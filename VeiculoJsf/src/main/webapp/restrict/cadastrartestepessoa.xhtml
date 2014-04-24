@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <p:fieldset legend="Cadastrar TestePessoa">
+            <br/>
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="TestePessoa">
+                    <h:form prependId="false" id="formTestePessoa">
+                        <p:growl id="msg0"/>
+                        <h:panelGrid styleClass="panelGrid" id="grid0">
+
+                            
+                            <h:outputLabel/>
+                                <h:inputHidden id="idpessoa" value="#{mbTestePessoa.pessoa.pes_id}"/> 
+
+                                <h:outputLabel for="pes_nome" value="Nome.:"/>
+                                <p:inputText id="nomePessoa" size="40" value="#{mbTestePessoa.pessoa.pes_nome}"
+                                             required="true" requiredMessage="O campo [Nome] é obrigatório"
+                                             onkeyup="this.value = this.value.toUpperCase()"/>
+
+                                <h:outputLabel for="telefone" value="Telefone.:"/>
+                                <p:inputMask id="telefone" size="40" mask="(99) 9999-9999"
+                                             value="#{mbTestePessoa.pessoa.pes_tel}"
+                                             required="true" requiredMessage="O campo [Telefone] é obrigatório"/>
+
+                                <h:outputLabel for="celular" value="Celular.:"/>
+                                <p:inputMask id="celular" size="40" mask="(99) 99999-9999"
+                                             value="#{mbTestePessoa.pessoa.pes_tel}"
+                                             required="true" requiredMessage="O campo [Celular] é obrigatório"/>
+
+
+                                <h:outputLabel for="cpf" value="CPF.:"/>
+                                <p:inputMask id="cpf" size="40" mask="999.999.999-99" value="#{mbTestePessoa.pessoa.pes_cpf}"
+                                             required="true" requiredMessage="O campo [CPF] é obrigatório">
+                                    <f:validator validatorId="cpfValidator"/>
+                                </p:inputMask>
+
+                                <h:outputLabel for="rg" value="RG.:"/>
+                                <p:inputText id="rg" size="40" value="#{mbTestePessoa.pessoa.pes_rg}"
+                                             required="true" requiredMessage="O campo [RG] é obrigatório">
+                                </p:inputText>
+
+
+                                <h:outputLabel value="Estado: *" />
+                                <h:selectOneMenu id="estado" value="#{mbTestePessoa.estado}" required="true" requiredMessage="O campo [Estado] obrigatório" converter="converterEstado"  >
+                                    <f:selectItem itemLabel="Selecione" />
+                                    <f:selectItems value="#{mbTestePessoa.estados}" var="e" itemValue="#{e}" itemLabel="#{e.est_nome}" />
+                                    <f:ajax render="cidade" event="change" listener="#{mbTestePessoa.listaCidades}" />
+                                </h:selectOneMenu>
+
+
+                                <h:outputLabel value="Cidade: *" />
+                                <h:selectOneMenu id="cidade" value="#{mbTestePessoa.cidade}" required="true" requiredMessage="O campo [Cidade] obrigatório" converter="converterCidade"  >
+                                    <f:selectItem itemLabel="Selecione" />
+                                    <f:selectItems value="#{mbTestePessoa.cidades}" var="c" itemValue="#{c}" itemLabel="#{c.cid_nome}" />
+                                </h:selectOneMenu>
+                            
+                            
+                            
+                            <br/><br/>
+                            <p:panel style="text-align: center">
+                                <p:commandButton value="Salvar" action="#{mbTestePessoa.addPessoa()}"
+                                                 image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                <p:commandButton value="Cancelar" actionListener="#{mbTestePessoa.limpPessoa()}" 
+                                                 image="ui-icon ui-icon-close" update="@form"/>
+                            </p:panel>
+                        </h:panelGrid>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="pessoa" value="#{mbTestePessoa.pessoas}"
+                             paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+
+                    <f:facet name="header">Lista de Pessoas</f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{pessoa.pes_id}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Pessoa"/>
+                        </f:facet>
+                        <h:outputText value="#{pessoa.pes_nome}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ações"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
+                                         process="@this" update=":tbv1:formTestePessoa">
+                            <f:setPropertyActionListener target="#{mbTestePessoa.pessoa}"
+                                                         value="#{pessoa}"/>
+                        </p:commandButton>
+                        <p:commandButton value="Remover" action="#{mbTestePessoa.deletePessoa()}"
+                                         image="ui-icon ui-icon-close" update="@form">
+                            <f:setPropertyActionListener target="#{mbTestePessoa.pessoa}"
+                                                         value="#{pessoa}"/>
+                        </p:commandButton>
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

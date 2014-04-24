@@ -41,8 +41,8 @@ public class MbVeiculo implements Serializable {
     private List<Modelo> modelos;
     private Marca marca;
     private Modelo modelo;
-
     //////////////////////////////////
+    
     public MbVeiculo() {
     }
 

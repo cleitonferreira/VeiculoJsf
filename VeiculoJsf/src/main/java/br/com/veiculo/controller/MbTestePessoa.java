@@ -6,17 +6,12 @@
 package br.com.veiculo.controller;
 
 import br.com.veiculo.model.dao.HibernateDAO;
-import br.com.veiculo.model.dao.ImplDaoMarcaModelo;
 import br.com.veiculo.model.dao.InterfaceDAO;
 import br.com.veiculo.model.dao.MeuDao;
 import br.com.veiculo.model.dao.MeuDaoImpl;
-import br.com.veiculo.model.dao.MeuDaoMarcaModelo;
 import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
-import br.com.veiculo.model.entities.Marca;
-import br.com.veiculo.model.entities.Modelo;
 import br.com.veiculo.model.entities.Pessoa;
-import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
 import java.util.List;
@@ -31,16 +26,14 @@ import javax.faces.event.AjaxBehaviorEvent;
  *
  * @author cleiton
  */
-@ManagedBean(name = "mbPessoa")
+@ManagedBean(name = "mbTestePessoa")
 @SessionScoped
-public class MbPessoa implements Serializable {
+public class MbTestePessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Pessoa pessoa = new Pessoa();
-    private Veiculo veiculo = new Veiculo();
-    private List<Pessoa> pessoas;
-    private List<Veiculo> veiculos;
+    public List<Pessoa> pessoas;
 
     ///// Objetos para os ComBos Estado Cidade \\\\\
     private final MeuDao dao = new MeuDaoImpl();
@@ -50,33 +43,16 @@ public class MbPessoa implements Serializable {
     private Estado estado;
     //////////////////////////////////
 
-    ///// Objetos para os ComBos Marcas e Modelos \\\\\
-    private final MeuDaoMarcaModelo mmdao = new ImplDaoMarcaModelo();
-    private List<Marca> marcas;
-    private List<Modelo> modelos;
-    private Marca marca;
-    private Modelo modelo;
-    //////////////////////////////////
-    
-    
-    public MbPessoa() {
+    public MbTestePessoa() {
     }
-    
-    
 
     @PostConstruct
     public void init() {
-        marcas = mmdao.consultaTodasMarcas();
         estados = dao.consultaTodosEstados();
     }
-    
 
     public void listaCidades(AjaxBehaviorEvent event) {
         cidades = dao.consultaCidades(estado);
-    }
-
-    public void listaModelos(AjaxBehaviorEvent event) {
-        modelos = mmdao.consultaModelos(marca);
     }
 
     private InterfaceDAO<Pessoa> pessoaDAO() {
@@ -84,19 +60,13 @@ public class MbPessoa implements Serializable {
         return pessoaDAO;
     }
 
-    private InterfaceDAO<Veiculo> veiculoDAO() {
-        InterfaceDAO<Veiculo> veiculoDAO = new HibernateDAO<Veiculo>(Veiculo.class, FacesContextUtil.getRequestSession());
-        return veiculoDAO;
-    }
-
     public String limpPessoa() {
         pessoa = new Pessoa();
-        veiculo = new Veiculo();
         return editPessoa();
     }
 
     public String editPessoa() {
-        return "/restrict/cadastrarpessoa.faces";
+        return "/restrict/cadastrartestepessoa.faces";
     }
 
     public String addPessoa() {
@@ -109,53 +79,32 @@ public class MbPessoa implements Serializable {
         limpPessoa();
         return null;
     }
-    
-    public String testeSalvar(){
-        insertPessoa();
-        return null;
-    }
-    
 
     private void insertPessoa() {
-        System.out.println("INSERT");
         pessoa.setEstado(estado);
         pessoa.setCidade(cidade);
-        veiculo.setMarca(marca);
-        veiculo.setModelo(modelo);
         pessoaDAO().save(pessoa);
-        veiculo.setPessoa(pessoa);
-        veiculoDAO().save(veiculo);
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
     }
 
     private void updatePessoa() {
         pessoaDAO().update(pessoa);
-        veiculoDAO().update(veiculo);
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
     }
 
     public void deletePessoa() {
         pessoaDAO().remove(pessoa);
-        veiculoDAO().remove(veiculo);
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
     }
 
-    //tomar cuidado com esses dois get aqui
-    //realizar as modificações.
     public List<Pessoa> getPessoas() {
         pessoas = pessoaDAO().getEntities();
         return pessoas;
     }
 
-    public List<Veiculo> getVeiculos() {
-        veiculos = veiculoDAO().getEntities();
-        return veiculos;
-    }
-
-    ////////////////////////////////////////////
     public void setPessoas(List<Pessoa> pessoas) {
         this.pessoas = pessoas;
     }
@@ -166,22 +115,6 @@ public class MbPessoa implements Serializable {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
-    }
-
-    public Cidade getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
-    }
-
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
     }
 
     public List<Estado> getEstados() {
@@ -200,48 +133,20 @@ public class MbPessoa implements Serializable {
         this.cidades = cidades;
     }
 
-    public Veiculo getVeiculo() {
-        return veiculo;
+    public Cidade getCidade() {
+        return cidade;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 
-    public void setVeiculos(List<Veiculo> veiculos) {
-        this.veiculos = veiculos;
+    public Estado getEstado() {
+        return estado;
     }
 
-    public List<Marca> getMarcas() {
-        return marcas;
-    }
-
-    public void setMarcas(List<Marca> marcas) {
-        this.marcas = marcas;
-    }
-
-    public List<Modelo> getModelos() {
-        return modelos;
-    }
-
-    public void setModelos(List<Modelo> modelos) {
-        this.modelos = modelos;
-    }
-
-    public Marca getMarca() {
-        return marca;
-    }
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
-
-    public Modelo getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(Modelo modelo) {
-        this.modelo = modelo;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
 }
