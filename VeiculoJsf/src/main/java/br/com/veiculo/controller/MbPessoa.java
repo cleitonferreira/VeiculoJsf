@@ -57,19 +57,15 @@ public class MbPessoa implements Serializable {
     private Marca marca;
     private Modelo modelo;
     //////////////////////////////////
-    
-    
+
     public MbPessoa() {
     }
-    
-    
 
     @PostConstruct
     public void init() {
         marcas = mmdao.consultaTodasMarcas();
         estados = dao.consultaTodosEstados();
     }
-    
 
     public void listaCidades(AjaxBehaviorEvent event) {
         cidades = dao.consultaCidades(estado);
@@ -109,21 +105,15 @@ public class MbPessoa implements Serializable {
         limpPessoa();
         return null;
     }
-    
-    public String testeSalvar(){
-        insertPessoa();
-        return null;
-    }
-    
 
     private void insertPessoa() {
-        System.out.println("INSERT");
         pessoa.setEstado(estado);
         pessoa.setCidade(cidade);
+        pessoaDAO().save(pessoa);
+        
+        veiculo.setPessoa(pessoa);
         veiculo.setMarca(marca);
         veiculo.setModelo(modelo);
-        pessoaDAO().save(pessoa);
-        veiculo.setPessoa(pessoa);
         veiculoDAO().save(veiculo);
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));

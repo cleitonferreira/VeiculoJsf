@@ -32,11 +32,6 @@
                                              value="#{mbPessoa.pessoa.pes_tel}"
                                              required="true" requiredMessage="O campo [Telefone] é obrigatório"/>
 
-                                <h:outputLabel for="celular" value="Celular.:"/>
-                                <p:inputMask id="celular" size="40" mask="(99) 99999-9999"
-                                             value="#{mbPessoa.pessoa.pes_tel}"
-                                             required="true" requiredMessage="O campo [Celular] é obrigatório"/>
-
 
                                 <h:outputLabel for="cpf" value="CPF.:"/>
                                 <p:inputMask id="cpf" size="40" mask="999.999.999-99" value="#{mbPessoa.pessoa.pes_cpf}"
@@ -74,7 +69,7 @@
                     <p:tab title="Informações do Veículo" id="infoVeiculo">
                         <p:panel header="Informações do Veículo">
                             <p:growl id="msg1"/>
-                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid" id="grid1">
+                            <h:panelGrid styleClass="panelGrid" id="grid1">
 
                                 <h:outputLabel for="ano" value="Ano.:"/>
                                 <p:inputMask id="ano" size="6" maxlength="4" mask="9999" value="#{mbPessoa.veiculo.veic_ano}"
@@ -105,7 +100,7 @@
                                 
                                 
                                 <p:panel>
-                                    <p:commandButton value="Salvar" action="#{mbPessoa.testeSalvar()}"
+                                    <p:commandButton value="Salvar" action="#{mbPessoa.addPessoa}"
                                                      image="ui-icon ui-icon-disk" update="@form"/>
                                     <p:commandButton value="Cancelar" actionListener="#{mbPessoa.limpPessoa}" 
                                                      image="ui-icon ui-icon-close" update="@form"/>

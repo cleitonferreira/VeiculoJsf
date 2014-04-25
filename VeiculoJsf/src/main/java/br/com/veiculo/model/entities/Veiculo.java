@@ -33,9 +33,8 @@ public class Veiculo implements Serializable {
     @GeneratedValue
     @Column(name = "veic_id", nullable = false)
     private Integer veic_id;
-    @Column(name = "veic_ano", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date veic_ano;
+    @Column(name = "veic_ano", nullable = false, length = 10)
+    private String veic_ano;
     @Column(name = "veic_placa", nullable = false, length = 10)
     private String veic_placa;
     @Column(name = "veic_cor", nullable = false, length = 15)
@@ -71,13 +70,15 @@ public class Veiculo implements Serializable {
         this.veic_id = veic_id;
     }
 
-    public Date getVeic_ano() {
+    public String getVeic_ano() {
         return veic_ano;
     }
 
-    public void setVeic_ano(Date veic_ano) {
+    public void setVeic_ano(String veic_ano) {
         this.veic_ano = veic_ano;
     }
+
+
 
     public String getVeic_placa() {
         return veic_placa;
