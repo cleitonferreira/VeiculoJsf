@@ -6,11 +6,8 @@
 package br.com.veiculo.controller;
 
 import br.com.veiculo.model.dao.HibernateDAO;
-import br.com.veiculo.model.dao.ImplDaoMarcaModelo;
 import br.com.veiculo.model.dao.InterfaceDAO;
-import br.com.veiculo.model.dao.MeuDao;
 import br.com.veiculo.model.dao.MeuDaoImpl;
-import br.com.veiculo.model.dao.MeuDaoMarcaModelo;
 import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Marca;
@@ -43,7 +40,7 @@ public class MbPessoa implements Serializable {
     private List<Veiculo> veiculos;
 
     ///// Objetos para os ComBos Estado Cidade \\\\\
-    private final MeuDao dao = new MeuDaoImpl();
+    private final MeuDaoImpl dao = new MeuDaoImpl();
     private List<Estado> estados;
     private List<Cidade> cidades;
     private Cidade cidade;
@@ -51,7 +48,7 @@ public class MbPessoa implements Serializable {
     //////////////////////////////////
 
     ///// Objetos para os ComBos Marcas e Modelos \\\\\
-    private final MeuDaoMarcaModelo mmdao = new ImplDaoMarcaModelo();
+    private final MeuDaoImpl mmdao = new MeuDaoImpl();
     private List<Marca> marcas;
     private List<Modelo> modelos;
     private Marca marca;
@@ -107,16 +104,20 @@ public class MbPessoa implements Serializable {
     }
 
     private void insertPessoa() {
-        pessoa.setEstado(estado);
-        pessoa.setCidade(cidade);
-        pessoaDAO().save(pessoa);
-        
-        veiculo.setPessoa(pessoa);
-        veiculo.setMarca(marca);
-        veiculo.setModelo(modelo);
-        veiculoDAO().save(veiculo);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+            
+            pessoa.setEstado(estado);
+            pessoa.setCidade(cidade);
+            pessoaDAO().save(pessoa);
+
+            veiculo.setPessoa(pessoa);
+            veiculo.setMarca(marca);
+            veiculo.setModelo(modelo);
+            veiculoDAO().save(veiculo);
+            
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+            
+
     }
 
     private void updatePessoa() {

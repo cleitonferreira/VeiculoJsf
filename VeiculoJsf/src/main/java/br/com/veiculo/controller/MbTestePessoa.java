@@ -30,7 +30,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 @SessionScoped
 public class MbTestePessoa implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     private Pessoa pessoa = new Pessoa();
     public List<Pessoa> pessoas;
@@ -72,7 +72,17 @@ public class MbTestePessoa implements Serializable {
     public String addPessoa() {
         // verifica a id veio igual a null ou id igual a 0
         if (pessoa.getPes_id() == null || pessoa.getPes_id() == 0) {
-            insertPessoa();
+
+//            if (pessoas.) {
+//                
+//                FacesContext.getCurrentInstance().addMessage(null,
+//                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Cpf já cadastrado!!!", ""));
+//                limpPessoa();
+//                
+//            } else {
+                insertPessoa();
+//            }
+
         } else {
             updatePessoa();
         }

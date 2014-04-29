@@ -37,6 +37,7 @@
                                 <p:inputMask id="cpf" size="40" mask="999.999.999-99" value="#{mbPessoa.pessoa.pes_cpf}"
                                              required="true" requiredMessage="O campo [CPF] é obrigatório">
                                     <f:validator validatorId="cpfValidator"/>
+                                    <f:converter converterId="converter.CpfConverter" />
                                 </p:inputMask>
 
                                 <h:outputLabel for="rg" value="RG.:"/>
@@ -73,7 +74,7 @@
 
                                 <h:outputLabel for="ano" value="Ano.:"/>
                                 <p:inputMask id="ano" size="6" maxlength="4" mask="9999" value="#{mbPessoa.veiculo.veic_ano}"
-                                            required="true" requiredMessage="O campo [Ano] é obrigatório"/>
+                                             required="true" requiredMessage="O campo [Ano] é obrigatório"/>
 
                                 <h:outputLabel for="cor" value="Cor.:"/>
                                 <p:inputText id="cor" size="40" maxlength="15" value="#{mbPessoa.veiculo.veic_cor}"
@@ -81,7 +82,7 @@
                                              onkeyup="this.value = this.value.toUpperCase()"/>
 
                                 <h:outputLabel for="placa" value="Placa.:"/>
-                                <p:inputText id="placa" size="40" maxlength="8" value="#{mbPessoa.veiculo.veic_placa}"
+                                <p:inputMask id="placa" size="40" maxlength="8" mask="aaa-9999" value="#{mbPessoa.veiculo.veic_placa}"
                                              required="true" requiredMessage="O campo [Placa] é obrigatório"/>
 
                                 <h:outputLabel value="Marca.: *" />
@@ -97,8 +98,8 @@
                                     <f:selectItem itemLabel="Selecione" />
                                     <f:selectItems value="#{mbPessoa.modelos}" var="o" itemValue="#{o}" itemLabel="#{o.mod_nome}" />
                                 </h:selectOneMenu>
-                                
-                                
+
+
                                 <p:panel>
                                     <p:commandButton value="Salvar" action="#{mbPessoa.addPessoa}"
                                                      image="ui-icon ui-icon-disk" update="@form"/>

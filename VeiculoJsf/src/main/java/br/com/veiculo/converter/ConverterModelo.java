@@ -6,8 +6,8 @@
 
 package br.com.veiculo.converter;
 
-import br.com.veiculo.model.dao.ImplDaoMarcaModelo;
-import br.com.veiculo.model.dao.MeuDaoMarcaModelo;
+import br.com.veiculo.model.dao.MeuDao;
+import br.com.veiculo.model.dao.MeuDaoImpl;
 import br.com.veiculo.model.entities.Modelo;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -24,7 +24,7 @@ public class ConverterModelo implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && !value.equals("")) {
-            MeuDaoMarcaModelo dao = new ImplDaoMarcaModelo();
+            MeuDao dao = new MeuDaoImpl();
             return dao.getByIdModelo(Integer.valueOf(value));
         }
         return null;

@@ -1,8 +1,6 @@
 package br.com.veiculo.util;
 
 
-import br.com.veiculo.model.entities.Cidade;
-import br.com.veiculo.model.entities.Estado;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

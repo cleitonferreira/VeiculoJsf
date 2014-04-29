@@ -6,6 +6,8 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -81,7 +83,12 @@ public class Pessoa implements Serializable {
     }
 
     public void setPes_cpf(String pes_cpf) {
-        this.pes_cpf = pes_cpf;
+        if (pes_cpf.equals(getPes_cpf())) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Cpf já cadastrado!!!", ""));
+        } else {
+            this.pes_cpf = pes_cpf;
+        }
     }
 
     public String getPes_rg() {
@@ -123,16 +130,6 @@ public class Pessoa implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
-
-    
- 
-
-
-    
-    
-    
-    
-    
 
     @Override
     public int hashCode() {

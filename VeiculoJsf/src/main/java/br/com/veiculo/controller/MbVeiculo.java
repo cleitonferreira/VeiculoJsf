@@ -6,9 +6,8 @@
 package br.com.veiculo.controller;
 
 import br.com.veiculo.model.dao.HibernateDAO;
-import br.com.veiculo.model.dao.ImplDaoMarcaModelo;
 import br.com.veiculo.model.dao.InterfaceDAO;
-import br.com.veiculo.model.dao.MeuDaoMarcaModelo;
+import br.com.veiculo.model.dao.MeuDaoImpl;
 import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
 import br.com.veiculo.model.entities.Veiculo;
@@ -36,7 +35,7 @@ public class MbVeiculo implements Serializable {
     private List<Veiculo> veiculos;
 
     ///// Objetos para os ComBos \\\\\
-    private final MeuDaoMarcaModelo dao = new ImplDaoMarcaModelo();
+    private final MeuDaoImpl dao = new MeuDaoImpl();
     private List<Marca> marcas;
     private List<Modelo> modelos;
     private Marca marca;

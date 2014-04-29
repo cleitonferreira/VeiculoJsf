@@ -32,11 +32,6 @@
                             </p:selectOneRadio>  
                             <br/>
 
-
-
-
-
-
                             <br/><br/>
                             <p:panel style="text-align: center">
                                 <p:commandButton value="Salvar" action="#{mbMarca.addMarca()}"
@@ -48,6 +43,9 @@
                     </h:form>
                 </p:tab>
             </p:tabView>
+
+
+
 
             <h:form id="formtable">
                 <p:growl id="msg1"/>
@@ -86,6 +84,7 @@
                             <f:setPropertyActionListener target="#{mbMarca.marca}"
                                                          value="#{marca}"/>
                         </p:commandButton>
+                        &nbsp;&nbsp;
                         <p:commandButton value="Remover" action="#{mbMarca.deleteMarca()}"
                                          image="ui-icon ui-icon-close" update="@form">
                             <f:setPropertyActionListener target="#{mbMarca.marca}"
@@ -96,7 +95,55 @@
 
                 </p:dataTable>
 
+                <h:panelGrid columns="2">  
+                    <p:panel header="Exportar Vários Formatos">  
+                        <h:commandLink>  
+                            <p:graphicImage value="./../resources/restrict/icons/excel.png" />  
+                            <p:dataExporter type="xls" target="idTabela" fileName="marcas" />  
+                        </h:commandLink>  
+                        &nbsp;
+                        <h:commandLink>  
+                            <p:graphicImage value="./../resources/restrict/icons/pdf.png" />  
+                            <p:dataExporter type="pdf" target="idTabela" fileName="marcas"/>  
+                        </h:commandLink>  
+                        &nbsp;
+                        <h:commandLink>  
+                            <p:graphicImage value="./../resources/restrict/icons/xls.png" />  
+                            <p:dataExporter type="csv" target="idTabela" fileName="marcas" />  
+                        </h:commandLink>  
+                        &nbsp;
+                        <h:commandLink>  
+                            <p:graphicImage value="./../resources/restrict/icons/xml.png" />  
+                            <p:dataExporter type="xml" target="idTabela" fileName="marcas" />  
+                        </h:commandLink>  
+                    </p:panel>  
+
+                    <p:panel header="Exportar Vários Formatos">  
+                        <h:commandLink>  
+                            <p:graphicImage value="./../resources/restrict/icons/excel.png" />  
+                            <p:dataExporter type="xls" target="idTabela" fileName="marcas" pageOnly="true"/>  
+                        </h:commandLink>  
+                        &nbsp;
+                        <h:commandLink>  
+                            <p:graphicImage value="./../resources/restrict/icons/pdf.png" />  
+                            <p:dataExporter type="pdf" target="idTabela" fileName="marcas" pageOnly="true"/>  
+                        </h:commandLink>  
+                        &nbsp;
+                        <h:commandLink>  
+                            <p:graphicImage value="./../resources/restrict/icons/xls.png" />  
+                            <p:dataExporter type="csv" target="idTabela" fileName="marcas" pageOnly="true"/>  
+                        </h:commandLink>  
+                        &nbsp;
+                        <h:commandLink>  
+                            <p:graphicImage value="./../resources/restrict/icons/xml.png" />  
+                            <p:dataExporter type="xml" target="idTabela" fileName="marcas" pageOnly="true"/>  
+                        </h:commandLink>  
+                    </p:panel>  
+                </h:panelGrid>
+
+
             </h:form>
+
 
         </p:fieldset>
     </ui:define>
