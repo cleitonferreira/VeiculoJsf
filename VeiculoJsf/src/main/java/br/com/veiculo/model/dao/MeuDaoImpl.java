@@ -9,6 +9,7 @@ import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
+import br.com.veiculo.model.entities.Pessoa;
 import br.com.veiculo.util.HibernateCombos;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -71,7 +72,16 @@ public class MeuDaoImpl implements MeuDao {
         return crit.list();
     }
     
-    
+
+    //http://www.devmedia.com.br/hibernate-api-criteria-realizando-consultas/29627
+    @Override
+    public List<Pessoa> consultaCpf() {
+        Pessoa pessoa = new Pessoa();
+        Criteria crit = HibernateCombos.getSession().createCriteria(Pessoa.class);
+//        crit.add(Restrictions.eq("pes_cpf", pessoa.getPes_cpf()));
+        crit.add(Restrictions.like("pes_cpf", pessoa.getPes_cpf()));
+        return crit.list();
+    }
     
     
 }

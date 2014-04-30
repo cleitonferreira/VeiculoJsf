@@ -9,6 +9,7 @@ import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
+import br.com.veiculo.model.entities.Pessoa;
 import java.util.List;
 
 /**
@@ -34,6 +35,8 @@ public interface MeuDao {
     public Marca getByIdMarca(Integer id);
     
     public Modelo getByIdModelo(Integer id);
+    
+    public List<Pessoa> consultaCpf();
     
     
 }

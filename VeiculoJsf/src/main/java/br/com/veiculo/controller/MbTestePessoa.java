@@ -72,16 +72,32 @@ public class MbTestePessoa implements Serializable {
     public String addPessoa() {
         // verifica a id veio igual a null ou id igual a 0
         if (pessoa.getPes_id() == null || pessoa.getPes_id() == 0) {
-
-//            if (pessoas.) {
-//                
-//                FacesContext.getCurrentInstance().addMessage(null,
-//                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Cpf já cadastrado!!!", ""));
-//                limpPessoa();
-//                
-//            } else {
+            //insertPessoa();
+            
+            String buscacpf;
+            Object cpf;
+            buscacpf = pessoa.getPes_cpf();
+            
+            cpf = dao.consultaCpf();
+            cpf.toString();
+            
+            //comparacao do cpf com banco
+            if (pessoa.getPes_cpf().equals(cpf)) {
+                
+                System.out.println("Cpf"+cpf);
+                
+                        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Cpf já cadastrado!!!", ""));
+            } else {
                 insertPessoa();
+            }
+            
+//            try {
+//                System.out.println("Cpf Igual");
+//            } catch (Exception ex) {
+//                System.out.println("Erro"+ex);
 //            }
+            
 
         } else {
             updatePessoa();

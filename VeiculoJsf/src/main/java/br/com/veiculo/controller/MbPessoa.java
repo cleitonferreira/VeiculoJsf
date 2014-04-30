@@ -16,6 +16,7 @@ import br.com.veiculo.model.entities.Pessoa;
 import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -34,6 +35,7 @@ public class MbPessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
     private Pessoa pessoa = new Pessoa();
     private Veiculo veiculo = new Veiculo();
     private List<Pessoa> pessoas;
@@ -48,7 +50,7 @@ public class MbPessoa implements Serializable {
     //////////////////////////////////
 
     ///// Objetos para os ComBos Marcas e Modelos \\\\\
-    private final MeuDaoImpl mmdao = new MeuDaoImpl();
+//    private final MeuDaoImpl mmdao = new MeuDaoImpl();
     private List<Marca> marcas;
     private List<Modelo> modelos;
     private Marca marca;
@@ -60,7 +62,7 @@ public class MbPessoa implements Serializable {
 
     @PostConstruct
     public void init() {
-        marcas = mmdao.consultaTodasMarcas();
+        marcas = dao.consultaTodasMarcas();
         estados = dao.consultaTodosEstados();
     }
 
@@ -69,7 +71,7 @@ public class MbPessoa implements Serializable {
     }
 
     public void listaModelos(AjaxBehaviorEvent event) {
-        modelos = mmdao.consultaModelos(marca);
+        modelos = dao.consultaModelos(marca);
     }
 
     private InterfaceDAO<Pessoa> pessoaDAO() {
@@ -104,19 +106,18 @@ public class MbPessoa implements Serializable {
     }
 
     private void insertPessoa() {
-            
-            pessoa.setEstado(estado);
-            pessoa.setCidade(cidade);
-            pessoaDAO().save(pessoa);
 
-            veiculo.setPessoa(pessoa);
-            veiculo.setMarca(marca);
-            veiculo.setModelo(modelo);
-            veiculoDAO().save(veiculo);
-            
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
-            
+        pessoa.setEstado(estado);
+        pessoa.setCidade(cidade);
+        pessoaDAO().save(pessoa);
+
+        veiculo.setPessoa(pessoa);
+        veiculo.setMarca(marca);
+        veiculo.setModelo(modelo);
+        veiculoDAO().save(veiculo);
+
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
 
     }
 

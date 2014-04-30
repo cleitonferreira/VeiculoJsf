@@ -6,6 +6,7 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.Column;
@@ -28,6 +29,9 @@ import org.hibernate.annotations.ForeignKey;
 public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+//        public static ArrayList<Pessoa> listapessoas = new ArrayList<Pessoa>();
+    
 
     @Id
     @GeneratedValue
@@ -130,6 +134,8 @@ public class Pessoa implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
+    
+    
 
     @Override
     public int hashCode() {

@@ -18,7 +18,48 @@
                         <h:panelGrid styleClass="panelGrid" id="grid0">
 
                             <h:outputLabel/>
-                            <h:inputHidden id="idcidade" value="#{mbCidade.cidade.cid_id}"/> 
+                            <h:inputHidden id="idcidade" value="#{mbVeiculo.veiculo.veic_id}"/> 
+                            
+                            
+                            
+                            
+                            
+                      <p:panel header="Pessoa">        
+                            <h:outputLabel value="Cpf Pessoa: " for="pessoa" />  
+                            <p:autoComplete value="#{autoCompleteBean.selectedPessoa1}"   
+                        id="pessoa" completeMethod="#{autoCompleteBean.completePessoa}"  
+                        var="p" itemLabel="#{p.name}" itemValue="#{p}" converter="player" forceSelection="true">  
+  
+                
+                
+                        <f:facet name="itemtip">  
+                            <h:panelGrid  columns="2" cellpadding="5"> 
+
+                                <h:outputText value="Nome: " />  
+                                <h:outputText id="modelNo" value="#{p.pes_nome}" />  
+
+                                <h:outputText value="Tel " />  
+                                <h:outputText id="year" value="#{p.pes_tel}" />  
+
+                            </h:panelGrid>  
+                        </f:facet>  
+
+                    </p:autoComplete> 
+                      </p:panel>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
 
                                         <h:outputLabel for="ano" value="Ano.:"/>
                                         <p:inputMask id="ano" size="6" maxlength="4" mask="9999" value="#{mbVeiculo.veiculo.veic_ano}"
