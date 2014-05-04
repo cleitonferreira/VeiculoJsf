@@ -10,6 +10,7 @@ import br.com.veiculo.model.dao.InterfaceDAO;
 import br.com.veiculo.model.dao.MeuDaoImpl;
 import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
+import br.com.veiculo.model.entities.Pessoa;
 import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
@@ -34,6 +35,8 @@ public class MbVeiculo implements Serializable {
     private Veiculo veiculo = new Veiculo();
     private List<Veiculo> veiculos;
 
+    private Pessoa selected;
+
     ///// Objetos para os ComBos \\\\\
     private final MeuDaoImpl dao = new MeuDaoImpl();
     private List<Marca> marcas;
@@ -41,7 +44,7 @@ public class MbVeiculo implements Serializable {
     private Marca marca;
     private Modelo modelo;
     //////////////////////////////////
-    
+
     public MbVeiculo() {
     }
 
@@ -75,14 +78,27 @@ public class MbVeiculo implements Serializable {
         } else {
             updateVeiculo();
         }
+        clear();
         limpVeiculo();
         return null;
     }
 
     private void insertVeiculo() {
-        veiculoDAO().save(veiculo);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+
+        try {
+
+            veiculo.setPessoa(selected);
+            veiculo.setMarca(marca);
+            veiculo.setModelo(modelo);
+            veiculoDAO().save(veiculo);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+
+        } catch (Exception ex) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Aconteceu um Error inesperado.", "" + ex)); 
+        }
+
     }
 
     private void updateVeiculo() {
@@ -95,6 +111,26 @@ public class MbVeiculo implements Serializable {
         veiculoDAO().remove(veiculo);
     }
 
+    public Pessoa getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Pessoa selected) {
+        this.selected = selected;
+    }
+
+    // Actions
+    public List<Pessoa> completePessoa() {
+        return dao.consultaTodosPessoas();
+    }
+
+    public String clear() {
+        this.selected = null;
+//        this.marca = null;
+//        this.modelo = null;
+        return "";
+    }
+
     //tomar cuidado com esse get aqui
     //realizar as modificações.
     public List<Veiculo> getVeiculos() {
@@ -102,7 +138,6 @@ public class MbVeiculo implements Serializable {
         return veiculos;
     }
     //////////////////////////////////
-    
 
     public void setVeiculos(List<Veiculo> veiculos) {
         this.veiculos = veiculos;

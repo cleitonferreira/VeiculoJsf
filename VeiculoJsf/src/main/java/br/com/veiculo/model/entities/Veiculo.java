@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -39,7 +38,7 @@ public class Veiculo implements Serializable {
     private String veic_cor;
 
     //Relacionamento 1 / 1
-    @OneToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "VeiculoPessoa")
     @JoinColumn(name = "pes_id", referencedColumnName = "pes_id")
     private Pessoa pessoa;
@@ -75,8 +74,6 @@ public class Veiculo implements Serializable {
     public void setVeic_ano(String veic_ano) {
         this.veic_ano = veic_ano;
     }
-
-
 
     public String getVeic_placa() {
         return veic_placa;
@@ -117,6 +114,8 @@ public class Veiculo implements Serializable {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
+
+
 
     
 

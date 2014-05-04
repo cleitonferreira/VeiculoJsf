@@ -27,9 +27,8 @@
                             <br/>
 
                             <h:outputText value="Ramal.:"/>
-                            <p:inputText id="ramal" size="40" value="#{mbSetor.setor.set_ramal}"
-                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
-                                         requiredMessage="O campo [Ramal] é obrigatório."/>
+                            <p:inputMask id="ramal" size="40" mask="9999" maxlength="4" value="#{mbSetor.setor.set_ramal}"
+                                         required="true" requiredMessage="O campo [Ramal] é obrigatório."/>
                             <br/>
 
                             <h:outputText value="Responsável pelo Setor.:"/>

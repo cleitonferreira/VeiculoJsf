@@ -6,9 +6,7 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -46,10 +44,9 @@ public class Pessoa implements Serializable {
     @Column(name = "pes_tel", nullable = false, length = 14)//(34)-8888-8888
     private String pes_tel;
 
-    //Relacionamento 1 / 1 com veiculo
-    @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
     @ForeignKey(name = "VeiculoPessoa")
-    private Veiculo veiculo;
+    private List<Veiculo> veiculos;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "EstadoPessoa")
@@ -87,12 +84,7 @@ public class Pessoa implements Serializable {
     }
 
     public void setPes_cpf(String pes_cpf) {
-        if (pes_cpf.equals(getPes_cpf())) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Cpf já cadastrado!!!", ""));
-        } else {
-            this.pes_cpf = pes_cpf;
-        }
+        this.pes_cpf = pes_cpf;
     }
 
     public String getPes_rg() {
@@ -111,12 +103,12 @@ public class Pessoa implements Serializable {
         this.pes_tel = pes_tel;
     }
 
-    public Veiculo getVeiculo() {
-        return veiculo;
+    public List<Veiculo> getVeiculos() {
+        return veiculos;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
+    public void setVeiculos(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
     }
 
     public Estado getEstado() {
@@ -134,6 +126,8 @@ public class Pessoa implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
+
+    
     
     
 

@@ -6,6 +6,8 @@
 
 package br.com.veiculo.converter;
 
+import br.com.veiculo.model.dao.MeuDao;
+import br.com.veiculo.model.dao.MeuDaoImpl;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -16,6 +18,9 @@ import javax.faces.convert.ConverterException;
  * @author cleiton
  */
 public class CpfConverter implements Converter {
+    
+//    private final MeuDao dao = new MeuDaoImpl();
+    
       public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
          /*
           * Irá converter CPF formatado para um sem pontos e traço.
@@ -24,7 +29,10 @@ public class CpfConverter implements Converter {
           String cpf = value;
           if (value!= null && !value.equals(""))
                cpf = value.replaceAll("\\.", "").replaceAll("\\-", "");
- 
+          
+          
+//            dao.consultaCpf(cpf);
+            
           return cpf;
      }
  

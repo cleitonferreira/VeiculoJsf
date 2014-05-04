@@ -16,7 +16,6 @@ import br.com.veiculo.model.entities.Pessoa;
 import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;

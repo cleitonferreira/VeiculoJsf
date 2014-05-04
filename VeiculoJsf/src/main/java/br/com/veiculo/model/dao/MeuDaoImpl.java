@@ -4,7 +4,6 @@
  */
 package br.com.veiculo.model.dao;
 
-
 import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Marca;
@@ -43,11 +42,16 @@ public class MeuDaoImpl implements MeuDao {
         crit.add(Restrictions.eq("estado", estado));
         return crit.list();
     }
+
+    
+    
+    
+
     
     
     
     
-    
+
     //Marcas e Modelos
     @Override
     public Marca getByIdMarca(Integer id) {
@@ -71,17 +75,26 @@ public class MeuDaoImpl implements MeuDao {
         crit.add(Restrictions.eq("marca", marca));
         return crit.list();
     }
-    
 
     //http://www.devmedia.com.br/hibernate-api-criteria-realizando-consultas/29627
     @Override
-    public List<Pessoa> consultaCpf() {
+    public List<Pessoa> consultaCpf(String cpf) {
         Pessoa pessoa = new Pessoa();
         Criteria crit = HibernateCombos.getSession().createCriteria(Pessoa.class);
 //        crit.add(Restrictions.eq("pes_cpf", pessoa.getPes_cpf()));
-        crit.add(Restrictions.like("pes_cpf", pessoa.getPes_cpf()));
+        crit.add(Restrictions.like("pes_cpf", cpf));
         return crit.list();
     }
-    
-    
+
+    @Override
+    public Pessoa getByIdPessoa(Integer id) {
+        return (Pessoa) HibernateCombos.getSession().get(Pessoa.class, id);
+    }
+
+    @Override
+    public List<Pessoa> consultaTodosPessoas() {
+           Criteria crit = HibernateCombos.getSession().createCriteria(Pessoa.class);
+        return crit.list();
+    }
+
 }

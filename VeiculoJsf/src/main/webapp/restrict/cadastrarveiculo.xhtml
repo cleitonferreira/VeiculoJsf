@@ -18,152 +18,141 @@
                         <h:panelGrid styleClass="panelGrid" id="grid0">
 
                             <h:outputLabel/>
-                            <h:inputHidden id="idcidade" value="#{mbVeiculo.veiculo.veic_id}"/> 
-                            
-                            
-                            
-                            
-                            
-                      <p:panel header="Pessoa">        
-                            <h:outputLabel value="Cpf Pessoa: " for="pessoa" />  
-                            <p:autoComplete value="#{autoCompleteBean.selectedPessoa1}"   
-                        id="pessoa" completeMethod="#{autoCompleteBean.completePessoa}"  
-                        var="p" itemLabel="#{p.name}" itemValue="#{p}" converter="player" forceSelection="true">  
-  
-                
-                
-                        <f:facet name="itemtip">  
-                            <h:panelGrid  columns="2" cellpadding="5"> 
+                            <h:inputHidden id="idveiculo" value="#{mbVeiculo.veiculo.veic_id}"/> 
 
-                                <h:outputText value="Nome: " />  
-                                <h:outputText id="modelNo" value="#{p.pes_nome}" />  
 
-                                <h:outputText value="Tel " />  
-                                <h:outputText id="year" value="#{p.pes_tel}" />  
 
-                            </h:panelGrid>  
-                        </f:facet>  
 
-                    </p:autoComplete> 
-                      </p:panel>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Pessoa: " />
+                                <p:autoComplete value="#{mbVeiculo.selected}"
+                                                completeMethod="#{mbVeiculo.completePessoa()}"
+                                                converter="pessoaConverter"
+                                                var="pessoa" itemValue="#{pessoa}" itemLabel="#{pessoa.pes_nome}" 
+                                                forceSelection="true">
+
+                                </p:autoComplete>
+
+                            </h:panelGrid>
                             
 
-                                        <h:outputLabel for="ano" value="Ano.:"/>
-                                        <p:inputMask id="ano" size="6" maxlength="4" mask="9999" value="#{mbVeiculo.veiculo.veic_ano}"
-                                                     required="true" requiredMessage="O campo [Ano] é obrigatório"/>
-
-                                        <h:outputLabel for="cor" value="Cor.:"/>
-                                        <p:inputText id="cor" size="40" maxlength="15" value="#{mbVeiculo.veiculo.veic_cor}"
-                                                     required="true" requiredMessage="O campo [Cor] é obrigatório"
-                                                     onkeyup="this.value = this.value.toUpperCase()"/>
-
-                                        <h:outputLabel for="placa" value="Placa.:"/>
-                                        <p:inputMask id="placa" size="40" maxlength="8" mask="aaa-9999" value="#{mbVeiculo.veiculo.veic_placa}"
-                                                     required="true" requiredMessage="O campo [Placa] é obrigatório"/>
-
-                                        <h:outputLabel value="Marca.: *" />
-                                        <h:selectOneMenu id="marca" value="#{mbVeiculo.marca}" required="true" requiredMessage="O campo [Marca] obrigatório" converter="converterMarca"  >
-                                            <f:selectItem itemLabel="Selecione" />
-                                            <f:selectItems value="#{mbVeiculo.marcas}" var="a" itemValue="#{a}" itemLabel="#{a.mar_nome}" />
-                                            <f:ajax render="modelo" event="change" listener="#{mbVeiculo.listaModelos}" />
-                                        </h:selectOneMenu>
 
 
-                                        <h:outputLabel value="Modelo.: *" />
-                                        <h:selectOneMenu id="modelo" value="#{mbVeiculo.modelo}" required="true" requiredMessage="O campo [Modelo] obrigatório" converter="converterModelo"  >
-                                            <f:selectItem itemLabel="Selecione" />
-                                            <f:selectItems value="#{mbVeiculo.modelos}" var="o" itemValue="#{o}" itemLabel="#{o.mod_nome}" />
-                                        </h:selectOneMenu>
 
 
-                                        <p:panel>
-                                            <p:commandButton value="Salvar" action="#{mbVeiculo.addVeiculo}"
-                                                             image="ui-icon ui-icon-disk" update="@form"/>
-                                            <p:commandButton value="Cancelar" actionListener="#{mbVeiculo.limpVeiculo}" 
-                                                             image="ui-icon ui-icon-close" update="@form"/>
-                                        </p:panel>
 
 
-                                    </h:panelGrid>
-                                    </h:form>
-                            </p:tab>
-                            </p:tabView>
 
-                            <h:form id="formtable">
-                                <p:growl id="msg1"/>
-                                <p:dataTable id="idTabela" var="veiculo" value="#{mbVeiculo.veiculos}"
-                                             paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
-                                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             rowsPerPageTemplate="5,10,15,30,50,100,200">
 
-                                    <f:facet name="header">Lista de Veiculos</f:facet>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Id"/>
-                                        </f:facet>
-                                        <h:outputText value="#{veiculo.veic_id}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Pessoa"/>
-                                        </f:facet>
-                                        <h:outputText value="#{veiculo.pessoa.pes_nome}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Placa"/>
-                                        </f:facet>
-                                        <h:outputText value="#{veiculo.veic_placa}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Marca"/>
-                                        </f:facet>
-                                        <h:outputText value="#{veiculo.marca.mar_nome}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Modelo"/>
-                                        </f:facet>
-                                        <h:outputText value="#{veiculo.modelo.mod_nome}"/>
-                                    </p:column>
 
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Ações"/>
-                                        </f:facet>
-                                        <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
-                                                         process="@this" update=":tbv1:formVeiculo">
-                                            <f:setPropertyActionListener target="#{mbVeiculo.veiculo}"
-                                                                         value="#{veiculo}"/>
-                                        </p:commandButton>
-                                        <p:commandButton value="Remover" action="#{mbVeiculo.deleteVeiculo}"
-                                                         image="ui-icon ui-icon-close" update="@form">
-                                            <f:setPropertyActionListener target="#{mbVeiculo.veiculo}"
-                                                                         value="#{veiculo}"/>
-                                        </p:commandButton>
 
-                                    </p:column>
 
-                                </p:dataTable>
 
-                            </h:form>
 
-                            </p:fieldset>
-                            </ui:define>
 
-                            </ui:composition>
+                            <h:outputLabel for="ano" value="Ano.:"/>
+                            <p:inputMask id="ano" size="6" maxlength="4" mask="9999" value="#{mbVeiculo.veiculo.veic_ano}"
+                                         required="true" requiredMessage="O campo [Ano] é obrigatório"/>
+
+                            <h:outputLabel for="cor" value="Cor.:"/>
+                            <p:inputText id="cor" size="40" maxlength="15" value="#{mbVeiculo.veiculo.veic_cor}"
+                                         required="true" requiredMessage="O campo [Cor] é obrigatório"
+                                         onkeyup="this.value = this.value.toUpperCase()"/>
+
+                            <h:outputLabel for="placa" value="Placa.:"/>
+                            <p:inputMask id="placa" size="40" maxlength="8" mask="aaa-9999" value="#{mbVeiculo.veiculo.veic_placa}"
+                                         required="true" requiredMessage="O campo [Placa] é obrigatório"/>
+
+                            <h:outputLabel value="Marca.: *" />
+                            <h:selectOneMenu id="marca" value="#{mbVeiculo.marca}" required="true" requiredMessage="O campo [Marca] obrigatório" converter="converterMarca"  >
+                                <f:selectItem itemLabel="Selecione" />
+                                <f:selectItems value="#{mbVeiculo.marcas}" var="a" itemValue="#{a}" itemLabel="#{a.mar_nome}" />
+                                <f:ajax render="modelo" event="change" listener="#{mbVeiculo.listaModelos}" />
+                            </h:selectOneMenu>
+
+
+                            <h:outputLabel value="Modelo.: *" />
+                            <h:selectOneMenu id="modelo" value="#{mbVeiculo.modelo}" required="true" requiredMessage="O campo [Modelo] obrigatório" converter="converterModelo"  >
+                                <f:selectItem itemLabel="Selecione" />
+                                <f:selectItems value="#{mbVeiculo.modelos}" var="o" itemValue="#{o}" itemLabel="#{o.mod_nome}" />
+                            </h:selectOneMenu>
+
+
+                            <p:panel>
+                                <p:commandButton value="Salvar" action="#{mbVeiculo.addVeiculo}"
+                                                 image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                <p:commandButton value="Cancelar" actionListener="#{mbVeiculo.limpVeiculo}" 
+                                                 image="ui-icon ui-icon-close" update="@form"/>
+                            </p:panel>
+
+
+                        </h:panelGrid>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="veiculo" value="#{mbVeiculo.veiculos}"
+                             paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+
+                    <f:facet name="header">Lista de Veiculos</f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{veiculo.veic_id}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Pessoa"/>
+                        </f:facet>
+                        <h:outputText value="#{veiculo.pessoa.pes_nome}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Placa"/>
+                        </f:facet>
+                        <h:outputText value="#{veiculo.veic_placa}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Marca"/>
+                        </f:facet>
+                        <h:outputText value="#{veiculo.marca.mar_nome}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Modelo"/>
+                        </f:facet>
+                        <h:outputText value="#{veiculo.modelo.mod_nome}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ações"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
+                                         process="@this" update=":tbv1:formVeiculo">
+                            <f:setPropertyActionListener target="#{mbVeiculo.veiculo}"
+                                                         value="#{veiculo}"/>
+                        </p:commandButton>
+                        <p:commandButton value="Remover" action="#{mbVeiculo.deleteVeiculo}"
+                                         image="ui-icon ui-icon-close" update="@form">
+                            <f:setPropertyActionListener target="#{mbVeiculo.veiculo}"
+                                                         value="#{veiculo}"/>
+                        </p:commandButton>
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

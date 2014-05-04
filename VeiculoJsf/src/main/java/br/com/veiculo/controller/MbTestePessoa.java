@@ -43,6 +43,8 @@ public class MbTestePessoa implements Serializable {
     private Estado estado;
     //////////////////////////////////
 
+
+
     public MbTestePessoa() {
     }
 
@@ -73,32 +75,33 @@ public class MbTestePessoa implements Serializable {
         // verifica a id veio igual a null ou id igual a 0
         if (pessoa.getPes_id() == null || pessoa.getPes_id() == 0) {
             //insertPessoa();
-            
-            String buscacpf;
-            Object cpf;
-            buscacpf = pessoa.getPes_cpf();
-            
-            cpf = dao.consultaCpf();
-            cpf.toString();
-            
-            //comparacao do cpf com banco
-            if (pessoa.getPes_cpf().equals(cpf)) {
-                
-                System.out.println("Cpf"+cpf);
-                
-                        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Cpf já cadastrado!!!", ""));
-            } else {
-                insertPessoa();
-            }
-            
+
+//            String buscacpf;
+//            Object cpf;
+//            buscacpf = pessoa.getPes_cpf();
+//
+//            FacesContext.getCurrentInstance().addMessage(null,
+//                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Esse é o cpf >> ", buscacpf));
+//
+//            cpf = dao.consultaCpf();
+//            cpf.toString();
+//
+//            //comparacao do cpf com banco
+//            if (pessoa.getPes_cpf().equals(cpf)) {
+//
+//                System.out.println("Cpf" + cpf);
+//
+//                FacesContext.getCurrentInstance().addMessage(null,
+//                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Cpf já cadastrado!!!", ""));
+//            } else {
+            insertPessoa();
+//            }
+
 //            try {
 //                System.out.println("Cpf Igual");
 //            } catch (Exception ex) {
 //                System.out.println("Erro"+ex);
 //            }
-            
-
         } else {
             updatePessoa();
         }
@@ -107,6 +110,7 @@ public class MbTestePessoa implements Serializable {
     }
 
     private void insertPessoa() {
+//        System.out.println("chamou");
         pessoa.setEstado(estado);
         pessoa.setCidade(cidade);
         pessoaDAO().save(pessoa);
@@ -125,6 +129,7 @@ public class MbTestePessoa implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
     }
+    
 
     public List<Pessoa> getPessoas() {
         pessoas = pessoaDAO().getEntities();

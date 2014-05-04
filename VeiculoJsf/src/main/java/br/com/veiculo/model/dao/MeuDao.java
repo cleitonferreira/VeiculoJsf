@@ -36,7 +36,12 @@ public interface MeuDao {
     
     public Modelo getByIdModelo(Integer id);
     
-    public List<Pessoa> consultaCpf();
+    public List<Pessoa> consultaCpf(String cpf);
+    
+    //AutoComplete
+    public Pessoa getByIdPessoa(Integer id);
+    
+    public List<Pessoa> consultaTodosPessoas();
     
     
 }
