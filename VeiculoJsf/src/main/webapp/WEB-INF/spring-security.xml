@@ -22,8 +22,8 @@
         <authentication-provider>
             <password-encoder hash="sha"/>
             <jdbc-user-service data-source-ref="dataSource"
-                               users-by-username-query="SELECT usu_email, usu_senha 'true' as enable FROM TB_USUARIO WHERE usu_email=?"
-                               authorities-by-username-query="SELECT usu_email as username, Permissao as authority  FROM TB_USUARIO WHERE usu_email=?"/>               
+                               users-by-username-query="SELECT usu_email, usu_senha, 'true' as enable FROM usuario WHERE usu_email=?"
+                               authorities-by-username-query="SELECT usu_email as username, usu_permisao as authority  FROM usuario WHERE usu_email=?"/>             
         </authentication-provider>
     </authentication-manager>
     

@@ -34,8 +34,10 @@ public class Usuario implements Serializable {
     private String usu_nome;
     @Column(name = "usu_email", unique = true, nullable = false, length = 50)
     private String usu_email;
-    @Column(name = "usu_senha", length = 10)
+    @Column(name = "usu_senha", length = 40)
     private String usu_senha;
+    @Column(name = "usu_permisao", length = 36)
+    private String usu_permissao;
     @Column(name = "usu_tel", nullable = false, length = 14)//(34)-8888-8888
     private String usu_tel;
     @Column(name = "usu_cel", nullable = false, length = 15)
@@ -106,8 +108,15 @@ public class Usuario implements Serializable {
         this.setor = setor;
     }
 
-    
+    public String getUsu_permissao() {
+        return usu_permissao;
+    }
 
+    public void setUsu_permissao(String usu_permissao) {
+        this.usu_permissao = usu_permissao;
+    }
+    
+    
 
     @Override
     public int hashCode() {

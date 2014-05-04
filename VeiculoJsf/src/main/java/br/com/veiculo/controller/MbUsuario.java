@@ -5,6 +5,7 @@
  */
 package br.com.veiculo.controller;
 
+import br.com.veiculo.converter.ConverterSHA1;
 import br.com.veiculo.model.dao.HibernateDAO;
 import br.com.veiculo.model.dao.InterfaceDAO;
 import br.com.veiculo.model.entities.Usuario;
@@ -58,6 +59,8 @@ public class MbUsuario implements Serializable {
     }
 
     private void insertUsuario() {
+        usuario.setUsu_senha(ConverterSHA1.cipher(usuario.getUsu_senha()));
+        usuario.setUsu_permissao("ROLE_ADMIN");
         usuarioDAO().save(usuario);
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));

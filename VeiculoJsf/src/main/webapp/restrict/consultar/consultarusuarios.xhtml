@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <h:form>
+            <p:growl id="msg0"/>
+            <p:dataTable id="idTabela" var="usuario" value="#{mbUsuario.usuarios}"
+                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+                <f:facet name="header">Lista de Usuários</f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usu_id}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usu_nome}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Email"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usu_email}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Tel"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usu_tel}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cel"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usu_cel}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Setor"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.setor.set_nome}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Senha"/>
+                    </f:facet>
+                    <h:outputText value="#{usuario.usu_senha}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <h:commandLink>  
+                <p:graphicImage value="./../../resources/restrict/icons/excel.png" />  
+                <p:dataExporter type="xls" target="idTabela" fileName="usuarios"  />  
+            </h:commandLink>  
+            &nbsp;
+            <h:commandLink>  
+                <p:graphicImage value="./../../resources/restrict/icons/pdf.png" />  
+                <p:dataExporter type="pdf" target="idTabela" fileName="usuarios"/>  
+            </h:commandLink>  
+            &nbsp;
+            <h:commandLink>  
+                <p:graphicImage value="./../../resources/restrict/icons/xls.png" />  
+                <p:dataExporter type="csv" target="idTabela" fileName="usuarios" />  
+            </h:commandLink>  
+            &nbsp;
+            <h:commandLink>  
+                <p:graphicImage value="./../../resources/restrict/icons/xml.png" />  
+                <p:dataExporter type="xml" target="idTabela" fileName="usuarios" />  
+            </h:commandLink> 
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

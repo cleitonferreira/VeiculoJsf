@@ -45,14 +45,22 @@
                         <p:menuitem  value="Cidades" url="/restrict/cadastrarcidade.faces"/>
                         <p:menuitem  value="Marcas" url="/restrict/cadastrarmarca.faces"/>
                         <p:menuitem  value="Modelos" url="/restrict/cadastrarmodelo.faces"/>  
-                        <p:menuitem  value="Pessoas" url="/restrict/cadastrarpessoa.faces" ajax="false"/>
-                        <p:menuitem  value="Teste" url="/restrict/teste.faces" ajax="false"/>
+                        <p:menuitem  value="Pessoas" action="#{mbPessoa.limpPessoa}" ajax="false"/>
+                        <p:menuitem  value="Teste" url="/restrict/teste.faces" />
                         <p:menuitem  value="TestePessoa" url="/restrict/cadastrartestepessoa.faces"/>
                         <p:menuitem  value="Veiculo" url="/restrict/cadastrarveiculo.faces"/>
                         <p:menuitem  value="AutoComplete" url="/restrict/autoComplete.faces"/>
                     </p:submenu> 
                     <p:submenu label="Consultas">  
-                        <p:menuitem value="Pessoas" url="/restrict/consultar/consultarpessoas.faces"/>  
+                        <p:menuitem value="Pessoas" url="/restrict/consultar/consultarpessoas.faces"/>
+                        <p:menuitem value="Veiculos" url="/restrict/consultar/consultarveiculos.faces"/>
+                        <p:menuitem value="Cidades" url="/restrict/consultar/consultarcidades.faces"/>
+                        <p:menuitem value="Estados" url="/restrict/consultar/consultarestados.faces"/>
+                        <p:menuitem value="Marcas" url="/restrict/consultar/consultarmarcas.faces"/>
+                        <p:menuitem value="Modelos" url="/restrict/consultar/consultarmodelos.faces"/>
+                        <p:menuitem value="Paises" url="/restrict/consultar/consultarpaises.faces"/>
+                        <p:menuitem value="Setores" url="/restrict/consultar/consultarsetores.faces"/>
+                        <p:menuitem value="Usuarios" url="/restrict/consultar/consultarusuarios.faces"/>
                     </p:submenu>                                      
                 </p:menubar> 
             </h:form>           
