@@ -23,30 +23,30 @@
         <script type="text/javascript" src="../resources/restrict/bootstrap/js/jquery.js"></script>
         <script type="text/javascript" src="../resources/restrict/bootstrap/js/jquery-loader.js"></script>
         <script type="text/javascript" src="../resources/restrict/bootstrap/js/jquery.smartmenus.js"></script>
-    
-    
-    
-    <script type="text/javascript">
-	$(function() {
-		$('#main-menu').smartmenus({
-			subMenusSubOffsetX: 1,
-			subMenusSubOffsetY: -8
-		});
-	});
-</script>
 
 
-<style type="text/css">
-	#main-menu {
-		--position:relative;
-		z-index:9999;
-		width:auto;
-	}
-	#main-menu ul {
-		width:12em;
-	}
-</style>
-    
+
+        <script type="text/javascript">
+            $(function() {
+                $('#main-menu').smartmenus({
+                    subMenusSubOffsetX: 1,
+                    subMenusSubOffsetY: -8
+                });
+            });
+        </script>
+
+
+        <style type="text/css">
+            #main-menu {
+                --position:relative;
+                z-index:9999;
+                width:auto;
+            }
+            #main-menu ul {
+                width:12em;
+            }
+        </style>
+
     </h:head>
 
     <h:body>
@@ -55,59 +55,76 @@
             <a href="http://www.veiculojsf.com.br/">
                 <div id="logotipo"></div>
             </a> 
-            
+
             <div id="logoff">
                 <h:form>
                     <br/>
                     <h5 style="text-align: right; color: white;"><h:outputText value="SEJA BEM VINDO(A)!"/></h5>
                     <br/>
                     <a style="text-align: right; color: white; width: 10%;" href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
-	                <h4>LOGOFF</h4>
-	            </a>
+                        <h4>LOGOFF</h4>
+                    </a>
 
                 </h:form>
             </div>
-            
+
         </div>  
 
 
         <div style="float: right; margin-top: -125px;"><p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" /></div>
 
-        
+
         <ul id="main-menu" class="sm sm-blue">
             <li><a action="">Home</a></li>
             <li><a action="">Cadastros</a>
-              <ul>
-                <li><a action="">Setores</a></li>
-                <li><a action="">Pessoas</a></li>
-                <li><a action="">Usuarios</a></li>
-                <li><a action="">Veiculos</a>
-                  <ul>
-                    <li><a action="">Marcas</a></li>
-                    <li><a action="">Modelos</a></li>
-                  </ul>
-                </li>
-                <li><a action="">Regiões</a>
-                 <ul>
-                  <li><a action="">Paises</a></li>
-                  <li><a action="">Estados</a></li>
-                  <li><a action="">Cidades</a></li>
-                   </ul>
-                </li>
-              </ul>
-             </li>
-            <li><a action="">Procurar</a>
-             <ul>
-               <li><a action="">Pessoas</a></li>
-              </ul>
-            </li>
-             <li><a action="">Equipe</a></li>
-              <li><a action="">Contato</a></li>
-        </ul>
-    
-        <!-- Menu ########################################## Menu -->
+                <ul>
+                    <li><a action="">Setores</a></li>
+                    <li><a href="">Pessoas</a></li>
 
-     
+                    <li><a action="">Usuarios</a></li>
+                    <li><a action="">Veiculos</a>
+                        <ul>
+                            <li><a action="">Marcas</a></li>
+                            <li><a action="">Marcas</a></li>
+                            <li><a action="">Modelos</a></li>
+                        </ul>
+                    </li>
+                    <li><a action="">Regiões</a>
+                        <ul>
+                            <li><a action="">Paises</a></li>
+                            <li><a action="">Estados</a></li>
+                            <li><a action="">Cidades</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a action="">Procurar</a>
+                <ul>
+                    <li><a action="">Pessoas</a></li>
+                </ul>
+            </li>
+            <li><a action="">Equipe</a></li>
+            <li><a action="">Contato</a></li>
+        </ul>
+        
+<!--###########################-->
+
+        <div id="menu"><!-- Menu ########################################## Menu-->
+            <h:form>    
+                <p:menubar styleClass="labelmenu">
+
+                    <p:submenu label="Cadastros">  
+                        <p:menuitem value="Cidades" url="/restrict/cadastrarcidade.faces"/>                        
+                        <p:menuitem value="Pessoas" action="#{mbPessoa.limpPessoa}" ajax="false"/>                        
+                    </p:submenu> 
+                    <p:submenu label="Consultas">  
+                        <p:menuitem value="Pessoas" url="/restrict/consultarpessoas.faces"/>  
+                    </p:submenu>                                      
+                </p:menubar> 
+            </h:form>           
+        </div>
+
+        <!-- Menu ########################################## Menu -->
 
         <div id="tarefas">
             <ui:insert name="tarefas"></ui:insert>
