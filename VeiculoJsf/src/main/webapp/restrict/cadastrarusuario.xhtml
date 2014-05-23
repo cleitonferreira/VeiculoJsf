@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"                
                 xmlns="http://www.w3.org/1999/xhtml"
@@ -27,23 +27,20 @@
                                                itemValue="#{setor.set_id}" itemLabel="#{setor.set_nome}"/>
                             </p:selectOneMenu>
 
-                            <br/>
 
-                            <h:outputText value="Usuário.:"/>
+
+                            <h:outputText value="Usu&aacute;rio.:"/>
                             <p:inputText id="nomeusuario" size="40" value="#{mbUsuario.usuario.usu_nome}"
                                          onkeyup="this.value = this.value.toUpperCase()" required="true"
                                          requiredMessage="O campo [Usuário] é obrigatório."/>
-                            <br/>
 
                             <h:outputText value="Telefone.:"/>
                             <p:inputMask id="usu_tel" size="40" mask="(99) 9999-9999" value="#{mbUsuario.usuario.usu_tel}" 
                                          required="true" requiredMessage="O campo [Telefone] é obrigatório" />
-                            <br/>
 
                             <h:outputText value="Celular.:"/>
                             <p:inputMask id="usu_cel" size="40" mask="(99) 99999-9999" value="#{mbUsuario.usuario.usu_cel}"
                                           required="true" requiredMessage="O campo [Celular] é obrigatório"/>
-                            <br/>
 
                             <h:outputLabel for="email" value="E-mail.:"/>
                             <p:inputText id="email" size="40" value="#{mbUsuario.usuario.usu_email}"
@@ -51,7 +48,6 @@
                                          requiredMessage="O campo [Email] é obrigatório.">
                             <f:validator validatorId="emailValidator"/>
                             </p:inputText>
-                            <br/>
 
                             <h:outputText value="Senha.:"/>
                             <p:password id="usu_senha" size="40" value="#{mbUsuario.usuario.usu_senha}"
@@ -60,7 +56,6 @@
                                         goodLabel="Médio" strongLabel="Forte" />  
 
 
-                            <br/><br/>
                             <p:panel style="text-align: center">
                                 <p:commandButton value="Salvar" action="#{mbUsuario.addUsuario()}"
                                                  image="ui-icon ui-icon-disk" update="@form :formtable"/>
@@ -89,7 +84,7 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Usuário"/>
+                            <h:outputText value="Usu&aacute;rio"/>
                         </f:facet>
                         <h:outputText value="#{usuario.usu_nome}"/>
                     </p:column>
@@ -120,7 +115,7 @@
 
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Alterar - Excluir"/>
+                            <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>
                         <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
                                          process="@this" update=":tbv1:formUsuario">

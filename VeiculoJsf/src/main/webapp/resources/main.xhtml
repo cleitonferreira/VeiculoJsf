@@ -12,41 +12,13 @@
         <title>VeiculoJsf - Sistema JSF e Maven</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <link href="./../resources/restrict/css/layout.css" rel="stylesheet" type="text/css" />
-        <link href="./../resources/restrict/css/sm-blue.css" rel="stylesheet" type="text/css" />
-        <link href="./../resources/restrict/css/sm-core-css.css" rel="stylesheet" type="text/css" />
         <link href="./../resources/restrict/images/faviconn.ico" rel="shortcut icon" type="image/x-icon" />
         <link href="./../../resources/restrict/css/layout.css" rel="stylesheet" type="text/css" />
         <link href="./../../resources/restrict/images/faviconn.ico" rel="shortcut icon" type="image/x-icon" />
-        <!--        <link href="./../resources/restrict/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-                <link href="./../resources/restrict/bootstrap/js/bootstrap.js" type="text/javascript" />
-                <link href="./../resources/restrict/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />-->
-        <script type="text/javascript" src="../resources/restrict/bootstrap/js/jquery.js"></script>
-        <script type="text/javascript" src="../resources/restrict/bootstrap/js/jquery-loader.js"></script>
-        <script type="text/javascript" src="../resources/restrict/bootstrap/js/jquery.smartmenus.js"></script>
-
-
-
-        <script type="text/javascript">
-            $(function() {
-                $('#main-menu').smartmenus({
-                    subMenusSubOffsetX: 1,
-                    subMenusSubOffsetY: -8
-                });
-            });
-        </script>
-
-
-        <style type="text/css">
-            #main-menu {
-                --position:relative;
-                z-index:9999;
-                width:auto;
-            }
-            #main-menu ul {
-                width:12em;
-            }
-        </style>
-
+<!--        <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../bootstrap/js/bootstrap.js" type="text/javascript" />-->
+        <link href="../bootstrap/js/jquery-2.1.1.js" />
+        <!--<link href="./../resources/restrict/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />-->
     </h:head>
 
     <h:body>
@@ -54,19 +26,21 @@
         <div id="topo">
             <a href="http://www.veiculojsf.com.br/">
                 <div id="logotipo"></div>
-            </a> 
+            </a>
 
-            <div id="logoff">
-                <h:form>
+            <div id="logoff" style="text-align: right;">
                     <br/>
-                    <h5 style="text-align: right; color: white;"><h:outputText value="SEJA BEM VINDO(A)!"/></h5>
+                    <h5 style="text-align: right; color: white;"><h:outputText value="SEJA BEM VINDO(A)!!!"/></h5>
                     <br/>
-                    <a style="text-align: right; color: white; width: 10%;" href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
-                        <h4>LOGOFF</h4>
+                    <a style="" href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+                        <button class="btn btn-mini" type="button">Desconectar</button>
                     </a>
 
-                </h:form>
+<!--                <button class="btn btn-mini" type="button">Botão miniatura</button>
+                <h:commandButton class="btn btn-mini" value="Acessar">
+                </h:commandButton>-->
             </div>
+
 
         </div>  
 
@@ -74,57 +48,44 @@
         <div style="float: right; margin-top: -125px;"><p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" /></div>
 
 
-        <ul id="main-menu" class="sm sm-blue">
-            <li><a action="">Home</a></li>
-            <li><a action="">Cadastros</a>
-                <ul>
-                    <li><a action="">Setores</a></li>
-                    <li><a href="">Pessoas</a></li>
-
-                    <li><a action="">Usuarios</a></li>
-                    <li><a action="">Veiculos</a>
-                        <ul>
-                            <li><a action="">Marcas</a></li>
-                            <li><a action="">Marcas</a></li>
-                            <li><a action="">Modelos</a></li>
-                        </ul>
-                    </li>
-                    <li><a action="">Regiões</a>
-                        <ul>
-                            <li><a action="">Paises</a></li>
-                            <li><a action="">Estados</a></li>
-                            <li><a action="">Cidades</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><a action="">Procurar</a>
-                <ul>
-                    <li><a action="">Pessoas</a></li>
-                </ul>
-            </li>
-            <li><a action="">Equipe</a></li>
-            <li><a action="">Contato</a></li>
-        </ul>
-        
-<!--###########################-->
-
         <div id="menu"><!-- Menu ########################################## Menu-->
             <h:form>    
                 <p:menubar styleClass="labelmenu">
 
-                    <p:submenu label="Cadastros">  
-                        <p:menuitem value="Cidades" url="/restrict/cadastrarcidade.faces"/>                        
-                        <p:menuitem value="Pessoas" action="#{mbPessoa.limpPessoa}" ajax="false"/>                        
+                    <p:menuitem  value="Home" url="/restrict/home.faces"/>
+                    <p:submenu label="Cadastros">
+                        <p:menuitem  value="Setores" url="/restrict/cadastrarsetor.faces"/>
+                        <p:menuitem  value="Usuarios" url="/restrict/cadastrarusuario.faces"/>
+                        <p:menuitem  value="Paises" url="/restrict/cadastrarpais.faces"/>
+                        <p:menuitem  value="Estados" url="/restrict/cadastrarestado.faces"/>
+                        <p:menuitem  value="Cidades" url="/restrict/cadastrarcidade.faces"/>
+                        <p:menuitem  value="Marcas" url="/restrict/cadastrarmarca.faces"/>
+                        <p:menuitem  value="Modelos" url="/restrict/cadastrarmodelo.faces"/>  
+                        <p:menuitem  value="Pessoas" action="#{mbPessoa.limpPessoa}" ajax="false"/>
+                        <p:menuitem  value="Teste" url="/restrict/teste.faces" />
+                        <p:menuitem  value="TestePessoa" url="/restrict/cadastrartestepessoa.faces"/>
+                        <p:menuitem  value="Veiculo" url="/restrict/cadastrarveiculo.faces"/>
+                        <p:menuitem  value="AutoComplete" url="/restrict/autoComplete.faces"/>
                     </p:submenu> 
                     <p:submenu label="Consultas">  
-                        <p:menuitem value="Pessoas" url="/restrict/consultarpessoas.faces"/>  
+                        <p:menuitem value="Pessoas" url="/restrict/consultar/consultarpessoas.faces"/>
+                        <p:menuitem value="Veiculos" url="/restrict/consultar/consultarveiculos.faces"/>
+                        <p:menuitem value="Cidades" url="/restrict/consultar/consultarcidades.faces"/>
+                        <p:menuitem value="Estados" url="/restrict/consultar/consultarestados.faces"/>
+                        <p:menuitem value="Marcas" url="/restrict/consultar/consultarmarcas.faces"/>
+                        <p:menuitem value="Modelos" url="/restrict/consultar/consultarmodelos.faces"/>
+                        <p:menuitem value="Paises" url="/restrict/consultar/consultarpaises.faces"/>
+                        <p:menuitem value="Setores" url="/restrict/consultar/consultarsetores.faces"/>
+                        <p:menuitem value="Usuarios" url="/restrict/consultar/consultarusuarios.faces"/>
                     </p:submenu>                                      
                 </p:menubar> 
             </h:form>           
         </div>
 
         <!-- Menu ########################################## Menu -->
+
+        <!--        <br/><br/><br/><br/>
+                <center><a href="#"><img src="./../resources/restrict/images/Analise_Sistemas.png" /></a></center>-->
 
         <div id="tarefas">
             <ui:insert name="tarefas"></ui:insert>
@@ -146,4 +107,3 @@
 
 
 </html>
-

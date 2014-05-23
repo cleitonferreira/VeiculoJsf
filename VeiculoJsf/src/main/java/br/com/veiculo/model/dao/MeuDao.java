@@ -10,6 +10,7 @@ import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
 import br.com.veiculo.model.entities.Pessoa;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +37,15 @@ public interface MeuDao {
     
     public Modelo getByIdModelo(Integer id);
     
-    public List<Pessoa> consultaCpf(String cpf);
+    
+    //Consultas na hora do cadastro
+    public Object consultaCpf(String cpf);
+    
+    public Object atualizaCpf(Integer cpf);
+    
+//    public Object consultaPlaca(String placa); 
+    
+    
     
     //AutoComplete
     public Pessoa getByIdPessoa(Integer id);

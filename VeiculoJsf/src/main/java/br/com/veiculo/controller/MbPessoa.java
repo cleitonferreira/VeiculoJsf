@@ -16,6 +16,7 @@ import br.com.veiculo.model.entities.Pessoa;
 import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -33,7 +34,6 @@ import javax.faces.event.AjaxBehaviorEvent;
 public class MbPessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
 
     private Pessoa pessoa = new Pessoa();
     private Veiculo veiculo = new Veiculo();
@@ -106,32 +106,79 @@ public class MbPessoa implements Serializable {
 
     private void insertPessoa() {
 
-        pessoa.setEstado(estado);
-        pessoa.setCidade(cidade);
-        pessoaDAO().save(pessoa);
+        String cpf = pessoa.getPes_cpf();
+        ArrayList results = (ArrayList) dao.consultaCpf(cpf);
+//        System.out.println("Resultsss>>>>" + results.toString());
 
-        veiculo.setPessoa(pessoa);
-        veiculo.setMarca(marca);
-        veiculo.setModelo(modelo);
-        veiculoDAO().save(veiculo);
+        if (results.contains(cpf)) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao C[adastrar], no Banco de Dados!!!", ""));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Cpf já se encontra cadastrado no sistema", "" + cpf));
+        } else {
+            try {
 
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+                pessoa.setEstado(estado);
+                pessoa.setCidade(cidade);
+                pessoaDAO().save(pessoa);
+
+                veiculo.setPessoa(pessoa);
+                veiculo.setMarca(marca);
+                veiculo.setModelo(modelo);
+                veiculoDAO().save(veiculo);
+
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+                //Limpar os campos
+                limpPessoa();
+            } catch (Exception ex) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar],  no Banco de Dados", "" + ex));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+            }
+        }
 
     }
 
     private void updatePessoa() {
-        pessoaDAO().update(pessoa);
-        veiculoDAO().update(veiculo);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
+        String cpf = pessoa.getPes_cpf();
+        ArrayList results = (ArrayList) dao.consultaCpf(cpf);
+//        System.out.println("Resultsss>>>>" + results.toString());
+
+        if (results.contains(cpf)) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados!!!", ""));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Cpf já se encontra cadastrado no sistema", "" + cpf));
+        } else {
+            try {
+                pessoaDAO().update(pessoa);
+                veiculoDAO().update(veiculo);
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
+            } catch (Exception ex) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados", "" + ex));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+            }
+        }
     }
 
     public void deletePessoa() {
-        pessoaDAO().remove(pessoa);
-        veiculoDAO().remove(veiculo);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
+        try {
+            pessoaDAO().remove(pessoa);
+            veiculoDAO().remove(veiculo);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Excluir], no Banco de Dados", "" + ex));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+        }
+
     }
 
     //tomar cuidado com esses dois get aqui

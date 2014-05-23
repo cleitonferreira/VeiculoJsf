@@ -81,13 +81,13 @@
         <!-- JBOSS REPOSITORY -->
         <repository>
             <id>jboss-repository</id>
-            <url>https://repository.jboss.org/nexus/content/repositories/</url>
+            <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
         </repository>
 
         <!-- JBOSS REPOSITORY -->
         <repository>
             <id>JBoss Repo</id>
-            <url>http://repository.jboss.com</url>
+            <url>http://repository.jboss.org/maven2</url>
         </repository>
 
         <!-- GOOGLE REPOSITORY -->
@@ -103,10 +103,10 @@
         </repository>
 
         <!-- REPO2 REPOSITORY -->
-        <repository>
+<!--        <repository>
             <id>repo2</id>
-            <url>http://repo2.maven.org/maven2</url>
-        </repository>
+            <url>http://repo.maven.apache.org/maven2/org/apache/maven/plugins/</url>
+        </repository>-->
 
         <!-- SPRING MAVEN MILESTONE -->
         <repository>
@@ -191,7 +191,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>4.0</version>
+            <version>5.0</version>
         </dependency>
         
         <!-- ######## TEMAS DO PRIMEFACES ######### -->        
@@ -354,20 +354,20 @@
             <version>3.15.0-GA</version>
         </dependency>
         
-        <!-- ############ JBOSS-LOGGING ############ -->
+        <!-- ############ JBOSS-LOGGING3 ############ -->
         <dependency>
-            <artifactId>jboss-logging</artifactId>
             <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
             <type>jar</type>
-            <version>3.1.0.CR2</version>
+            <version>3.2.0.Beta1</version>
         </dependency>
         
         <!-- ######## JBOSS-TRANSACTION-API ######## -->
         <dependency>
-            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
             <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
             <type>jar</type>
-            <version>1.0.0.Final</version>
+            <version>1.0.1.Final</version>
         </dependency>      
                 
         <!-- ##### JPA-HIBERNATE-ENTITYMANAGER ##### -->                        

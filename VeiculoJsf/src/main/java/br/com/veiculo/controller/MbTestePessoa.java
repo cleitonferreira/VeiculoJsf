@@ -14,6 +14,7 @@ import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Pessoa;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -43,8 +44,6 @@ public class MbTestePessoa implements Serializable {
     private Estado estado;
     //////////////////////////////////
 
-
-
     public MbTestePessoa() {
     }
 
@@ -64,72 +63,118 @@ public class MbTestePessoa implements Serializable {
 
     public String limpPessoa() {
         pessoa = new Pessoa();
+        estado = new Estado();
+        cidade = new Cidade();
         return editPessoa();
     }
 
     public String editPessoa() {
         return "/restrict/cadastrartestepessoa.faces";
     }
+//Desabilitar o campo Cpf
+//    public boolean disable() {
+//        if(pessoa.getPes_cpf().equals("")){
+//           return false; 
+//        }else{
+//        return true;
+//        }
+//    }
 
     public String addPessoa() {
-        // verifica a id veio igual a null ou id igual a 0
+
         if (pessoa.getPes_id() == null || pessoa.getPes_id() == 0) {
-            //insertPessoa();
-
-//            String buscacpf;
-//            Object cpf;
-//            buscacpf = pessoa.getPes_cpf();
-//
-//            FacesContext.getCurrentInstance().addMessage(null,
-//                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Esse é o cpf >> ", buscacpf));
-//
-//            cpf = dao.consultaCpf();
-//            cpf.toString();
-//
-//            //comparacao do cpf com banco
-//            if (pessoa.getPes_cpf().equals(cpf)) {
-//
-//                System.out.println("Cpf" + cpf);
-//
-//                FacesContext.getCurrentInstance().addMessage(null,
-//                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Cpf já cadastrado!!!", ""));
-//            } else {
             insertPessoa();
-//            }
-
-//            try {
-//                System.out.println("Cpf Igual");
-//            } catch (Exception ex) {
-//                System.out.println("Erro"+ex);
-//            }
         } else {
             updatePessoa();
         }
+        //Limpar os campos
         limpPessoa();
         return null;
     }
 
     private void insertPessoa() {
-//        System.out.println("chamou");
-        pessoa.setEstado(estado);
-        pessoa.setCidade(cidade);
-        pessoaDAO().save(pessoa);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+        String cpf = pessoa.getPes_cpf();
+        ArrayList consultacpf = (ArrayList) dao.consultaCpf(cpf);
+        System.out.println("Resultsss>>>>" + consultacpf.toString());
+
+//        if ( consultacpf.toString().contains("[0]")) {
+//            System.out.println("Cpf não está no BD");
+//        } else if (consultacpf.toString().contains("[1]")) {
+//            System.out.println("Cpf está no BD");
+//        } else {
+//            System.out.println("Não encontrei");
+//        }
+
+        if (consultacpf.toString().contains("[0]")) {
+
+            try {
+
+                pessoaDAO().save(pessoa);
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+            } catch (Exception ex) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar],  no Banco de Dados", "" + ex));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+            }
+
+        } else if (consultacpf.toString().contains("[1]")) {
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar], no Banco de Dados!!!", ""));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Cpf já se encontra cadastrado no sistema", "" + cpf));
+
+        }
     }
 
     private void updatePessoa() {
-        pessoaDAO().update(pessoa);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
+        String cpf = pessoa.getPes_cpf();
+        Integer id = pessoa.getPes_id();
+        ArrayList atualizaCpf = (ArrayList) dao.atualizaCpf(id);
+        System.out.println("Resultsss>>>>" + atualizaCpf.toString());
+        System.out.println("Cpf da tela >>>" + cpf);
+
+        //verificação negativa com Cpf do BD com Cpf da tela
+        if (atualizaCpf.contains(cpf)) {
+
+            try {
+                pessoaDAO().update(pessoa);
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
+                //Limpar os campos
+                limpPessoa();
+            } catch (Exception ex) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados", "" + ex));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+
+            }
+
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Por Favor, Cpf não poderá ser alterado", "" + cpf));
+
+        }
     }
 
     public void deletePessoa() {
-        pessoaDAO().remove(pessoa);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
+
+        try {
+            pessoaDAO().remove(pessoa);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
+
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Excluir], no Banco de Dados", "" + ex));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+        }
+
     }
-    
 
     public List<Pessoa> getPessoas() {
         pessoas = pessoaDAO().getEntities();

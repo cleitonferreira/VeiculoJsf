@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"                
                 xmlns="http://www.w3.org/1999/xhtml"
@@ -24,18 +24,15 @@
                             <p:inputText id="setor" size="40" value="#{mbSetor.setor.set_nome}"
                                          onkeyup="this.value = this.value.toUpperCase()" required="true"
                                          requiredMessage="O campo [Setor] é obrigatório."/>
-                            <br/>
 
                             <h:outputText value="Ramal.:"/>
                             <p:inputMask id="ramal" size="40" mask="9999" maxlength="4" value="#{mbSetor.setor.set_ramal}"
                                          required="true" requiredMessage="O campo [Ramal] é obrigatório."/>
-                            <br/>
 
-                            <h:outputText value="Responsável pelo Setor.:"/>
+                            <h:outputText value="Respons&aacute;vel pelo Setor.:"/>
                             <p:inputText id="responsavel" size="40" value="#{mbSetor.setor.set_responsavel}"
                                          onkeyup="this.value = this.value.toUpperCase()" required="true"
                                          requiredMessage="O campo [Responsável] é obrigatório."/>
-                            <br/><br/>
                             
                             
                             <p:panel style="text-align: center">
@@ -78,14 +75,14 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Responsável"/>
+                            <h:outputText value="Respons&aacute;vel"/>
                         </f:facet>
                         <h:outputText value="#{setor.set_responsavel}"/>
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Ações"/>
+                            <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>
                         <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
                                          process="@this" update=":tbv1:formSetor">

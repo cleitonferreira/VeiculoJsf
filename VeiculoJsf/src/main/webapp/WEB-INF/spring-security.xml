@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <b:beans xmlns="http://www.springframework.org/schema/security"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns:b="http://www.springframework.org/schema/beans"
@@ -9,7 +9,8 @@
 
         <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/login.faces" access="permitAll" />
-        <intercept-url pattern="/restrict/**" access="isAuthenticated()" />
+<!--        <intercept-url pattern="/restrict/**" access="isAuthenticated()" />-->
+        <intercept-url pattern="/restrict/**" access="permitAll" />
         <intercept-url pattern="/public/**" access="permitAll"/>
     
         <form-login login-page="/login.faces" authentication-failure-url="/login.faces?erro=true"
@@ -17,7 +18,7 @@
         <access-denied-handler error-page="/acessonegado.faces" />
     </http>                
 
-    <!-- NO PROJETO SEMERU PADRÃƒO FIZEMOS DESSA FORMA -->  
+    <!-- NO PROJETO SEMERU PADRÃO FIZEMOS DESSA FORMA -->  
     <authentication-manager>
         <authentication-provider>
             <password-encoder hash="sha"/>
@@ -35,13 +36,13 @@
     </b:bean>
     
     <!-- MAS EXISTEM OUTRAS 2 FORMAS DE SE FAZER ISSO -->
-    <!-- VOCÃŠ PODE CUSTOMIZAR A AUTENTICATION PROVIDER -->
+    <!-- VOCÊ PODE CUSTOMIZAR A AUTENTICATION PROVIDER -->
     <!--    <b:bean id="customAuthenticationProvider" class="br.com.semeru.security.CustomAuthenticationProvider"></b:bean> 
     <authentication-manager> 
         <authentication-provider ref="customAuthenticationProvider"/> 
     </authentication-manager>     -->
     
-    <!-- OU VOCÃŠ PODE AINDA CUSTOMIZAR A USER DETAILS -->
+    <!-- OU VOCÊ PODE AINDA CUSTOMIZAR A USER DETAILS -->
 <!--    <b:bean id="encoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
     <authentication-manager>
         <authentication-provider user-service-ref="semeruUserService" >

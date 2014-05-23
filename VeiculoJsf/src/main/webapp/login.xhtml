@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
+<?xml version='1.0' encoding='ISO-8859-1' ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -8,27 +8,29 @@
       xmlns:sec="http://www.springframework.org/security/facelets/tags">
 
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="./resources/restrict/css/erudio.css" rel="stylesheet" type="text/css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link href="./resources/restrict/css/layout.css" rel="stylesheet" type="text/css" />
         <link href="./resources/restrict/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="bootstrap/js/bootstrap.js" type="text/javascript" />
+        <!--        <link href="public/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />-->
         <title>Login</title>
     </h:head>
     <h:body onload="dialog.login.j_username.focus()">
 
         <div id="topo">
-            <div id="logotipo"></div>
-            
-            <div id="logoff">
-  
-            </div>  
-        </div>       
+            <div id="logotipo">
+                <img src="public/images/topo_cesva.png" class="img-rounded"> </img>
+            </div>
 
-        <div id="conteudo" title="Área Restrita">
+        </div>      
+
+        <div id="conteudo" title="&Aacute;rea Restrita">
             <h:form>
                 <p:growl id="msg" rendered="#{param.erro}">#{msgs.erro_message}</p:growl>
             </h:form>
 
-            <p:dialog header="Área Restrita"
+            <p:dialog header="&Aacute;rea Restrita"
                       id="dialog"  
                       modal="true"
                       minWidth="335"
@@ -42,13 +44,16 @@
                       visible="true">
 
 
+                <br />
                 <form action="j_spring_security_check" method="post" id="login">
                     <h:panelGrid columns="2" cellpadding="3">
-                        <h:outputLabel for="j_username" value="Usuário: " /> 
+                        <h:outputLabel for="j_username" value="Usu&aacute;rio: " /> 
                         <h:inputText id="j_username" required="true"/>
                         <h:outputLabel for="j_password" value="Senha: " />
                         <h:inputSecret id="j_password" required="true"/>
-                        <h:commandButton value="Acessar"/>
+                        <br />
+                        <h:commandButton class="btn btn-primary" value="Acessar"/>
+
                     </h:panelGrid>
                 </form>
             </p:dialog>  
@@ -56,13 +61,13 @@
 
         <!-- Fim da div conteudo -->
 
-        <div id="rodape">
-            <a href="http://www.faa.edu.br/"><img src="./resources/restrict/images/bra.png" /></a>
-
-            <div id="copyright">                  
-                <a href="http://www.semeru.com.br/">VeiculoJsf - An&aacute;lise e Desenvolvimento de Sistemas - &copy; Copyright TI FAA 2014</a>
-            </div>
-        </div> <!--Fim da div rodape -->
+        <!--        <div id="rodape">
+                    <a href="http://www.faa.edu.br/"><img src="./resources/restrict/images/bra.png" /></a>
+        
+                    <div id="copyright">                  
+                        <a href="http://www.semeru.com.br/">VeiculoJsf - An&aacute;lise e Desenvolvimento de Sistemas - &copy; Copyright TI FAA 2014</a>
+                    </div>
+                </div> Fim da div rodape -->
 
     </h:body>
 </html>

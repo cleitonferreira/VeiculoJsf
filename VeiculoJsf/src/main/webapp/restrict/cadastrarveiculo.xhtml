@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
@@ -9,7 +9,7 @@
                 template="./../resources/main.xhtml">
 
     <ui:define name="tarefas">
-        <p:fieldset legend="Cadastrar Veículo">
+        <p:fieldset legend="Cadastrar Ve&iacute;culo">
             <br/>
             <p:tabView id="tbv1" dynamic="true" cache="true">
                 <p:tab title="Veículo">
@@ -133,7 +133,7 @@
 
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Ações"/>
+                            <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>
                         <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
                                          process="@this" update=":tbv1:formVeiculo">
