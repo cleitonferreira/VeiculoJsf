@@ -12,37 +12,31 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="modelo" value="#{mbModelo.modelos}"
-                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                         paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+                         widgetVar="modeloTable" rowsPerPageTemplate="50,100,200"
+                         emptyMessage="Registro não encontrado!!" filteredValue="#{mbModelo.filteredModelos}">
 
-                <f:facet name="header">Lista de Modelos</f:facet>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Id"/>
-                    </f:facet>
+                <f:facet name="header">Lista de Modelos
+                    <p:outputPanel style=" float: right;">Pesquisar:
+                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('modeloTable').filter()" placeholder="..."/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Id" filterBy="#{modelo.mod_id}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{modelo.mod_id}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Modelo"/>
-                    </f:facet>
+                <p:column headerText="Modelo" filterBy="#{modelo.mod_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{modelo.mod_nome}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Flag"/>
-                    </f:facet>
+                <p:column headerText="Flag" filterBy="#{modelo.mod_flag}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{modelo.mod_flag}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Marca"/>
-                    </f:facet>
+                <p:column headerText="Marca" filterBy="#{modelo.marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{modelo.marca.mar_nome}"/>
                 </p:column>
 

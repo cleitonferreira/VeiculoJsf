@@ -28,6 +28,7 @@ public class MbSetor implements Serializable {
 
     private Setor setor = new Setor();
     private List<Setor> setores;
+    private List<Setor> filteredSetores;
 
     public MbSetor() {
     }
@@ -88,6 +89,7 @@ public class MbSetor implements Serializable {
             setorDAO().remove(setor);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
+            limpSetor();
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Excluir], no Banco de Dados", "" + ex));
@@ -113,5 +115,16 @@ public class MbSetor implements Serializable {
     public void setSetor(Setor setor) {
         this.setor = setor;
     }
+
+    public List<Setor> getFilteredSetores() {
+        return filteredSetores;
+    }
+
+    public void setFilteredSetores(List<Setor> filteredSetores) {
+        this.filteredSetores = filteredSetores;
+    }
+
+
+    
 
 }

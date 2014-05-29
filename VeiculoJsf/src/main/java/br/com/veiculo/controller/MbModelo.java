@@ -28,6 +28,7 @@ public class MbModelo implements Serializable {
 
     private Modelo modelo = new Modelo();
     private List<Modelo> modelos;
+    private List<Modelo> filteredModelos;
 
     public MbModelo() {
     }
@@ -114,5 +115,14 @@ public class MbModelo implements Serializable {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
+
+    public List<Modelo> getFilteredModelos() {
+        return filteredModelos;
+    }
+
+    public void setFilteredModelos(List<Modelo> filteredModelos) {
+        this.filteredModelos = filteredModelos;
+    }
+    
 
 }

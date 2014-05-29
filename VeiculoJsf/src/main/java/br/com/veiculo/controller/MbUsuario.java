@@ -29,6 +29,7 @@ public class MbUsuario implements Serializable {
 
     private Usuario usuario = new Usuario();
     private List<Usuario> usuarios;
+    private List<Usuario> filteredUsuarios;
 
     public MbUsuario() {
     }
@@ -119,4 +120,13 @@ public class MbUsuario implements Serializable {
         this.usuario = usuario;
     }
 
+    public List<Usuario> getFilteredUsuarios() {
+        return filteredUsuarios;
+    }
+
+    public void setFilteredUsuarios(List<Usuario> filteredUsuarios) {
+        this.filteredUsuarios = filteredUsuarios;
+    }
+
+    
 }

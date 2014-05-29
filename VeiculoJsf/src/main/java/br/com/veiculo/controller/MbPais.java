@@ -28,6 +28,7 @@ public class MbPais implements Serializable {
 
     private Pais pais = new Pais();
     private List<Pais> paises;
+    private List<Pais> filteredPaises;
 
     public MbPais() {
     }
@@ -114,5 +115,14 @@ public class MbPais implements Serializable {
     public void setPais(Pais pais) {
         this.pais = pais;
     }
+
+    public List<Pais> getFilteredPaises() {
+        return filteredPaises;
+    }
+
+    public void setFilteredPaises(List<Pais> filteredPaises) {
+        this.filteredPaises = filteredPaises;
+    }
+    
 
 }

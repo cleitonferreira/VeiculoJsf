@@ -39,6 +39,7 @@ public class MbPessoa implements Serializable {
     private Veiculo veiculo = new Veiculo();
     private List<Pessoa> pessoas;
     private List<Veiculo> veiculos;
+    private List<Pessoa> filteredPessoas;
 
     ///// Objetos para os ComBos Estado Cidade \\\\\
     private final MeuDaoImpl dao = new MeuDaoImpl();
@@ -281,5 +282,14 @@ public class MbPessoa implements Serializable {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
+
+    public List<Pessoa> getFilteredPessoas() {
+        return filteredPessoas;
+    }
+
+    public void setFilteredPessoas(List<Pessoa> filteredPessoas) {
+        this.filteredPessoas = filteredPessoas;
+    }
+    
 
 }

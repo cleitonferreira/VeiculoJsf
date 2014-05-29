@@ -28,10 +28,11 @@ public class MbCidade implements Serializable {
 
     private Cidade cidade = new Cidade();
     public List<Cidade> cidades;
+    private List<Cidade> filteredCidades;
 
     public MbCidade() {
     }
-
+    
     private InterfaceDAO<Cidade> cidadeDAO() {
         InterfaceDAO<Cidade> cidadeDAO = new HibernateDAO<Cidade>(Cidade.class, FacesContextUtil.getRequestSession());
         return cidadeDAO;
@@ -115,6 +116,14 @@ public class MbCidade implements Serializable {
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
+    }
+    
+    public List<Cidade> getFilteredCidades() {
+        return filteredCidades;
+    }
+ 
+    public void setFilteredCidades(List<Cidade> filteredCidades) {
+        this.filteredCidades = filteredCidades;
     }
 
 }

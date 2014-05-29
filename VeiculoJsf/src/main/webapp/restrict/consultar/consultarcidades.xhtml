@@ -12,30 +12,28 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="cidade" value="#{mbCidade.cidades}"
-                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                         paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+                         widgetVar="cidadeTable" rowsPerPageTemplate="50,100,200"
+                         emptyMessage="Registro não encontrado!!" filteredValue="#{mbCidade.filteredCidades}">
 
-                <f:facet name="header">Lista de Cidades</f:facet>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Id"/>
-                    </f:facet>
+                <f:facet name="header">Lista de Cidades
+                    <p:outputPanel style=" float: right;">Pesquisar:
+                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('cidadeTable').filter()" placeholder="..."/>
+                    </p:outputPanel>
+                </f:facet>
+
+
+                <p:column headerText="Id" filterBy="#{cidade.cid_id}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{cidade.cid_id}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Cidade"/>
-                    </f:facet>
+                <p:column headerText="Cidade" filterBy="#{cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{cidade.cid_nome}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Estado"/>
-                    </f:facet>
+                <p:column headerText="Estado" filterBy="#{cidade.estado.est_uf}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{cidade.estado.est_uf}"/>
                 </p:column>
 

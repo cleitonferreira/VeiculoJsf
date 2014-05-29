@@ -12,30 +12,27 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="marca" value="#{mbMarca.marcas}"
-                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                         paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+                         widgetVar="marcaTable" rowsPerPageTemplate="50,100,200"
+                         emptyMessage="Registro não encontrado!!" filteredValue="#{mbMarca.filteredMarcas}">
 
-                <f:facet name="header">Lista de Marcas</f:facet>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Id"/>
-                    </f:facet>
+                <f:facet name="header">Lista de Marcas
+                    <p:outputPanel style=" float: right;">Pesquisar:
+                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('marcaTable').filter()" placeholder="..."/>
+                    </p:outputPanel>
+                </f:facet>
+                
+                <p:column headerText="Id" filterBy="#{marca.mar_id}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{marca.mar_id}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Marca"/>
-                    </f:facet>
+                <p:column headerText="Marca" filterBy="#{marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{marca.mar_nome}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Flag"/>
-                    </f:facet>
+                <p:column headerText="Flag" filterBy="#{marca.mar_flag}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{marca.mar_flag}"/>
                 </p:column>
 

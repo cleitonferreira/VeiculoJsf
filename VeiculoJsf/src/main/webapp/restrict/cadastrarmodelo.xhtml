@@ -37,14 +37,14 @@
                             <h:outputText value="Flag.:" />  
                             <p:selectOneRadio id="mod_flag" value="#{mbModelo.modelo.mod_flag}" required="true" requiredMessage="O campo [Flag] é obrigatório.">  
                                 <f:selectItem itemLabel="Sim" itemValue="1" />  
-                                <f:selectItem itemLabel="Não" itemValue="0" />   
+                                <f:selectItem itemLabel="N&atilde;o" itemValue="0" />   
                             </p:selectOneRadio>
 
 
 
                             <br/><br/>
                             <p:panel style="text-align: center">
-                                <p:commandButton value="Salvar" action="#{mbModelo.addModelo()}"
+                                <p:commandButton value="Salvar" action="#{mbModelo.addModelo}"
                                                  image="ui-icon ui-icon-disk" update="@form :formtable"/>
                                 <p:commandButton value="Cancelar" actionListener="#{mbModelo.limpModelo}" 
                                                  image="ui-icon ui-icon-close" update="@form"/>

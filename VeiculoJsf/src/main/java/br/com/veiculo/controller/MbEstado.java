@@ -28,7 +28,8 @@ public class MbEstado implements Serializable {
 
     private Estado estado = new Estado();
     private List<Estado> estados;
-
+    private List<Estado> filteredEstados;
+    
     public MbEstado() {
     }
 
@@ -115,5 +116,15 @@ public class MbEstado implements Serializable {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    public List<Estado> getFilteredEstados() {
+        return filteredEstados;
+    }
+
+    public void setFilteredEstados(List<Estado> filteredEstados) {
+        this.filteredEstados = filteredEstados;
+    }
+    
+    
 
 }

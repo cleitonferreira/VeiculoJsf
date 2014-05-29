@@ -12,30 +12,27 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="pais" value="#{mbPais.paises}"
-                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                         paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+                         widgetVar="paisTable" rowsPerPageTemplate="50,100,200"
+                         emptyMessage="Registro não encontrado!!" filteredValue="#{mbPais.filteredPaises}">
 
-                <f:facet name="header">Lista de Paises</f:facet>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="id"/>
-                    </f:facet>
+                <f:facet name="header">Lista de Paises
+                    <p:outputPanel style=" float: right;">Pesquisar:
+                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('paisTable').filter()" placeholder="..."/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Id" filterBy="#{pais.pa_id}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{pais.pa_id}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Nome"/>
-                    </f:facet>
+                <p:column headerText="Id" filterBy="#{pais.pa_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{pais.pa_nome}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Sigla"/>
-                    </f:facet>
+                <p:column headerText="Id" filterBy="#{pais.pa_sigla}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{pais.pa_sigla}"/>
                 </p:column>
 

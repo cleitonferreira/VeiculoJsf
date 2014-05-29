@@ -34,6 +34,7 @@ public class MbVeiculo implements Serializable {
 
     private Veiculo veiculo = new Veiculo();
     private List<Veiculo> veiculos;
+    private List<Veiculo> filteredVeiculos;
 
     private Pessoa selected;
 
@@ -181,6 +182,14 @@ public class MbVeiculo implements Serializable {
 
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
+    }
+
+    public List<Veiculo> getFilteredVeiculos() {
+        return filteredVeiculos;
+    }
+
+    public void setFilteredVeiculos(List<Veiculo> filteredVeiculos) {
+        this.filteredVeiculos = filteredVeiculos;
     }
     
     

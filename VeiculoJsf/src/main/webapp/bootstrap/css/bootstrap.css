@@ -221,14 +221,14 @@ textarea {
           box-sizing: border-box;
 }
 
-body {
+/*body {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
   color: #333333;
   background-color: #ffffff;
-}
+}*/
 
 a {
   color: #0088cc;
@@ -1006,13 +1006,13 @@ form {
   margin: 0 0 20px;
 }
 
-fieldset {
+/*fieldset {
   padding: 0;
   margin: 0;
   border: 0;
-}
+}*/
 
-legend {
+/*legend {
   display: block;
   width: 100%;
   padding: 0;
@@ -1022,7 +1022,7 @@ legend {
   color: #333333;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
-}
+}*/
 
 legend small {
   font-size: 15px;
@@ -1174,7 +1174,7 @@ input[type="file"] {
 }
 
 select {
-  width: 220px;
+/*  width: 220px;*/
   background-color: #ffffff;
   border: 1px solid #cccccc;
 }

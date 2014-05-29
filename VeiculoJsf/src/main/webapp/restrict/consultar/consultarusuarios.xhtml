@@ -12,61 +12,41 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="usuario" value="#{mbUsuario.usuarios}"
-                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                         paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+                         widgetVar="usuarioTable" rowsPerPageTemplate="50,100,200"
+                         emptyMessage="Registro não encontrado!!" filteredValue="#{mbUsuario.filteredUsuarios}">
 
-                <f:facet name="header">Lista de Usuários</f:facet>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Id"/>
-                    </f:facet>
+                <f:facet name="header">Lista de Usu&aacute;rios
+                    <p:outputPanel style=" float: right;">Pesquisar:
+                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('usuarioTable').filter()" placeholder="..."/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column headerText="Id" filterBy="#{usuario.usu_id}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{usuario.usu_id}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Nome"/>
-                    </f:facet>
+                <p:column headerText="Nome" filterBy="#{usuario.usu_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{usuario.usu_nome}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Email"/>
-                    </f:facet>
+                <p:column headerText="Email" filterBy="#{usuario.usu_email}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{usuario.usu_email}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Tel"/>
-                    </f:facet>
+                <p:column headerText="Tel" filterBy="#{usuario.usu_tel}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{usuario.usu_tel}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Cel"/>
-                    </f:facet>
+                <p:column headerText="Cel" filterBy="#{usuario.usu_cel}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{usuario.usu_cel}"/>
                 </p:column>
-                
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Setor"/>
-                    </f:facet>
+
+                <p:column headerText="Setor" filterBy="#{usuario.setor.set_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{usuario.setor.set_nome}"/>
                 </p:column>
-                
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Senha"/>
-                    </f:facet>
-                    <h:outputText value="#{usuario.usu_senha}"/>
-                </p:column>
-
 
             </p:dataTable>
 

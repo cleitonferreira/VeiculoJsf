@@ -12,44 +12,35 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="pessoa" value="#{mbPessoa.pessoas}"
-                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                         paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+                         widgetVar="pessoasTable" rowsPerPageTemplate="50,100,200"
+                         emptyMessage="Registro não encontrado!!" filteredValue="#{mbPessoa.filteredPessoas}">
 
-                <f:facet name="header">Lista de Pessoas</f:facet>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Nome"/>
-                    </f:facet>
+                <f:facet name="header">Lista de Pessoas
+                    <p:outputPanel style=" float: right;">Pesquisar:
+                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('pessoasTable').filter()" placeholder="..."/>
+                    </p:outputPanel>
+                </f:facet>
+                
+                <p:column headerText="Nome" filterBy="#{pessoa.pes_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{pessoa.pes_nome}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Cpf"/>
-                    </f:facet>
+                <p:column headerText="Cpf" filterBy="#{pessoa.pes_cpf}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{pessoa.pes_cpf}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Telefone"/>
-                    </f:facet>
+                <p:column headerText="Tel" filterBy="#{pessoa.pes_tel}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{pessoa.pes_tel}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Estado"/>
-                    </f:facet>
+                <p:column headerText="Estado" filterBy="#{pessoa.estado.est_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{pessoa.estado.est_nome}"/>
                 </p:column>
 
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Cidade"/>
-                    </f:facet>
+                <p:column headerText="Cidade" filterBy="#{pessoa.cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
                     <h:outputText value="#{pessoa.cidade.cid_nome}"/>
                 </p:column>
 

@@ -28,6 +28,7 @@ public class MbMarca implements Serializable {
 
     private Marca marca = new Marca();
     private List<Marca> marcas;
+    private List<Marca> filteredMarcas;
 
     public MbMarca() {
     }
@@ -115,4 +116,13 @@ public class MbMarca implements Serializable {
         this.marca = marca;
     }
 
+    public List<Marca> getFilteredMarcas() {
+        return filteredMarcas;
+    }
+
+    public void setFilteredMarcas(List<Marca> filteredMarcas) {
+        this.filteredMarcas = filteredMarcas;
+    }
+
+    
 }
