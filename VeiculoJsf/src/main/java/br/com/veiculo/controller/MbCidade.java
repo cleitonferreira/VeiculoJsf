@@ -44,7 +44,7 @@ public class MbCidade implements Serializable {
     }
 
     public String editCidade() {
-        return "/restrict/cadastrarcidade.faces";
+        return "/restrict/cadastros/cadastrarcidade.faces";
     }
 
     public String addCidade() {
@@ -67,7 +67,7 @@ public class MbCidade implements Serializable {
 
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar],  no Banco de Dados", "" + ex));
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar], no Banco de Dados", "" + ex));
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
         }

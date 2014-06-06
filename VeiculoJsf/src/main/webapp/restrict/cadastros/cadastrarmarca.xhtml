@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <p:fieldset>
+
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Formul&aacute;rio de Cadastro [Marca]">
+                    <h:form prependId="false" id="formMarca">
+
+                        <p:commandButton value="Novo Resgistro" action="#{mbMarca.limpMarca}" onclick="PF('viewMarca').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+
+                        <div align="center">
+                            <p:dialog header="View Marca" widgetVar="viewMarca" minimizable="true" maximizable="true" focus="mar_nome">
+                                <h:panelGrid columns="2" cellpadding="5" >
+
+                                    <h:outputLabel/>
+                                    <h:inputHidden id="mar_id" value="#{mbMarca.marca.mar_id}"/> 
+
+                                    <h:outputText value="Marca.:"/>
+                                    <p:inputText id="mar_nome" size="40" maxlength="60" value="#{mbMarca.marca.mar_nome}"
+                                                 required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio."/>
+
+                                    <h:outputText value="Flag.:" />  
+                                    <p:selectOneRadio id="mar_flag" value="#{mbMarca.marca.mar_flag}" required="true" 
+                                                      requiredMessage="O campo [Flag] &eacute; obrigat&oacute;rio."> 
+                                        <f:selectItem itemLabel="Sim" itemValue="1" /> &nbsp; &nbsp;
+                                        <f:selectItem itemLabel="N&atilde;o" itemValue="0" />   
+                                    </p:selectOneRadio>
+
+                                </h:panelGrid>
+                                <p:panel style="text-align: center">
+                                    <p:commandButton value="Salvar" action="#{mbMarca.addMarca()}"
+                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                    <p:commandButton value="Cancelar" actionListener="#{mbMarca.limpMarca()}" 
+                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                </p:panel>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+
+
+
+
+
+
+
+
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="marca" value="#{mbMarca.marcas}"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+
+                    <f:facet name="header">Lista de Marcas</f:facet>
+                    <p:column headerText="Id" filterBy="#{marca.mar_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{marca.mar_id}"/>
+                    </p:column>
+                    <p:column headerText="Marca" filterBy="#{marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{marca.mar_nome}"/>
+                    </p:column>
+                    <p:column headerText="Flag" filterBy="#{marca.mar_flag}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{marca.mar_flag}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="A&ccedil;&otilde;es"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" oncomplete="PF('viewMarca').show();" update=":tbv1:formMarca" 
+                                         process="@this"
+                                         image="ui-icon ui-icon-pencil">
+                            <f:setPropertyActionListener target="#{mbMarca.marca}" value="#{marca}"/>
+                        </p:commandButton>
+
+                        <!-- Excluir -->
+                        <p:commandButton value="Remover" action="#{mbMarca.deleteMarca}" update="@form">
+
+                            <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{mbMarca.marca}" value="#{marca}"/>
+
+                            <!-- DialogConfirm Excluir registro -->
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:commandButton>
+
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

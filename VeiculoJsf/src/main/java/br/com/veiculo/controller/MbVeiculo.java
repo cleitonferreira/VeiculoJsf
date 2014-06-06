@@ -69,7 +69,7 @@ public class MbVeiculo implements Serializable {
     }
 
     public String editVeiculo() {
-        return "/restrict/cadastrarveiculo.faces";
+        return "/restrict/cadastros/cadastrarveiculo.faces";
     }
 
     public String addVeiculo() {

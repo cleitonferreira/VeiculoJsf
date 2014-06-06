@@ -11,16 +11,16 @@
     <h:head>
         <title>VeiculoJsf - Sistema JSF e Maven</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <link href="./../resources/restrict/css/layout.css" rel="stylesheet" type="text/css" />
-        <link href="./../resources/restrict/images/faviconn.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="./../../resources/restrict/css/layout.css" rel="stylesheet" type="text/css" />
-        <link href="./../../resources/restrict/images/faviconn.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-        <link href="../bootstrap/js/bootstrap.js" type="text/javascript" />
+        <link href="./../resources/css/layout.css" rel="stylesheet" type="text/css" />
+        <link href="./../resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+        <link href="./../../resources/css/layout.css" rel="stylesheet" type="text/css" />
+        <link href="./../../resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+        <link href="./../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="./../bootstrap/js/bootstrap.js" type="text/javascript" />
         <!--   Import Bootstrap Consulta   -->
-        <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-        <link href="../../bootstrap/js/bootstrap.js" type="text/javascript" />
-        <!--<link href="./../resources/restrict/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />-->
+        <link href="./../../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="./../../bootstrap/js/bootstrap.js" type="text/javascript" />
+        <!--<link href="../../bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />-->
         <link href="../bootstrap/js/jquery-2.1.1.js" />
 
     </h:head>
@@ -58,31 +58,34 @@
 
                     <p:menuitem  value="Home" url="/restrict/home.faces"/>
                     <p:submenu label="Cadastros">
-                        <p:menuitem  value="Setores" url="/restrict/cadastrarsetor.faces"/>
-                        <p:menuitem  value="Usuarios" url="/restrict/cadastrarusuario.faces"/>
-                        <p:menuitem  value="Paises" url="/restrict/cadastrarpais.faces"/>
-                        <p:menuitem  value="Estados" url="/restrict/cadastrarestado.faces"/>
-                        <p:menuitem  value="Cidades" url="/restrict/cadastrarcidade.faces"/>
-                        <p:menuitem  value="Marcas" url="/restrict/cadastrarmarca.faces"/>
-                        <p:menuitem  value="Modelos" url="/restrict/cadastrarmodelo.faces"/>  
+                        <p:menuitem  value="Setores" url="/restrict/cadastros/cadastrarsetor.faces"/>
+                        <p:menuitem  value="Usuarios" url="/restrict/cadastros/cadastrarusuario.faces"/>
+                        <p:menuitem  value="Paises" url="/restrict/cadastros/cadastrarpais.faces"/>
+                        <p:menuitem  value="Estados" url="/restrict/cadastros/cadastrarestado.faces"/>
+                        <p:menuitem  value="Cidades" url="/restrict/cadastros/cadastrarcidade.faces"/>
+                        <p:menuitem  value="Marcas" url="/restrict/cadastros/cadastrarmarca.faces"/>
+                        <p:menuitem  value="Modelos" url="/restrict/cadastros/cadastrarmodelo.faces"/>  
                         <p:menuitem  value="Pessoas" action="#{mbPessoa.limpPessoa}" ajax="false"/>
-                        <p:menuitem  value="Teste" url="/restrict/teste.faces" />
-                        <p:menuitem  value="TestePessoa" url="/restrict/cadastrartestepessoa.faces"/>
-                        <p:menuitem  value="Veiculo" url="/restrict/cadastrarveiculo.faces"/>
-                        <p:menuitem  value="AutoComplete" url="/restrict/autoComplete.faces"/>
-                        <p:menuitem  value="TesteDialog" url="/restrict/testedialog.faces"/>
+                        <p:menuitem  value="Veiculo" url="/restrict/cadastros/cadastrarveiculo.faces"/>
                     </p:submenu> 
                     <p:submenu label="Consultas">  
-                        <p:menuitem value="Pessoas" url="/restrict/consultar/consultarpessoas.faces"/>
-                        <p:menuitem value="Veiculos" url="/restrict/consultar/consultarveiculos.faces"/>
-                        <p:menuitem value="Cidades" url="/restrict/consultar/consultarcidades.faces"/>
-                        <p:menuitem value="Estados" url="/restrict/consultar/consultarestados.faces"/>
-                        <p:menuitem value="Marcas" url="/restrict/consultar/consultarmarcas.faces"/>
-                        <p:menuitem value="Modelos" url="/restrict/consultar/consultarmodelos.faces"/>
-                        <p:menuitem value="Paises" url="/restrict/consultar/consultarpaises.faces"/>
-                        <p:menuitem value="Setores" url="/restrict/consultar/consultarsetores.faces"/>
-                        <p:menuitem value="Usuarios" url="/restrict/consultar/consultarusuarios.faces"/>
-                    </p:submenu>                                      
+                        <p:menuitem value="Pessoas" url="/restrict/consultas/consultarpessoas.faces"/>
+                        <p:menuitem value="Veiculos" url="/restrict/consultas/consultarveiculos.faces"/>
+                        <p:menuitem value="Cidades" url="/restrict/consultas/consultarcidades.faces"/>
+                        <p:menuitem value="Estados" url="/restrict/consultas/consultarestados.faces"/>
+                        <p:menuitem value="Marcas" url="/restrict/consultas/consultarmarcas.faces"/>
+                        <p:menuitem value="Modelos" url="/restrict/consultas/consultarmodelos.faces"/>
+                        <p:menuitem value="Paises" url="/restrict/consultas/consultarpaises.faces"/>
+                        <p:menuitem value="Setores" url="/restrict/consultas/consultarsetores.faces"/>
+                        <p:menuitem value="Usuarios" url="/restrict/consultas/consultarusuarios.faces"/>
+                    </p:submenu> 
+                    <p:submenu label="Teste">
+                        <p:menuitem  value="Teste" url="/restrict/teste/teste.faces" />
+                        <p:menuitem  value="TestePessoa" url="/restrict/teste/cadastrartestepessoa.faces"/>
+                        <p:menuitem  value="AutoComplete" url="/restrict/teste/autoComplete.faces"/>
+                        <p:menuitem  value="TesteDialog" url="/restrict/teste/testedialog.faces"/>
+                    </p:submenu>
+                    <p:menuitem  value="Equipe" url="/restrict/equipe.faces"/>
                 </p:menubar> 
             </h:form>           
         </div>

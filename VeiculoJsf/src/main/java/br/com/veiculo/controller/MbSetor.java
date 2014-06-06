@@ -44,7 +44,7 @@ public class MbSetor implements Serializable {
     }
 
     public String editSetor() {
-        return "/restrict/cadastrarsetor.faces";
+        return "/restrict/cadastros/cadastrarsetor.faces";
     }
 
     public String addSetor() {

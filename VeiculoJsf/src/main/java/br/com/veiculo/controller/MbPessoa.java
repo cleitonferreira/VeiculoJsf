@@ -91,7 +91,7 @@ public class MbPessoa implements Serializable {
     }
 
     public String editPessoa() {
-        return "/restrict/cadastrarpessoa.faces";
+        return "/restrict/cadastros/cadastrarpessoa.faces";
     }
 
     public String addPessoa() {

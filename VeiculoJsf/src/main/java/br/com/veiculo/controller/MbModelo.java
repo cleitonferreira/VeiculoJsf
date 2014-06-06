@@ -24,15 +24,15 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class MbModelo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
     private Modelo modelo = new Modelo();
-    private List<Modelo> modelos;
+    public List<Modelo> modelos;
     private List<Modelo> filteredModelos;
 
     public MbModelo() {
     }
-
+    
     private InterfaceDAO<Modelo> modeloDAO() {
         InterfaceDAO<Modelo> modeloDAO = new HibernateDAO<Modelo>(Modelo.class, FacesContextUtil.getRequestSession());
         return modeloDAO;
@@ -44,7 +44,7 @@ public class MbModelo implements Serializable {
     }
 
     public String editModelo() {
-        return "/restrict/cadastrarmodelo.faces";
+        return "/restrict/cadastros/cadastrarmodelo.faces";
     }
 
     public String addModelo() {
@@ -59,16 +59,19 @@ public class MbModelo implements Serializable {
     }
 
     private void insertModelo() {
+
         try {
             modeloDAO().save(modelo);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar],  no Banco de Dados", "" + ex));
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar], no Banco de Dados", "" + ex));
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
         }
+
     }
 
     private void updateModelo() {
@@ -96,7 +99,6 @@ public class MbModelo implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
         }
-
     }
 
     public List<Modelo> getModelos() {
@@ -115,14 +117,13 @@ public class MbModelo implements Serializable {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
-
+    
     public List<Modelo> getFilteredModelos() {
         return filteredModelos;
     }
-
+ 
     public void setFilteredModelos(List<Modelo> filteredModelos) {
         this.filteredModelos = filteredModelos;
     }
-    
 
 }

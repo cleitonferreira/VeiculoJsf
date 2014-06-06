@@ -29,6 +29,7 @@ public class HibernateCombos {
         Session session = (Session) sessionThread.get();
         if ((session != null) && (session.isOpen())) {
             sessionThread.set(null);
+            session.flush(); 
             session.close();
         }
     }

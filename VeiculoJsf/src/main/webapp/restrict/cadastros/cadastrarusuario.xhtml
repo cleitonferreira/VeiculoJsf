@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <p:fieldset>
+
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Formul&aacute;rio de Cadastro [Usu&aacute;rio]">
+                    <h:form prependId="false" id="formUsuario">
+
+                        <p:commandButton value="Novo Registro" action="#{mbUsuario.limpUsuario}" 
+                                         onclick="PF('viewUsuario').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+
+                        <div align="center">
+                            <p:dialog header="View Usu&aacute;rio" widgetVar="viewUsuario" minimizable="true" maximizable="true" focus="usu_nome">
+                                <h:panelGrid columns="2" cellpadding="5" >
+
+                                    <h:outputLabel/>
+                                    <h:inputHidden id="usu_id" value="#{mbUsuario.usuario.usu_id}"/> 
+
+                                    
+                                    
+                                    <h:outputText value="Setor.:"/>
+                                    <p:selectOneMenu id="set_id" value="#{mbUsuario.usuario.setor.set_id}" required="true" requiredMessage="O campo [Setor] obrigatório">
+                                        <f:selectItem itemValue="" itemLabel="Selecione"/>
+                                        <f:selectItems value="#{bbSetor.setores}" var="setor"
+                                                       itemValue="#{setor.set_id}" itemLabel="#{setor.set_nome}"/>
+                                    </p:selectOneMenu>
+
+
+
+                                    <h:outputText value="Usu&aacute;rio.:"/>
+                                    <p:inputText id="usu_nome" size="40" value="#{mbUsuario.usuario.usu_nome}"
+                                                 onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                                 requiredMessage="O campo [Usu&aacute;rio] &eacute; obrigat&oacute;rio."/>
+
+                                    <h:outputText value="Telefone.:"/>
+                                    <p:inputMask id="usu_tel" size="40" mask="(99) 9999-9999" value="#{mbUsuario.usuario.usu_tel}" 
+                                                 required="true" requiredMessage="O campo [Telefone] &eacute; obrigat&oacute;rio" />
+
+                                    <h:outputText value="Celular.:"/>
+                                    <p:inputMask id="usu_cel" size="40" mask="(99) 99999-9999" value="#{mbUsuario.usuario.usu_cel}"
+                                                 required="true" requiredMessage="O campo [Celular] &eacute; obrigat&oacute;rio"/>
+
+                                    <h:outputLabel for="email" value="E-mail.:"/>
+                                    <p:inputText id="email" size="40" value="#{mbUsuario.usuario.usu_email}"
+                                                 onkeyup="this.value = this.value.toLowerCase()" required="true"
+                                                 requiredMessage="O campo [Email] &eacute; obrigat&oacute;rio.">
+                                        <f:validator validatorId="emailValidator"/>
+                                    </p:inputText>
+
+                                    <h:outputText value="Senha.:"/>
+                                    <p:password id="usu_senha" size="40" value="#{mbUsuario.usuario.usu_senha}"
+                                                required="true" requiredMessage="O campo [Senha] &eacute; obrigat&oacute;rio." feedback="true" 
+                                                promptLabel="Por favor, digite a senha!!!" weakLabel="Fraco"  
+                                                goodLabel="M&eacute;dio" strongLabel="Forte" />
+
+                                </h:panelGrid>
+                                <p:panel style="text-align: center">
+                                    <p:commandButton value="Salvar" action="#{mbUsuario.addUsuario()}"
+                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                    <p:commandButton value="Cancelar" actionListener="#{mbUsuario.limpUsuario()}" 
+                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                </p:panel>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+
+
+
+
+
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="usuario" value="#{mbUsuario.usuarios}"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+
+                    <f:facet name="header">Lista de Usuarios</f:facet>
+                    <p:column headerText="Id" filterBy="#{usuario.usu_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.usu_id}"/>
+                    </p:column>
+                    <p:column headerText="Usu&aacute;rio" filterBy="#{usuario.usu_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.usu_nome}"/>
+                    </p:column>
+                    <p:column headerText="Email" filterBy="#{usuario.usu_email}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.usu_email}"/>
+                    </p:column>
+                    <p:column headerText="Permiss&atilde;o" filterBy="#{usuario.usu_permissao}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.usu_permissao}"/>
+                    </p:column>
+                    <p:column headerText="Tel" filterBy="#{usuario.usu_tel}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.usu_tel}"/>
+                    </p:column>
+                    <p:column headerText="Tel" filterBy="#{usuario.usu_cel}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.usu_cel}"/>
+                    </p:column>
+                    <p:column headerText="Setor" filterBy="#{usuario.setor.set_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.setor.set_nome}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="A&ccedil;&otilde;es"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" oncomplete="PF('viewUsuario').show();" update=":tbv1:formUsuario" 
+                                         process="@this"
+                                         image="ui-icon ui-icon-pencil">
+                            <f:setPropertyActionListener target="#{mbUsuario.usuario}" value="#{usuario}"/>
+                            <f:setPropertyActionListener target="#{mbUsuario.usuario.setor}" value="#{usuario.setor}"/>
+                            <f:setPropertyActionListener target="#{mbUsuario.usuario.setor.set_id}" value="#{usuario.setor.set_id}"/>
+                        </p:commandButton>
+
+                        <!-- Excluir -->
+                        <p:commandButton value="Remover" action="#{mbUsuario.deleteUsuario}" update="@form">
+
+                            <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{mbUsuario.usuario}" value="#{usuario}"/>
+
+                            <!-- DialogConfirm Excluir registro -->
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:commandButton>
+
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

@@ -45,7 +45,7 @@ public class MbUsuario implements Serializable {
     }
 
     public String editUsuario() {
-        return "/restrict/cadastrarusuario.faces";
+        return "/restrict/cadastros/cadastrarusuario.faces";
     }
 
     public String addUsuario() {
@@ -77,6 +77,9 @@ public class MbUsuario implements Serializable {
 
     private void updateUsuario() {
         try {
+//            usuario.setSetor(estado);
+            usuario.setUsu_senha(ConverterSHA1.cipher(usuario.getUsu_senha()));
+            usuario.setUsu_permissao("ROLE_ADMIN");
             usuarioDAO().update(usuario);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
@@ -128,5 +131,4 @@ public class MbUsuario implements Serializable {
         this.filteredUsuarios = filteredUsuarios;
     }
 
-    
 }

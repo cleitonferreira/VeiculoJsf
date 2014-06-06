@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -112,7 +110,6 @@ public class MeuDaoImpl implements MeuDao, Serializable {
 
         List result = crit.list();
         System.out.println("List >>>>" + result.toString());
-
         return result;
     }
 

@@ -44,7 +44,7 @@ public class MbPais implements Serializable {
     }
 
     public String editPais() {
-        return "/restrict/cadastrarpais.faces";
+        return "/restrict/cadastros/cadastrarpais.faces";
     }
 
     public String addPais() {

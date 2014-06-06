@@ -44,7 +44,7 @@ public class MbMarca implements Serializable {
     }
 
     public String editMarca() {
-        return "/restrict/cadastrarmarca.faces";
+        return "/restrict/cadastros/cadastrarmarca.faces";
     }
 
     public String addMarca() {

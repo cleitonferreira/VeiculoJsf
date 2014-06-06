@@ -7,6 +7,7 @@ package br.com.veiculo.controller;
 
 import br.com.veiculo.model.dao.HibernateDAO;
 import br.com.veiculo.model.dao.InterfaceDAO;
+import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
@@ -44,7 +45,7 @@ public class MbEstado implements Serializable {
     }
 
     public String editEstado() {
-        return "/restrict/cadastrarestado.faces";
+        return "/restrict/cadastros/cadastrarestado.faces";
     }
 
     public String addEstado() {

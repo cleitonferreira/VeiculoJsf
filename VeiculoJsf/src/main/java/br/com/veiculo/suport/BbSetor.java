@@ -8,7 +8,6 @@ package br.com.veiculo.suport;
 
 import br.com.veiculo.model.dao.HibernateDAO;
 import br.com.veiculo.model.dao.InterfaceDAO;
-import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Setor;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;

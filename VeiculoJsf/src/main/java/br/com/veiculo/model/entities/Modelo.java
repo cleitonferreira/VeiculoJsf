@@ -39,7 +39,7 @@ public class Modelo implements Serializable {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "MarcaModelo")
-    @JoinColumn(name = "mar_id", referencedColumnName = "mar_id")
+    @JoinColumn(name = "mar_id",  referencedColumnName = "mar_id")
     private Marca marca;
     
     
@@ -93,13 +93,10 @@ public class Modelo implements Serializable {
 
     
     
-
- 
-
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + (this.mod_id != null ? this.mod_id.hashCode() : 0);
+        int hash = 7;
+        hash = 61 * hash + (this.mod_id != null ? this.mod_id.hashCode() : 0);
         return hash;
     }
 
@@ -117,5 +114,15 @@ public class Modelo implements Serializable {
         }
         return true;
     }
+    
+    
+    
+    
+    
+
+    
+ 
+
+
 
 }
