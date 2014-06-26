@@ -3,7 +3,7 @@
 
 
 body {
-    background-image: url(../images/background.png); 
+    background-image: url(../imagens/background.png); 
     background-color:#FFF;
     font-size: 10pt;
 }
@@ -13,7 +13,7 @@ body {
    height:130px;
    margin:0;
    padding:0;
-   background-image: url(../images/topo_cesva2.png); 
+   background-image: url(../imagens/topo_cesva2.png); 
 /*   background-repeat: no-repeat;
    background-position: center;*/
 }
@@ -25,7 +25,7 @@ body {
 }
 
 #menu li {
-    background:  url(../images/bg-menu.png) repeat;
+    background:  url(../imagens/bg-menu.png) repeat;
     color: #FFF;
     
 }
@@ -41,7 +41,6 @@ body {
     background: #7BB232;
     
 }
-
 
 
 /** {

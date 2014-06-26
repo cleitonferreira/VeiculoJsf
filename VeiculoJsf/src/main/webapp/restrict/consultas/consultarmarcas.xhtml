@@ -12,6 +12,7 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="marca" value="#{mbMarca.marcas}"
+                         selectionMode="multiple" selection="#{mbMarca.consultaMarcas}" rowKey="#{marca.mar_id}"
                          paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -23,18 +24,21 @@
                         <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('marcaTable').filter()" placeholder="..."/>
                     </p:outputPanel>
                 </f:facet>
-                
-                <p:column headerText="Id" filterBy="#{marca.mar_id}"  footerText="contains" filterMatchMode="contains">
+
+                <p:column headerText="Id" filterBy="#{marca.mar_id}">
                     <h:outputText value="#{marca.mar_id}"/>
                 </p:column>
 
-                <p:column headerText="Marca" filterBy="#{marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Marca" filterBy="#{marca.mar_nome}">
                     <h:outputText value="#{marca.mar_nome}"/>
                 </p:column>
 
-                <p:column headerText="Flag" filterBy="#{marca.mar_flag}"  footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{marca.mar_flag}"/>
+                <p:column headerText="Flag" filterBy="#{marca.mar_flag == '1' ? 'Sim' : 'N&atilde;o'}">
+                    <h:outputText value="#{marca.mar_flag == '1' ? 'Sim' : 'N&atilde;o'}"/>
                 </p:column>
+                <f:facet name="footer">
+                    <p:commandButton process="idTabela" style="float: left; margin-top: -45px; position: relative;" update=":form:infoMarca" icon="ui-icon-search" value="View" oncomplete="PF('marcaDialog').show()" />
+                </f:facet>
 
 
             </p:dataTable>
@@ -61,6 +65,23 @@
 
 
         </h:form>
+
+
+        <h:form id="form">
+            <p:dialog header="Informa&ccedil;&otilde;es sobre a Marca" widgetVar="marcaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                <p:outputPanel id="infoMarca">
+                    <ui:repeat value="#{mbMarca.consultaMarcas}" var="marca">
+                        <h:outputText value=" Id: #{marca.mar_id}" style="display:block"/>
+                        <h:outputText value=" Pa&iacute;s: #{marca.mar_nome}" style="display:block"/>
+                        <h:outputText value=" Flag: #{marca.mar_flag == '1' ? 'Sim' : 'Nao'}" style="display:block"/>
+                        <br />
+                    </ui:repeat>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+
+
+
     </ui:define>
 
 </ui:composition>

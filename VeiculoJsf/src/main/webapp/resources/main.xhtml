@@ -12,9 +12,9 @@
         <title>VeiculoJsf - Sistema JSF e Maven</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <link href="./../resources/css/layout.css" rel="stylesheet" type="text/css" />
-        <link href="./../resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+        <link href="./../resources/imagens/favicon.png" rel="shortcut icon" type="image/x-icon" />
+        <link href="./../../resources/imagens/favicon.png" rel="shortcut icon" type="image/x-icon" />
         <link href="./../../resources/css/layout.css" rel="stylesheet" type="text/css" />
-        <link href="./../../resources/images/favicon.png" rel="shortcut icon" type="image/x-icon" />
         <link href="./../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="./../bootstrap/js/bootstrap.js" type="text/javascript" />
         <!--   Import Bootstrap Consulta   -->
@@ -58,6 +58,7 @@
 
                     <p:menuitem  value="Home" url="/restrict/home.faces"/>
                     <p:submenu label="Cadastros">
+                        <p:menuitem  value="Pessoa" action="/restrict/cadastros/cadastrarpessoa.faces" ajax="false"/>
                         <p:menuitem  value="Setores" url="/restrict/cadastros/cadastrarsetor.faces"/>
                         <p:menuitem  value="Usuarios" url="/restrict/cadastros/cadastrarusuario.faces"/>
                         <p:menuitem  value="Paises" url="/restrict/cadastros/cadastrarpais.faces"/>
@@ -65,7 +66,7 @@
                         <p:menuitem  value="Cidades" url="/restrict/cadastros/cadastrarcidade.faces"/>
                         <p:menuitem  value="Marcas" url="/restrict/cadastros/cadastrarmarca.faces"/>
                         <p:menuitem  value="Modelos" url="/restrict/cadastros/cadastrarmodelo.faces"/>  
-                        <p:menuitem  value="Pessoas" action="#{mbPessoa.limpPessoa}" ajax="false"/>
+                        <p:menuitem  value="Pessoa / Ve&iacute;culo" action="#{mbPessoaVeiculo.limpPessoa}" ajax="false"/>
                         <p:menuitem  value="Veiculo" url="/restrict/cadastros/cadastrarveiculo.faces"/>
                     </p:submenu> 
                     <p:submenu label="Consultas">  
@@ -81,9 +82,10 @@
                     </p:submenu> 
                     <p:submenu label="Teste">
                         <p:menuitem  value="Teste" url="/restrict/teste/teste.faces" />
-                        <p:menuitem  value="TestePessoa" url="/restrict/teste/cadastrartestepessoa.faces"/>
+                        <p:menuitem  value="TestePessoa" url="/restrict/teste/testepessoa.faces"/>
                         <p:menuitem  value="AutoComplete" url="/restrict/teste/autoComplete.faces"/>
                         <p:menuitem  value="TesteDialog" url="/restrict/teste/testedialog.faces"/>
+                        <p:menuitem  value="Combos Aninhados" url="/restrict/teste/combosaninhados.faces"/>
                     </p:submenu>
                     <p:menuitem  value="Equipe" url="/restrict/equipe.faces"/>
                 </p:menubar> 

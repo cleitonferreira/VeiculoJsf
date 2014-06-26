@@ -15,7 +15,7 @@
             <p:tab title="Formul&aacute;rio de Cadastro [Pais]">
                 <h:form prependId="false" id="formPais">
 
-                    <p:commandButton value="Novo Resgistro" action="#{mbPais.limpPais}" onclick="PF('viewPais').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                    <p:commandButton value="Novo Registro" action="#{mbPais.limpPais}" onclick="PF('viewPais').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
                     <div align="center">
                         <p:dialog header="View Pais" widgetVar="viewPais" minimizable="true" maximizable="true" focus="pa_nome">
@@ -25,7 +25,7 @@
                             <h:inputHidden id="pa_id" value="#{mbPais.pais.pa_id}"/> 
 
                             <h:outputText value="Pais.:"/>
-                            <p:inputText id="pa_nome" size="40" maxlength="60" value="#{mbPais.pais.pa_nome}"
+                            <p:inputText id="pa_nome" size="40" maxlength="50" value="#{mbPais.pais.pa_nome}"
                                          onkeyup="this.value = this.value.toUpperCase()" required="true"
                                          requiredMessage="O campo [Pais] &eacute; obrigat&oacute;rio."/>
                             

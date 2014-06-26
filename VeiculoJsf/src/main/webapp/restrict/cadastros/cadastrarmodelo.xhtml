@@ -15,22 +15,23 @@
                 <p:tab title="Formul&aacute;rio de Cadastro [Modelo]">
                     <h:form prependId="false" id="formModelo">
 
-                        <p:commandButton value="Novo Resgistro" action="#{mbModelo.limpModelo}" 
+                        <p:commandButton value="Novo Registro" action="#{mbModelo.limpModelo}" 
                                          onclick="PF('viewModelo').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
                         <div align="center">
-                            <p:dialog header="View Usu&aacute;rio" widgetVar="viewModelo" minimizable="true" maximizable="true" focus="mod_nome">
+                            <p:dialog header="View Modelo" widgetVar="viewModelo" minimizable="true" maximizable="true" focus="mod_nome">
                                 <h:panelGrid columns="2" cellpadding="5" >
 
                                     <h:outputLabel/>
                                     <h:inputHidden id="mod_id" value="#{mbModelo.modelo.mod_id}"/> 
 
                                     <h:outputText value="Marca.:"/>
-                                    <p:selectOneMenu id="mar_id" value="#{mbModelo.modelo.marca.mar_id}" required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio" >
+                                    <h:selectOneMenu id="marca" value="#{mbModelo.marca}" 
+                                                     required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio" 
+                                                     converter="converterMarca"  >
                                         <f:selectItem itemLabel="Selecione" />
-                                        <f:selectItems value="#{bbMarca.marcas}" var="marca"
-                                                       itemValue="#{marca.mar_id}" itemLabel="#{marca.mar_nome}"/>
-                                    </p:selectOneMenu>
+                                        <f:selectItems value="#{mbModelo.marcas}" var="marca" itemValue="#{marca}" itemLabel="#{marca.mar_nome}" />
+                                    </h:selectOneMenu>
 
                                     <h:outputText value="Modelo.:"/>
                                     <p:inputText id="mod_nome" size="40" maxlength="50" value="#{mbModelo.modelo.mod_nome}"
@@ -93,6 +94,8 @@
                                          process="@this"
                                          image="ui-icon ui-icon-pencil">
                             <f:setPropertyActionListener target="#{mbModelo.modelo}" value="#{modelo}"/>
+                            <f:setPropertyActionListener target="#{mbModelo.modelo.mod_id}" value="#{modelo.mod_id}"/>
+                            <f:setPropertyActionListener target="#{mbModelo.marca}" value="#{modelo.marca}"/>
                         </p:commandButton>
 
                         <!-- Excluir -->

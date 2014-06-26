@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
  * @author cleiton
  */
 @ManagedBean(name = "mbSetor")
-@SessionScoped
+@ViewScoped
 public class MbSetor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +29,7 @@ public class MbSetor implements Serializable {
     private Setor setor = new Setor();
     private List<Setor> setores;
     private List<Setor> filteredSetores;
+    private List<Setor> consultaSetores;
 
     public MbSetor() {
     }
@@ -124,7 +125,15 @@ public class MbSetor implements Serializable {
         this.filteredSetores = filteredSetores;
     }
 
+    public List<Setor> getConsultaSetores() {
+        return consultaSetores;
+    }
 
+    public void setConsultaSetores(List<Setor> consultaSetores) {
+        this.consultaSetores = consultaSetores;
+    }
+
+    
     
 
 }

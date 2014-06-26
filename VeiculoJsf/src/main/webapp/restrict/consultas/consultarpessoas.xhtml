@@ -12,6 +12,7 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="pessoa" value="#{mbPessoa.pessoas}"
+                         selectionMode="multiple" selection="#{mbPessoa.consultaPessoas}" rowKey="#{pessoa.pes_id}"
                          paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -23,26 +24,34 @@
                         <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('pessoasTable').filter()" placeholder="..."/>
                     </p:outputPanel>
                 </f:facet>
-                
-                <p:column headerText="Nome" filterBy="#{pessoa.pes_nome}"  footerText="contains" filterMatchMode="contains">
+
+                <p:column headerText="Nome" filterBy="#{pessoa.pes_nome}">
                     <h:outputText value="#{pessoa.pes_nome}"/>
                 </p:column>
 
-                <p:column headerText="Cpf" filterBy="#{pessoa.pes_cpf}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Cpf" filterBy="#{pessoa.pes_cpf}">
                     <h:outputText value="#{pessoa.pes_cpf}"/>
                 </p:column>
 
-                <p:column headerText="Tel" filterBy="#{pessoa.pes_tel}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Tel" filterBy="#{pessoa.pes_tel}">
                     <h:outputText value="#{pessoa.pes_tel}"/>
                 </p:column>
 
-                <p:column headerText="Estado" filterBy="#{pessoa.estado.est_nome}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Cel" filterBy="#{pessoa.pes_cel}">
+                    <h:outputText value="#{pessoa.pes_cel}"/>
+                </p:column>
+
+                <p:column headerText="Estado" filterBy="#{pessoa.estado.est_nome}">
                     <h:outputText value="#{pessoa.estado.est_nome}"/>
                 </p:column>
 
-                <p:column headerText="Cidade" filterBy="#{pessoa.cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Cidade" filterBy="#{pessoa.cidade.cid_nome}">
                     <h:outputText value="#{pessoa.cidade.cid_nome}"/>
                 </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="idTabela" style="float: left; margin-top: -45px; position: relative;" update=":form:infoPessoa" icon="ui-icon-search" value="View" oncomplete="PF('pessoaDialog').show()" />
+                </f:facet>
 
 
             </p:dataTable>
@@ -69,6 +78,26 @@
 
 
         </h:form>
+
+
+        <h:form id="form">
+            <p:dialog header="Informa&ccedil;&otilde;es sobre a Pessoa" widgetVar="pessoaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                <p:outputPanel id="infoPessoa">
+                    <ui:repeat value="#{mbPessoa.consultaPessoas}" var="pessoa">
+                        <h:outputText value=" Id: #{pessoa.pes_id}" style="display:block"/>
+                        <h:outputText value=" Nome: #{pessoa.pes_nome}" style="display:block"/>
+                        <h:outputText value=" Cpf: #{pessoa.pes_cpf}" style="display:block"/>
+                        <h:outputText value=" Tel: #{pessoa.pes_tel}" style="display:block"/>
+                        <h:outputText value=" Rg: #{pessoa.pes_rg}" style="display:block"/>
+                        <h:outputText value=" Estado: #{pessoa.estado.est_uf}" style="display:block"/>
+                        <h:outputText value=" Cidade: #{pessoa.cidade.cid_nome}" style="display:block"/>
+                        <br />
+                    </ui:repeat>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+
+
     </ui:define>
 
 </ui:composition>

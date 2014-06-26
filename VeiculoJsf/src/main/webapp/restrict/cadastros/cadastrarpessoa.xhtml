@@ -12,135 +12,88 @@
         <p:fieldset>
 
             <p:tabView id="tbv1" dynamic="true" cache="true">
-                <p:tab title="Formul&aacute;rio de Cadastro [Pessoa/Ve&iacute;culo]">
-                    <h:form prependId="false" id="formPessoa">
+                <p:tab title="Formul&aacute;rio de Cadastro [Pessoa]">
+                    <h:form id="formPessoa">
 
-                        <p:commandButton value="Novo Resgistro" action="#{mbPessoa.limpPessoa}" 
+                        <p:commandButton value="Novo Registro" action="#{mbPessoa.limpPessoa()}" process="@none" update="@form"
                                          onclick="PF('viewPessoa').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
                         <div align="center">
-                            <p:dialog header="View Pessoa" widgetVar="viewPessoa" minWidth="500" width="500" height="550" minimizable="true" maximizable="true">
+                            <p:dialog header="View Pessoa" widgetVar="viewPessoa" minimizable="true" maximizable="true" focus="nomePessoa">
+                                <h:panelGrid columns="2" cellpadding="5" >
+
+                                    <h:outputLabel/>
+                                    <h:inputHidden id="idpessoa" value="#{mbPessoa.pessoa.pes_id}"/> 
+
+                                    <h:outputLabel for="nomePessoa" value="Nome.:"/>
+                                    <p:inputText id="nomePessoa" size="40" maxlength="80" value="#{mbPessoa.pessoa.pes_nome}"
+                                                 required="true" requiredMessage="O campo [Nome] &eacute; obrigat&oacute;rio"
+                                                 onkeyup="this.value = this.value.toUpperCase()"/>
+
+                                    <h:outputLabel for="telefone" value="Telefone.:"/>
+                                    <p:inputMask id="telefone" size="40" maxlength="14" mask="(99) 9999-9999"
+                                                 value="#{mbPessoa.pessoa.pes_tel}" />
+
+                                    <h:outputLabel for="celular" value="Celular.:"/>
+                                    <p:inputMask id="celular" size="40" maxlength="14" mask="(99) 9999-9999"
+                                                 value="#{mbPessoa.pessoa.pes_cel}" />
+
+                                    <h:outputLabel for="cpf" value="CPF.:"/>
+                                    <p:inputMask id="cpf" size="40" maxlength="14" mask="999.999.999-99" value="#{mbPessoa.pessoa.pes_cpf}"
+                                                 disabled="#{mbPessoa.pessoa.pes_cpf != null}" required="true" requiredMessage="O campo [CPF] &eacute; obrigat&oacute;rio">
+                                        <f:validator validatorId="cpfValidator"/>
+                                        <f:converter converterId="converter.CpfConverter" />
+                                    </p:inputMask>
+
+                                    <h:outputLabel for="rg" value="RG.:"/>
+                                    <p:inputText id="rg" size="40" maxlength="12" value="#{mbPessoa.pessoa.pes_rg}"
+                                                 required="true" requiredMessage="O campo [RG] &eacute; obrigat&oacute;rio">
+                                    </p:inputText>
 
 
-                                <p:wizard nextLabel="Pr&oacute;xima Aba" backLabel="Aba Anterior">
-                                    <p:tab title="Informa&ccedil;&otilde;es B&aacute;sicas" id="infoPessoal">
-                                        <p:panel header="Informa&ccedil;&otilde;es B&aacute;sicas da Pessoa">
-                                            <p:growl id="msg0"/>
-                                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid" id="grid0">
-
-                                                <h:outputLabel/>
-                                                <h:inputHidden id="idpessoa" value="#{mbPessoa.pessoa.pes_id}"/> 
-
-                                                <h:outputLabel for="pes_nome" value="Nome.:"/>
-                                                <p:inputText id="nomePessoa" size="40" value="#{mbPessoa.pessoa.pes_nome}"
-                                                             required="true" requiredMessage="O campo [Nome] &eacute; obrigat&oacute;rio"
-                                                             onkeyup="this.value = this.value.toUpperCase()"/>
-
-                                                <h:outputLabel for="telefone" value="Telefone.:"/>
-                                                <p:inputMask id="telefone" size="40" mask="(99) 9999-9999"
-                                                             value="#{mbPessoa.pessoa.pes_tel}"
-                                                             required="true" requiredMessage="O campo [Telefone] &eacute; obrigat&oacute;rio"/>
+                                    <p:outputLabel for="estado" value="Estado:" />
+                                    <p:selectOneMenu id="estado" value="#{mbPessoa.estado}" style="width:200px"
+                                                     required="true" requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio" 
+                                                     converter="converterEstado"  >
+                                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbPessoa.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.est_nome}" />
+                                        <p:ajax listener="#{mbPessoa.listaCidades}" event="change" update="cidade" />
+                                    </p:selectOneMenu>
 
 
-                                                <h:outputLabel for="cpf" value="CPF.:"/>
-                                                <p:inputMask id="cpf" size="40" mask="999.999.999-99" value="#{mbPessoa.pessoa.pes_cpf}"
-                                                             required="true" requiredMessage="O campo [CPF] &eacute; obrigat&oacute;rio">
-                                                    <f:validator validatorId="cpfValidator"/>
-                                                    <f:converter converterId="converter.CpfConverter" />
-                                                </p:inputMask>
+                                    <p:outputLabel for="cidade" value="Cidade:" />
+                                    <p:selectOneMenu id="cidade" value="#{mbPessoa.cidade}" converter="converterCidade" required="true" style="width:200px" effect="fade" panelStyle="width:180px"
+                                                     requiredMessage="O campo [Cidade] &eacute; obrigat&oacute;rio" filter="true" filterMatchMode="startsWith">
+                                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbPessoa.cidades}" var="cidade" itemValue="#{cidade}" itemLabel="#{cidade.cid_nome}" />
+                                    </p:selectOneMenu>
 
-                                                <h:outputLabel for="rg" value="RG.:"/>
-                                                <p:inputText id="rg" size="40" value="#{mbPessoa.pessoa.pes_rg}"
-                                                             required="true" requiredMessage="O campo [RG] &eacute; obrigat&oacute;rio">
-                                                </p:inputText>
+<!--                                    <h:outputText value="#{mbPessoa.estado.est_id}" />
+                                    <h:outputText value="#{mbPessoa.cidade.cid_id}"/>-->
 
-
-                                                <h:outputLabel value="Estado: *" />
-                                                <h:selectOneMenu id="estado" value="#{mbPessoa.estado}" 
-                                                                 required="true" requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio" 
-                                                                 converter="converterEstado"  >
-                                                    <f:selectItem itemLabel="Selecione" />
-                                                    <f:selectItems value="#{mbPessoa.estados}" var="e" itemValue="#{e}" itemLabel="#{e.est_nome}" />
-                                                    <f:ajax render="cidade" event="change" listener="#{mbPessoa.listaCidades}" />
-                                                </h:selectOneMenu>
-
-
-                                                <h:outputLabel value="Cidade: *" />
-                                                <h:selectOneMenu id="cidade" value="#{mbPessoa.cidade}" required="true" 
-                                                                 requiredMessage="O campo [Cidade] &eacute; obrigat&oacute;rio" converter="converterCidade">
-                                                    <f:selectItem itemLabel="Selecione" />
-                                                    <f:selectItems value="#{mbPessoa.cidades}" var="c" itemValue="#{c}" itemLabel="#{c.cid_nome}" />
-                                                </h:selectOneMenu>
-
-
-
-                                            </h:panelGrid>
-
-                                        </p:panel>
-                                    </p:tab>
-
-                                    <p:tab title="Informa&ccedil;&otilde;es do Ve&iacute;culo" id="infoVeiculo">
-                                        <p:panel header="Informa&ccedil;&otilde;es do Ve&iacute;culo">
-                                            <p:growl id="msg1"/>
-                                            <h:panelGrid styleClass="panelGrid" id="grid1">
-
-                                                <h:outputLabel for="ano" value="Ano.:"/>
-                                                <p:inputMask id="ano" size="6" maxlength="4" mask="9999" value="#{mbPessoa.veiculo.veic_ano}"
-                                                             required="true" requiredMessage="O campo [Ano] &eacute; obrigat&oacute;rio"/>
-
-                                                <h:outputLabel for="cor" value="Cor.:"/>
-                                                <p:inputText id="cor" size="40" maxlength="15" value="#{mbPessoa.veiculo.veic_cor}"
-                                                             required="true" requiredMessage="O campo [Cor] &eacute; obrigat&oacute;rio"
-                                                             onkeyup="this.value = this.value.toUpperCase()"/>
-
-                                                <h:outputLabel for="placa" value="Placa.:"/>
-                                                <p:inputMask id="placa" size="40" maxlength="8" mask="aaa-9999" value="#{mbPessoa.veiculo.veic_placa}"
-                                                             required="true" requiredMessage="O campo [Placa] &eacute; obrigat&oacute;rio"/>
-
-                                                <h:outputLabel value="Marca.: *" />
-                                                <h:selectOneMenu id="marca" value="#{mbPessoa.marca}" required="true" 
-                                                                 requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio" converter="converterMarca">
-                                                    <f:selectItem itemLabel="Selecione" />
-                                                    <f:selectItems value="#{mbPessoa.marcas}" var="a" itemValue="#{a}" itemLabel="#{a.mar_nome}" />
-                                                    <f:ajax render="modelo" event="change" listener="#{mbPessoa.listaModelos}" />
-                                                </h:selectOneMenu>
-
-
-                                                <h:outputLabel value="Modelo.: *" />
-                                                <h:selectOneMenu id="modelo" value="#{mbPessoa.modelo}" required="true" 
-                                                                 requiredMessage="O campo [Modelo] &eacute; obrigat&oacute;rio" converter="converterModelo">
-                                                    <f:selectItem itemLabel="Selecione" />
-                                                    <f:selectItems value="#{mbPessoa.modelos}" var="o" itemValue="#{o}" itemLabel="#{o.mod_nome}" />
-                                                </h:selectOneMenu>
-
-
-                                                <p:panel>
-                                                    <p:commandButton value="Salvar" action="#{mbPessoa.addPessoa}"
-                                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                                    <p:commandButton value="Cancelar" actionListener="#{mbPessoa.limpPessoa}" 
-                                                                     image="ui-icon ui-icon-close" update="@form"/>
-                                                </p:panel>
-
-
-
-                                            </h:panelGrid>
-                                        </p:panel>
-                                    </p:tab>
-
-
-                                </p:wizard>
-
+                                </h:panelGrid>
+                                <p:panel style="text-align: center">
+                                    <p:commandButton value="Salvar" action="#{mbPessoa.addPessoa()}" onclick="PF('notificacao').hide()"
+                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                    <p:commandButton value="Cancelar" update="@form :formtable" process="@this" actionListener="#{mbPessoa.reset}" />
+                                </p:panel>
                             </p:dialog>
                         </div>
                     </h:form>
                 </p:tab>
             </p:tabView>
 
+            <style>
+                .ui-notificationbar{
+                    height: 2%;
+                }
+            </style>
 
+            <p:notificationBar position="top" effect="slide" widgetVar="notificacao">
+                <h:outputText value="Por Favor, pressione o bot&atilde;o [Editar] 2 vezes para o carregamento das informa&ccedil;&otilde;es!" style="font-size:15px;" />
+            </p:notificationBar>
 
-
-
-
+            <!--            <p:commandButton value="Fechar a Notifica&ccedil;&atilde;o" onclick="PF('notificacao').hide()" type="button" icon="ui-icon-arrow-1-n"/>-->
 
 
             <h:form id="formtable">
@@ -155,7 +108,7 @@
                     <p:column headerText="Id" filterBy="#{pessoa.pes_id}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{pessoa.pes_id}"/>
                     </p:column>
-                    <p:column headerText="Pessoa" filterBy="#{pessoa.pes_nome}"  footerText="contains" filterMatchMode="contains">
+                    <p:column headerText="Pessoa" filterBy="#{pessoa.pes_nome}"  footerText="contains" filterMatchMode="contains" width="20%">
                         <h:outputText value="#{pessoa.pes_nome}"/>
                     </p:column>
                     <p:column headerText="Cpf" filterBy="#{pessoa.pes_cpf}"  footerText="contains" filterMatchMode="contains">
@@ -167,6 +120,9 @@
                     <p:column headerText="Tel" filterBy="#{pessoa.pes_tel}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{pessoa.pes_tel}"/>
                     </p:column>
+                    <p:column headerText="Cel" filterBy="#{pessoa.pes_cel}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_cel}"/>
+                    </p:column>
                     <p:column headerText="Estado" filterBy="#{pessoa.estado.est_uf}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{pessoa.estado.est_uf}"/>
                     </p:column>
@@ -174,14 +130,17 @@
                         <h:outputText value="#{pessoa.cidade.cid_nome}"/>
                     </p:column>
 
-                    <p:column>
+                    <p:column style="width: 12%;">
                         <f:facet name="header">
                             <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>
-                        <p:commandButton value="Editar" oncomplete="PF('viewPessoa').show();" update=":tbv1:formPessoa" 
-                                         process="@this"
-                                         image="ui-icon ui-icon-pencil">
+                        <p:commandButton update=":tbv1:formPessoa" oncomplete="PF('viewPessoa').show();" 
+                                         onclick="PF('notificacao').show()"
+                                         image="ui-icon ui-icon-pencil" value="Editar">
                             <f:setPropertyActionListener target="#{mbPessoa.pessoa}" value="#{pessoa}"/>
+                            <p:ajax update=":tbv1:formPessoa:cidade" listener="#{mbPessoa.listaCidades}"/>
+                            <f:setPropertyActionListener target="#{mbPessoa.estado}" value="#{pessoa.estado}" />
+                            <f:setPropertyActionListener target="#{mbPessoa.cidade}" value="#{pessoa.cidade}" />
                         </p:commandButton>
 
                         <!-- Excluir -->

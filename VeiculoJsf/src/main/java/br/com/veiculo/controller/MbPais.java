@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
  * @author cleiton
  */
 @ManagedBean(name = "mbPais")
-@SessionScoped
+@ViewScoped
 public class MbPais implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +29,7 @@ public class MbPais implements Serializable {
     private Pais pais = new Pais();
     private List<Pais> paises;
     private List<Pais> filteredPaises;
+    private List<Pais> consultaPaises;
 
     public MbPais() {
     }
@@ -123,6 +124,16 @@ public class MbPais implements Serializable {
     public void setFilteredPaises(List<Pais> filteredPaises) {
         this.filteredPaises = filteredPaises;
     }
+
+    public List<Pais> getConsultaPaises() {
+        return consultaPaises;
+    }
+
+    public void setConsultaPaises(List<Pais> consultaPaises) {
+        this.consultaPaises = consultaPaises;
+    }
+    
+    
     
 
 }

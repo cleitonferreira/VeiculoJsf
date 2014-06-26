@@ -12,6 +12,7 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="estado" value="#{mbEstado.estados}"
+                         selectionMode="multiple" selection="#{mbEstado.consultaEstados}" rowKey="#{estado.est_id}"
                          paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -23,22 +24,26 @@
                         <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('estadoTable').filter()" placeholder="..."/>
                     </p:outputPanel>
                 </f:facet>
-                
-                <p:column headerText="Id" filterBy="#{estado.est_id}"  footerText="contains" filterMatchMode="contains">
+
+                <p:column headerText="Id" filterBy="#{estado.est_id}">
                     <h:outputText value="#{estado.est_id}"/>
                 </p:column>
 
-                <p:column headerText="Estado" filterBy="#{estado.est_nome}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Estado" filterBy="#{estado.est_nome}">
                     <h:outputText value="#{estado.est_nome}"/>
                 </p:column>
 
-                <p:column headerText="Uf" filterBy="#{estado.est_uf}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Uf" filterBy="#{estado.est_uf}">
                     <h:outputText value="#{estado.est_uf}"/>
                 </p:column>
 
-                <p:column headerText="Pa&iacute;s" filterBy="#{estado.pais.pa_sigla}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Pa&iacute;s" filterBy="#{estado.pais.pa_sigla}">
                     <h:outputText value="#{estado.pais.pa_sigla}"/>
                 </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="idTabela" style="float: left; margin-top: -45px; position: relative;" update=":form:infoEstado" icon="ui-icon-search" value="View" oncomplete="PF('estadoDialog').show()" />
+                </f:facet>
 
 
             </p:dataTable>
@@ -65,6 +70,25 @@
 
 
         </h:form>
+
+
+        <h:form id="form">
+            <p:dialog header="Informa&ccedil;&otilde;es sobre a Estado" widgetVar="estadoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                <p:outputPanel id="infoEstado">
+                    <ui:repeat value="#{mbEstado.consultaEstados}" var="estado">
+                        <h:outputText value=" Id: #{estado.est_id}" style="display:block"/>
+                        <h:outputText value=" Pa&iacute;s: #{estado.pais.pa_sigla}" style="display:block"/>
+                        <h:outputText value=" Uf: #{estado.est_uf}" style="display:block"/>
+                        <h:outputText value=" Estado: #{estado.est_nome}" style="display:block"/>
+                        <br />
+                    </ui:repeat>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+
+
+
+
     </ui:define>
 
 </ui:composition>

@@ -31,7 +31,7 @@ public class Pais implements Serializable{
     @GeneratedValue
     @Column(name="pa_id", nullable = false)
     private Integer pa_id;
-    @Column(name="pa_nome", nullable = false, length = 255)
+    @Column(name="pa_nome", nullable = false, length = 50)
     private String pa_nome;
     @Column(name="pa_sigla", nullable = false, length = 3)
     private String pa_sigla;

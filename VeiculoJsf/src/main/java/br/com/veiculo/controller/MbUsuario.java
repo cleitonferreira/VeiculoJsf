@@ -8,13 +8,16 @@ package br.com.veiculo.controller;
 import br.com.veiculo.converter.ConverterSHA1;
 import br.com.veiculo.model.dao.HibernateDAO;
 import br.com.veiculo.model.dao.InterfaceDAO;
+import br.com.veiculo.model.dao.MeuDaoImpl;
+import br.com.veiculo.model.entities.Setor;
 import br.com.veiculo.model.entities.Usuario;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -22,7 +25,7 @@ import javax.faces.context.FacesContext;
  * @author cleiton
  */
 @ManagedBean(name = "mbUsuario")
-@SessionScoped
+@ViewScoped
 public class MbUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,8 +33,21 @@ public class MbUsuario implements Serializable {
     private Usuario usuario = new Usuario();
     private List<Usuario> usuarios;
     private List<Usuario> filteredUsuarios;
+    private List<Usuario> consultaUsuarios;
 
+    ///// Objetos para o Combo Setor \\\\\
+    //private final MeuDaoImpl mmdao = new MeuDaoImpl();
+    private final MeuDaoImpl dao = new MeuDaoImpl();
+    private List<Setor> setores;
+    private Setor setor;
+    ////////////////////////////////////////////////////////
+    
     public MbUsuario() {
+    }
+
+    @PostConstruct
+    public void init() {
+        setores = dao.consultaTodosSetores();
     }
 
     private InterfaceDAO<Usuario> usuarioDAO() {
@@ -61,6 +77,7 @@ public class MbUsuario implements Serializable {
 
     private void insertUsuario() {
         try {
+            usuario.setSetor(setor);
             usuario.setUsu_senha(ConverterSHA1.cipher(usuario.getUsu_senha()));
             usuario.setUsu_permissao("ROLE_ADMIN");
             usuarioDAO().save(usuario);
@@ -77,7 +94,7 @@ public class MbUsuario implements Serializable {
 
     private void updateUsuario() {
         try {
-//            usuario.setSetor(estado);
+            usuario.setSetor(setor);
             usuario.setUsu_senha(ConverterSHA1.cipher(usuario.getUsu_senha()));
             usuario.setUsu_permissao("ROLE_ADMIN");
             usuarioDAO().update(usuario);
@@ -123,6 +140,22 @@ public class MbUsuario implements Serializable {
         this.usuario = usuario;
     }
 
+    public List<Setor> getSetores() {
+        return setores;
+    }
+
+    public void setSetores(List<Setor> setores) {
+        this.setores = setores;
+    }
+
+    public Setor getSetor() {
+        return setor;
+    }
+
+    public void setSetor(Setor setor) {
+        this.setor = setor;
+    }
+
     public List<Usuario> getFilteredUsuarios() {
         return filteredUsuarios;
     }
@@ -130,5 +163,14 @@ public class MbUsuario implements Serializable {
     public void setFilteredUsuarios(List<Usuario> filteredUsuarios) {
         this.filteredUsuarios = filteredUsuarios;
     }
+
+    public List<Usuario> getConsultaUsuarios() {
+        return consultaUsuarios;
+    }
+
+    public void setConsultaUsuarios(List<Usuario> consultaUsuarios) {
+        this.consultaUsuarios = consultaUsuarios;
+    }
+    
 
 }

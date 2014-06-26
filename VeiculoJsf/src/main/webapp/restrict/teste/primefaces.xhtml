@@ -9,99 +9,153 @@
                 template="./../../resources/main.xhtml">
 
     <ui:define name="tarefas">
-        <p:fieldset legend="Cadastrar Modelos">
-            <br/>
+        <p:fieldset>
+
             <p:tabView id="tbv1" dynamic="true" cache="true">
-                <p:tab title="Modelo">
-                    <h:form prependId="false" id="formModelo">
-                        <p:growl id="msg0"/>
-                        <h:panelGrid styleClass="panelGrid" id="grid0">
+                <p:tab title="Formul&aacute;rio de Cadastro [Pessoa]">
+                    <h:form id="formPessoa">
 
-                            <h:outputLabel/>
-                            <h:inputHidden id="idmodelo" value="#{mbModelo.modelo.mod_id}"/> 
+                        <p:commandButton value="Novo Registro" action="#{mbPessoa.limpPessoa()}" process="@none" update="@form"
+                                         onclick="PF('viewPessoa').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
-                            <h:outputText value="Marca.:"/>
-                            <p:selectOneMenu id="mar_id" value="#{mbModelo.modelo.marca.mar_id}" required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio" >
-                                <f:selectItem itemLabel="Selecione" />
-                                <f:selectItems value="#{bbMarca.marcas}" var="marca"
-                                               itemValue="#{marca.mar_id}" itemLabel="#{marca.mar_nome}"/>
-                            </p:selectOneMenu>
+                        <div align="center">
+                            <p:dialog header="View Pessoa" widgetVar="viewPessoa" minimizable="true" maximizable="true" focus="nomePessoa">
+                                <h:panelGrid columns="2" cellpadding="5" >
 
-                            <h:outputText value="Modelo.:"/>
-                            <p:inputText id="nomemodelo" size="40" maxlength="50" value="#{mbModelo.modelo.mod_nome}"
-                                         required="true" requiredMessage="O campo [Modelo] &eacute; obrigat&oacute;rio."/>
+                                    <h:outputLabel/>
+                                    <h:inputHidden id="idpessoa" value="#{mbPessoa.pessoa.pes_id}"/> 
 
-                            <h:outputText value="Flag.:" />  
-                            <p:selectOneRadio id="mod_flag" value="#{mbModelo.modelo.mod_flag}" required="true" 
-                                              requiredMessage="O campo [Flag] &eacute; obrigat&oacute;rio.">  
-                                <f:selectItem itemLabel="Sim" itemValue="1" />  
-                                <f:selectItem itemLabel="N&atilde;o" itemValue="0" />   
-                            </p:selectOneRadio>
+                                    <h:outputLabel for="nomePessoa" value="Nome.:"/>
+                                    <p:inputText id="nomePessoa" size="40" value="#{mbPessoa.pessoa.pes_nome}"
+                                                 required="true" requiredMessage="O campo [Nome] &eacute; obrigat&oacute;rio"
+                                                 onkeyup="this.value = this.value.toUpperCase()"/>
 
-                            <p:panel style="text-align: center">
-                                <p:commandButton value="Salvar" action="#{mbModelo.addModelo}"
-                                                 image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                <p:commandButton value="Cancelar" actionListener="#{mbModelo.limpModelo}" 
-                                                 image="ui-icon ui-icon-close" update="@form"/>
-                            </p:panel>
-                        </h:panelGrid>
+                                    <h:outputLabel for="telefone" value="Telefone.:"/>
+                                    <p:inputMask id="telefone" size="40" mask="(99) 9999-9999"
+                                                 value="#{mbPessoa.pessoa.pes_tel}"
+                                                 required="true" requiredMessage="O campo [Telefone] &eacute; obrigat&oacute;rio"/>
+
+
+                                    <h:outputLabel for="cpf" value="CPF.:"/>
+                                    <p:inputMask id="cpf" size="40" mask="999.999.999-99" value="#{mbPessoa.pessoa.pes_cpf}"
+                                                 disabled="#{mbPessoa.pessoa.pes_cpf != null}" required="true" requiredMessage="O campo [CPF] &eacute; obrigat&oacute;rio">
+                                        <f:validator validatorId="cpfValidator"/>
+                                        <f:converter converterId="converter.CpfConverter" />
+                                    </p:inputMask>
+
+                                    <h:outputLabel for="rg" value="RG.:"/>
+                                    <p:inputText id="rg" size="40" value="#{mbPessoa.pessoa.pes_rg}"
+                                                 required="true" requiredMessage="O campo [RG] &eacute; obrigat&oacute;rio">
+                                    </p:inputText>
+
+
+                                    <h:outputLabel for="estado" value="Estado: *" />
+                                    <p:selectOneMenu id="estado" value="#{mbPessoa.estado}" style="width:150px"
+                                                     required="true" requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio" 
+                                                     converter="converterEstado"  >
+                                        <p:ajax listener="#{mbPessoa.listaCidades}" update="cidade" />
+                                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbPessoa.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.est_nome}" />
+                                    </p:selectOneMenu>
+
+
+                                    <h:outputLabel for="cidade" value="Cidade: *" />
+                                    <p:selectOneMenu id="cidade" value="#{mbPessoa.cidade}" required="true" style="width:150px"
+                                                     requiredMessage="O campo [Cidade] &eacute; obrigat&oacute;rio" converter="converterCidade">
+                                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbPessoa.cidades}" var="cidade" itemValue="#{cidade}" itemLabel="#{cidade.cid_nome}" />
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="#{mbPessoa.estado.est_id}" />
+                                    <h:outputText value="#{mbPessoa.cidade.cid_id}"/>
+
+                                </h:panelGrid>
+                                <p:panel style="text-align: center">
+                                    <p:commandButton value="Salvar" action="#{mbPessoa.addPessoa()}"
+                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                    <p:commandButton value="Cancelar" >
+<!--                                        <p:ajax update="panel" resetValues="true" />-->
+                                    </p:commandButton>
+                                </p:panel>
+                            </p:dialog>
+                        </div>
                     </h:form>
                 </p:tab>
             </p:tabView>
 
+
+
+
+
+
+
+
             <h:form id="formtable">
                 <p:growl id="msg1"/>
-                <p:dataTable id="idTabela" var="modelo" value="#{mbModelo.modelos}"
-                             paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                <p:dataTable id="idTabela" var="pessoa" value="#{mbPessoa.pessoas}"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15,30,50,100,200">
 
-                    <f:facet name="header">Lista de Modelos</f:facet>
-                    <p:column >
-                        <f:facet name="header">
-                            <h:outputText value="Id"/>
-                        </f:facet>
-                        <h:outputText value="#{modelo.mod_id}"/>
+                    <f:facet name="header">Lista de Pessoas</f:facet>
+                    <p:column headerText="Id" filterBy="#{pessoa.pes_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_id}"/>
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Marca"/>
-                        </f:facet>
-                        <h:outputText value="#{modelo.marca.mar_nome}"/>
+                    <p:column headerText="Pessoa" filterBy="#{pessoa.pes_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_nome}"/>
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Modelo"/>
-                        </f:facet>
-                        <h:outputText value="#{modelo.mod_nome}"/>
+                    <p:column headerText="Cpf" filterBy="#{pessoa.pes_cpf}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_cpf}"/>
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Flag"/>
-                        </f:facet>
-                        <h:outputText value="#{modelo.mod_flag}"/>
+                    <p:column headerText="Rg" filterBy="#{pessoa.pes_rg}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_rg}"/>
+                    </p:column>
+                    <p:column headerText="Tel" filterBy="#{pessoa.pes_tel}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_tel}"/>
+                    </p:column>
+                    <p:column headerText="Estado" filterBy="#{pessoa.estado.est_uf}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.estado.est_uf}"/>
+                    </p:column>
+                    <p:column headerText="Cidade" filterBy="#{pessoa.cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.cidade.cid_nome}"/>
                     </p:column>
 
-                    <p:column>
+                    <p:column style="width: 12%;">
                         <f:facet name="header">
                             <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>
-                        <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
-                                         process="@this" update=":tbv1:formModelo">
-                            <f:setPropertyActionListener target="#{mbModelo.modelo}"
-                                                         value="#{modelo}"/>
+                        <p:commandButton value="Editar" oncomplete="PF('viewPessoa').show();" update=":tbv1:formPessoa" 
+                                         process="@this" 
+                                         image="ui-icon ui-icon-pencil">
+                            <f:setPropertyActionListener target="#{mbPessoa.pessoa}" value="#{pessoa}"/>
+                            <f:setPropertyActionListener target="#{mbPessoa.pessoa.pes_id}" value="#{pessoa.pes_id}"/>
+                            <p:ajax listener="#{mbPessoa.listaCidades}" update=":tbv1:formPessoa:cidade" />
+                            <f:setPropertyActionListener target="#{mbPessoa.estado}" value="#{pessoa.estado}" />
+                            <f:setPropertyActionListener target="#{mbPessoa.cidade}" value="#{pessoa.cidade}" />
                         </p:commandButton>
-                        <p:commandButton value="Remover" action="#{mbModelo.deleteModelo()}"
-                                         image="ui-icon ui-icon-close" update="@form">
-                            <f:setPropertyActionListener target="#{mbModelo.modelo}"
-                                                         value="#{modelo}"/>
+
+                        <!-- Excluir -->
+                        <p:commandButton value="Remover" action="#{mbPessoa.deletePessoa}" update="@form">
+
+                            <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{mbPessoa.pessoa}" value="#{pessoa}"/>
+
+                            <!-- DialogConfirm Excluir registro -->
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
                         </p:commandButton>
+
 
                     </p:column>
 
                 </p:dataTable>
+
             </h:form>
+
 
         </p:fieldset>
     </ui:define>

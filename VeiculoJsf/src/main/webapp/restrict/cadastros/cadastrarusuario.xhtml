@@ -25,39 +25,36 @@
                                     <h:outputLabel/>
                                     <h:inputHidden id="usu_id" value="#{mbUsuario.usuario.usu_id}"/> 
 
-                                    
-                                    
-                                    <h:outputText value="Setor.:"/>
-                                    <p:selectOneMenu id="set_id" value="#{mbUsuario.usuario.setor.set_id}" required="true" requiredMessage="O campo [Setor] obrigatório">
-                                        <f:selectItem itemValue="" itemLabel="Selecione"/>
-                                        <f:selectItems value="#{bbSetor.setores}" var="setor"
-                                                       itemValue="#{setor.set_id}" itemLabel="#{setor.set_nome}"/>
-                                    </p:selectOneMenu>
-
-
+                                    <h:outputLabel value="Setor:" />
+                                    <h:selectOneMenu id="setor" value="#{mbUsuario.setor}" 
+                                                     required="true" requiredMessage="O campo [Setor] &eacute; obrigat&oacute;rio" 
+                                                     converter="converterSetor"  >
+                                        <f:selectItem itemLabel="Selecione" />
+                                        <f:selectItems value="#{mbUsuario.setores}" var="setor" itemValue="#{setor}" itemLabel="#{setor.set_nome}" />
+                                    </h:selectOneMenu>
 
                                     <h:outputText value="Usu&aacute;rio.:"/>
-                                    <p:inputText id="usu_nome" size="40" value="#{mbUsuario.usuario.usu_nome}"
+                                    <p:inputText id="usu_nome" size="40" maxlength="80" value="#{mbUsuario.usuario.usu_nome}"
                                                  onkeyup="this.value = this.value.toUpperCase()" required="true"
                                                  requiredMessage="O campo [Usu&aacute;rio] &eacute; obrigat&oacute;rio."/>
 
                                     <h:outputText value="Telefone.:"/>
-                                    <p:inputMask id="usu_tel" size="40" mask="(99) 9999-9999" value="#{mbUsuario.usuario.usu_tel}" 
+                                    <p:inputMask id="usu_tel" size="40" maxlength="14" mask="(99) 9999-9999" value="#{mbUsuario.usuario.usu_tel}" 
                                                  required="true" requiredMessage="O campo [Telefone] &eacute; obrigat&oacute;rio" />
 
                                     <h:outputText value="Celular.:"/>
-                                    <p:inputMask id="usu_cel" size="40" mask="(99) 99999-9999" value="#{mbUsuario.usuario.usu_cel}"
+                                    <p:inputMask id="usu_cel" size="40" maxlength="15" mask="(99) 99999-9999" value="#{mbUsuario.usuario.usu_cel}"
                                                  required="true" requiredMessage="O campo [Celular] &eacute; obrigat&oacute;rio"/>
 
                                     <h:outputLabel for="email" value="E-mail.:"/>
-                                    <p:inputText id="email" size="40" value="#{mbUsuario.usuario.usu_email}"
+                                    <p:inputText id="email" size="40" maxlength="50" value="#{mbUsuario.usuario.usu_email}"
                                                  onkeyup="this.value = this.value.toLowerCase()" required="true"
                                                  requiredMessage="O campo [Email] &eacute; obrigat&oacute;rio.">
                                         <f:validator validatorId="emailValidator"/>
                                     </p:inputText>
 
                                     <h:outputText value="Senha.:"/>
-                                    <p:password id="usu_senha" size="40" value="#{mbUsuario.usuario.usu_senha}"
+                                    <p:password id="usu_senha" size="40" maxlength="40" value="#{mbUsuario.usuario.usu_senha}"
                                                 required="true" requiredMessage="O campo [Senha] &eacute; obrigat&oacute;rio." feedback="true" 
                                                 promptLabel="Por favor, digite a senha!!!" weakLabel="Fraco"  
                                                 goodLabel="M&eacute;dio" strongLabel="Forte" />
@@ -74,8 +71,6 @@
                     </h:form>
                 </p:tab>
             </p:tabView>
-
-
 
 
 
@@ -110,7 +105,7 @@
                         <h:outputText value="#{usuario.setor.set_nome}"/>
                     </p:column>
 
-                    <p:column>
+                    <p:column style="width: 12%;">
                         <f:facet name="header">
                             <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>
@@ -118,8 +113,8 @@
                                          process="@this"
                                          image="ui-icon ui-icon-pencil">
                             <f:setPropertyActionListener target="#{mbUsuario.usuario}" value="#{usuario}"/>
-                            <f:setPropertyActionListener target="#{mbUsuario.usuario.setor}" value="#{usuario.setor}"/>
-                            <f:setPropertyActionListener target="#{mbUsuario.usuario.setor.set_id}" value="#{usuario.setor.set_id}"/>
+                            <f:setPropertyActionListener target="#{mbUsuario.usuario.usu_id}" value="#{usuario.usu_id}"/>
+                            <f:setPropertyActionListener target="#{mbUsuario.setor}" value="#{usuario.setor}"/>
                         </p:commandButton>
 
                         <!-- Excluir -->

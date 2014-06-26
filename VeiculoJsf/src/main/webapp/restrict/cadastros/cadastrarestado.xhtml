@@ -15,7 +15,7 @@
                 <p:tab title="Formul&aacute;rio de Cadastro [Estado]">
                     <h:form prependId="false" id="formEstado">
 
-                        <p:commandButton value="Novo Resgistro" action="#{mbEstado.limpEstado}" onclick="PF('viewEstado').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                        <p:commandButton value="Novo Registro" action="#{mbEstado.limpEstado}" onclick="PF('viewEstado').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
                         <div align="center">
                             <p:dialog header="View Estado" widgetVar="viewEstado" minimizable="true" maximizable="true" focus="est_nome">
@@ -24,22 +24,23 @@
                                     <h:outputLabel/>
                                     <h:inputHidden id="est_id" value="#{mbEstado.estado.est_id}"/> 
 
-                                    <h:outputText value="Pa&iacute;s.:"/>
-                                    <p:selectOneMenu id="pa_id" value="#{mbEstado.estado.pais.pa_id}" required="true" requiredMessage="O campo [Pa&iacute;s] &eacute; obrigat&oacute;rio" >
-                                        <f:selectItem itemValue="" itemLabel="Selecione" />
-                                        <f:selectItems value="#{bbPais.paises}" var="pais"
-                                                       itemLabel="#{pais.pa_sigla}" itemValue="#{pais.pa_id}"/>
-                                    </p:selectOneMenu>
-
-                                    <h:outputText value="Estado.:"/>
-                                    <p:inputText id="est_nome" size="40" value="#{mbEstado.estado.est_nome}"
-                                                 required="true" 
-                                                 requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio."/>
+                                    <h:outputLabel value="Pa&iacute;s:" />
+                                    <h:selectOneMenu id="setor" value="#{mbEstado.pais}" 
+                                                     required="true" requiredMessage="O campo [País] &eacute; obrigat&oacute;rio" 
+                                                     converter="converterPais"  >
+                                        <f:selectItem itemLabel="Selecione" />
+                                        <f:selectItems value="#{mbEstado.paises}" var="pais" itemValue="#{pais}" itemLabel="#{pais.pa_sigla}" />
+                                    </h:selectOneMenu>
 
                                     <h:outputText value="UF.:"/>
                                     <p:inputText id="est_uf" size="4" maxlength="2" value="#{mbEstado.estado.est_uf}"
                                                  onkeyup="this.value = this.value.toUpperCase()" required="true"
                                                  requiredMessage="O campo [UF] &eacute; obrigat&oacute;rio."/>
+
+                                    <h:outputText value="Estado.:"/>
+                                    <p:inputText id="est_nome" size="40" maxlength="50" value="#{mbEstado.estado.est_nome}"
+                                                 required="true" 
+                                                 requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio."/>
 
                                 </h:panelGrid>
                                 <p:panel style="text-align: center">
@@ -92,8 +93,7 @@
                                          image="ui-icon ui-icon-pencil">
                             <f:setPropertyActionListener target="#{mbEstado.estado}" value="#{estado}"/>
                             <f:setPropertyActionListener target="#{mbEstado.estado.est_id}" value="#{estado.est_id}"/>
-                            <f:setPropertyActionListener target="#{mbEstado.estado.pais}" value="#{estado.pais}"/>
-                            <f:setPropertyActionListener target="#{mbEstado.estado.pais.pa_id}" value="#{estado.pais.pa_id}"/>
+                            <f:setPropertyActionListener target="#{mbEstado.pais}" value="#{estado.pais}"/>
                         </p:commandButton>
 
                         <!-- Excluir -->
@@ -101,7 +101,7 @@
 
                             <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
                             <f:setPropertyActionListener target="#{mbEstado.estado}" value="#{estado}"/>
-                            
+
                             <!-- DialogConfirm Excluir registro -->
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />

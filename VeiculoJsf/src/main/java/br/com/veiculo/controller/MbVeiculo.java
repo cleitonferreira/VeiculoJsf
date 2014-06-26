@@ -14,20 +14,22 @@ import br.com.veiculo.model.entities.Pessoa;
 import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author cleiton
  */
 @ManagedBean(name = "mbVeiculo")
-@SessionScoped
+@ViewScoped
 public class MbVeiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +37,7 @@ public class MbVeiculo implements Serializable {
     private Veiculo veiculo = new Veiculo();
     private List<Veiculo> veiculos;
     private List<Veiculo> filteredVeiculos;
+    private List<Veiculo> consultaVeiculos;
 
     private Pessoa selected;
 
@@ -63,6 +66,10 @@ public class MbVeiculo implements Serializable {
         return veiculoDAO;
     }
 
+    public void reset() {
+        RequestContext.getCurrentInstance().reset("@form :formVeiculo");
+    }
+
     public String limpVeiculo() {
         veiculo = new Veiculo();
         return editVeiculo();
@@ -86,26 +93,63 @@ public class MbVeiculo implements Serializable {
 
     private void insertVeiculo() {
 
-        try {
+        String placa = veiculo.getVeic_placa();
+        ArrayList resultado = (ArrayList) dao.consultaPlaca(placa);
+        System.out.println("Resultado>>>>" + resultado.toString());
 
-            veiculo.setPessoa(selected);
-            veiculo.setMarca(marca);
-            veiculo.setModelo(modelo);
-            veiculoDAO().save(veiculo);
+        if (resultado.toString().equals("[1]")) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar], no Banco de Dados!!!", ""));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "A placa do veículo se encontra, cadastrado no sistema", "" + placa));
+        } else {
+            try {
+                veiculo.setPessoa(selected);
+                veiculo.setMarca(marca);
+                veiculo.setModelo(modelo);
+                veiculoDAO().save(veiculo);
 
-        } catch (Exception ex) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Aconteceu um Error inesperado.", "" + ex)); 
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
+                //Limpar os campos
+                limpVeiculo();
+            } catch (Exception ex) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar],  no Banco de Dados", "" + ex));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+            }
         }
 
     }
 
     private void updateVeiculo() {
-        veiculoDAO().update(veiculo);
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
+        String placa = veiculo.getVeic_placa();
+        ArrayList resultado = (ArrayList) dao.consultaPlaca(placa);
+        System.out.println("Resultado>>>>" + resultado.toString());
+
+        if (resultado.toString().equals("[1]")) {
+            try {
+                veiculo.setPessoa(selected);
+                veiculo.setMarca(marca);
+                veiculo.setModelo(modelo);
+                veiculoDAO().update(veiculo);
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
+            } catch (Exception ex) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados", "" + ex));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+            }
+
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados!!!", ""));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Por Favor, não altere a placa do veículo", "" + placa));
+
+        }
     }
 
     public void deleteVeiculo() {
@@ -191,7 +235,13 @@ public class MbVeiculo implements Serializable {
     public void setFilteredVeiculos(List<Veiculo> filteredVeiculos) {
         this.filteredVeiculos = filteredVeiculos;
     }
-    
-    
+
+    public List<Veiculo> getConsultaVeiculos() {
+        return consultaVeiculos;
+    }
+
+    public void setConsultaVeiculos(List<Veiculo> consultaVeiculos) {
+        this.consultaVeiculos = consultaVeiculos;
+    }
 
 }

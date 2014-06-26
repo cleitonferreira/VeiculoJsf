@@ -12,14 +12,14 @@ import br.com.veiculo.model.entities.Pessoa;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Cleiton
  */
 @ManagedBean(name = "pessoaControl")
-@SessionScoped
+@ViewScoped
 public class PessoaControl implements Serializable {
 
     private static final long serialVersionUID = 1L;

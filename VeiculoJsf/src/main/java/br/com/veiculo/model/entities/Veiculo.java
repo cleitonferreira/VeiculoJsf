@@ -30,14 +30,14 @@ public class Veiculo implements Serializable {
     @GeneratedValue
     @Column(name = "veic_id", nullable = false)
     private Integer veic_id;
-    @Column(name = "veic_ano", nullable = false, length = 10)
+    @Column(name = "veic_ano", nullable = false, length = 10) 
     private String veic_ano;
-    @Column(name = "veic_placa", nullable = false, length = 10)
+    @Column(name = "veic_placa", nullable = false, length = 8) //AAA-0000
     private String veic_placa;
-    @Column(name = "veic_cor", nullable = false, length = 15)
+    @Column(name = "veic_cor", nullable = false, length = 20)
     private String veic_cor;
 
-    //Relacionamento 1 / 1
+    //Relacionamentos
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "VeiculoPessoa")
     @JoinColumn(name = "pes_id", referencedColumnName = "pes_id")

@@ -12,6 +12,7 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="setor" value="#{mbSetor.setores}"
+                         selectionMode="multiple" selection="#{mbSetor.consultaSetores}" rowKey="#{setor.set_id}"
                          paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -24,28 +25,32 @@
                     </p:outputPanel>
                 </f:facet>
 
-                <p:column headerText="Id" filterBy="#{setor.set_id}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Id" filterBy="#{setor.set_id}">
                     <h:outputText value="#{setor.set_id}"/>
                 </p:column>
 
-                <p:column headerText="Setor" filterBy="#{setor.set_nome}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Setor" filterBy="#{setor.set_nome}">
                     <h:outputText value="#{setor.set_nome}"/>
                 </p:column>
 
-                <p:column headerText="Id" filterBy="#{setor.set_ramal}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Id" filterBy="#{setor.set_ramal}">
                     <h:outputText value="#{setor.set_ramal}"/>
                 </p:column>
 
-                <p:column headerText="Id" filterBy="#{setor.set_responsavel}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Id" filterBy="#{setor.set_responsavel}">
                     <h:outputText value="#{setor.set_responsavel}"/>
                 </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="idTabela" style="float: left; margin-top: -45px; position: relative;" update=":form:infoSetor" icon="ui-icon-search" value="View" oncomplete="PF('setorDialog').show()" />
+                </f:facet>
 
 
             </p:dataTable>
 
             <h:commandLink>  
                 <p:graphicImage value="./../../resources/icons/excel.png" />  
-                <p:dataExporter type="xls" target="idTabela" fileName="setores"  />  
+                <p:dataExporter type="xls" target="idTabela" fileName="setores"/>  
             </h:commandLink>  
             &nbsp;
             <h:commandLink>  
@@ -65,6 +70,23 @@
 
 
         </h:form>
+
+
+        <h:form id="form">
+            <p:dialog header="Informa&ccedil;&otilde;es sobre a Setor" widgetVar="setorDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                <p:outputPanel id="infoSetor">
+                    <ui:repeat value="#{mbSetor.consultaSetores}" var="setor">
+                        <h:outputText value=" Id: #{setor.set_id}" style="display:block"/>
+                        <h:outputText value=" Setor: #{setor.set_nome}" style="display:block"/>
+                        <h:outputText value=" Ramal: #{setor.set_ramal}" style="display:block"/>
+                        <h:outputText value=" Respons&aacute;vel: #{setor.set_responsavel}" style="display:block"/>
+                        <br />
+                    </ui:repeat>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+
+
     </ui:define>
 
 </ui:composition>

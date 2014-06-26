@@ -6,7 +6,7 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
 
@@ -27,15 +27,13 @@ import org.hibernate.annotations.ForeignKey;
 public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-//        public static ArrayList<Pessoa> listapessoas = new ArrayList<Pessoa>();
-    
 
+//        public static ArrayList<Pessoa> listapessoas = new ArrayList<Pessoa>();
     @Id
     @GeneratedValue
     @Column(name = "pes_id", nullable = false)
     private Integer pes_id;
-    @Column(name = "pes_nome", nullable = false, length = 50)
+    @Column(name = "pes_nome", nullable = false, length = 80)
     private String pes_nome;
     @Column(name = "pes_cpf", unique = true, nullable = false, length = 14)
     private String pes_cpf;
@@ -43,10 +41,12 @@ public class Pessoa implements Serializable {
     private String pes_rg;
     @Column(name = "pes_tel", nullable = false, length = 14)//(34)-8888-8888
     private String pes_tel;
+    @Column(name = "pes_cel", nullable = false, length = 15)//(34)-88888-8888
+    private String pes_cel;
 
-    @OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)
     @ForeignKey(name = "VeiculoPessoa")
-    private List<Veiculo> veiculos;
+    private Veiculo veiculo;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "EstadoPessoa")
@@ -103,12 +103,20 @@ public class Pessoa implements Serializable {
         this.pes_tel = pes_tel;
     }
 
-    public List<Veiculo> getVeiculos() {
-        return veiculos;
+    public String getPes_cel() {
+        return pes_cel;
     }
 
-    public void setVeiculos(List<Veiculo> veiculos) {
-        this.veiculos = veiculos;
+    public void setPes_cel(String pes_cel) {
+        this.pes_cel = pes_cel;
+    }
+
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
     public Estado getEstado() {
@@ -126,8 +134,6 @@ public class Pessoa implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
-
-    
     
     
 

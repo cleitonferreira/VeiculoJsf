@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
  * @author cleiton
  */
 @ManagedBean(name = "mbMarca")
-@SessionScoped
+@ViewScoped
 public class MbMarca implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +29,7 @@ public class MbMarca implements Serializable {
     private Marca marca = new Marca();
     private List<Marca> marcas;
     private List<Marca> filteredMarcas;
+    private List<Marca> consultaMarcas;
 
     public MbMarca() {
     }
@@ -124,5 +125,14 @@ public class MbMarca implements Serializable {
         this.filteredMarcas = filteredMarcas;
     }
 
+    public List<Marca> getConsultaMarcas() {
+        return consultaMarcas;
+    }
+
+    public void setConsultaMarcas(List<Marca> consultaMarcas) {
+        this.consultaMarcas = consultaMarcas;
+    }
+
+    
     
 }

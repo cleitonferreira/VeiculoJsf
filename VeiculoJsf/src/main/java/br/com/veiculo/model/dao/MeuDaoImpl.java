@@ -8,7 +8,9 @@ import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
+import br.com.veiculo.model.entities.Pais;
 import br.com.veiculo.model.entities.Pessoa;
+import br.com.veiculo.model.entities.Setor;
 import br.com.veiculo.util.HibernateCombos;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -98,30 +100,40 @@ public class MeuDaoImpl implements MeuDao, Serializable {
         return results;
     }
 
-    //Verifica Cpf, se for igual atualiza
-    @Override
-    public Object atualizaCpf(Integer id) {
-        System.out.println("Variavel>>>>>>" + id);
-        SQLQuery crit = HibernateCombos.getSession().createSQLQuery("SELECT `pes_cpf` FROM `pessoa` WHERE `pes_id` = " + id);
-//        ProjectionList projList = Projections.projectionList();
-//        projList.add(Projections.groupProperty("pes_cpf"),cpf);
-//        crit.setProjection(projList);
-//        crit.add(Restrictions.ne("pes_cpf", cpf));
 
-        List result = crit.list();
-        System.out.println("List >>>>" + result.toString());
-        return result;
+    @Override
+    public Object consultaPlaca(String placa) {
+        System.out.println("Variavel>>>>>>" + placa);
+        SQLQuery sql = HibernateCombos.getSession().createSQLQuery("SELECT COUNT(*) FROM `veiculo` WHERE `veic_placa` = '" + placa +"'");
+
+        List resultados = new ArrayList();
+        resultados = sql.list();
+        System.out.println("List >>>>" + resultados);
+
+        return resultados;
     }
 
-//    @Override
-//    public Object consultaPlaca(String placa) {
-////        System.out.println("Variavel>>>>>>" + placa);
-//        Criteria crit = HibernateCombos.getSession().createCriteria(Pessoa.class);
-//        ProjectionList projList = Projections.projectionList();
-//        projList.add(Projections.groupProperty("veic_placa"), placa);
-//        crit.setProjection(projList);
-//        List results_placas = crit.list();
-//
-//        return results_placas;
-//    }
+    //Setor
+    @Override
+    public Setor getByIdSetor(Integer id) {
+        return (Setor) HibernateCombos.getSession().get(Setor.class, id);
+    }
+
+    @Override
+    public List<Setor> consultaTodosSetores() {
+        Criteria crit = HibernateCombos.getSession().createCriteria(Setor.class);
+        return crit.list();
+    }
+
+    @Override
+    public Pais getByIdPais(Integer id) {
+        return (Pais) HibernateCombos.getSession().get(Pais.class, id);
+    }
+
+    @Override
+    public List<Pais> consultaTodosPaises() {
+        Criteria crit = HibernateCombos.getSession().createCriteria(Pais.class);
+        return crit.list();
+    }
+
 }

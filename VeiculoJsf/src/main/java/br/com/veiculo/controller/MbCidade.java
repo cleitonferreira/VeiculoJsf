@@ -7,13 +7,16 @@ package br.com.veiculo.controller;
 
 import br.com.veiculo.model.dao.HibernateDAO;
 import br.com.veiculo.model.dao.InterfaceDAO;
+import br.com.veiculo.model.dao.MeuDaoImpl;
 import br.com.veiculo.model.entities.Cidade;
+import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -21,7 +24,7 @@ import javax.faces.context.FacesContext;
  * @author XPredator
  */
 @ManagedBean(name = "mbCidade")
-@SessionScoped
+@ViewScoped
 public class MbCidade implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,10 +32,23 @@ public class MbCidade implements Serializable {
     private Cidade cidade = new Cidade();
     public List<Cidade> cidades;
     private List<Cidade> filteredCidades;
+    private List<Cidade> consultaCidades;
+
+    ///// Objetos para o Combo Estado \\\\\
+    //private final MeuDaoImpl mmdao = new MeuDaoImpl();
+    private final MeuDaoImpl dao = new MeuDaoImpl();
+    private List<Estado> estados;
+    private Estado estado;
+    ////////////////////////////////////////////////////////
 
     public MbCidade() {
     }
-    
+
+    @PostConstruct
+    public void init() {
+        estados = dao.consultaTodosEstados();
+    }
+
     private InterfaceDAO<Cidade> cidadeDAO() {
         InterfaceDAO<Cidade> cidadeDAO = new HibernateDAO<Cidade>(Cidade.class, FacesContextUtil.getRequestSession());
         return cidadeDAO;
@@ -61,6 +77,7 @@ public class MbCidade implements Serializable {
     private void insertCidade() {
 
         try {
+            cidade.setEstado(estado);
             cidadeDAO().save(cidade);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
@@ -76,6 +93,7 @@ public class MbCidade implements Serializable {
 
     private void updateCidade() {
         try {
+            cidade.setEstado(estado);
             cidadeDAO().update(cidade);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
@@ -117,13 +135,39 @@ public class MbCidade implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
-    
+
     public List<Cidade> getFilteredCidades() {
         return filteredCidades;
     }
- 
+
     public void setFilteredCidades(List<Cidade> filteredCidades) {
         this.filteredCidades = filteredCidades;
     }
+
+    public List<Estado> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(List<Estado> estados) {
+        this.estados = estados;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public List<Cidade> getConsultaCidades() {
+        return consultaCidades;
+    }
+
+    public void setConsultaCidades(List<Cidade> consultaCidades) {
+        this.consultaCidades = consultaCidades;
+    }
+    
+    
 
 }

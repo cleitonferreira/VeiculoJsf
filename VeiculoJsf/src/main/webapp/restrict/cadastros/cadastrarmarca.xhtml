@@ -15,7 +15,7 @@
                 <p:tab title="Formul&aacute;rio de Cadastro [Marca]">
                     <h:form prependId="false" id="formMarca">
 
-                        <p:commandButton value="Novo Resgistro" action="#{mbMarca.limpMarca}" onclick="PF('viewMarca').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                        <p:commandButton value="Novo Registro" action="#{mbMarca.limpMarca}" onclick="PF('viewMarca').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
                         <div align="center">
                             <p:dialog header="View Marca" widgetVar="viewMarca" minimizable="true" maximizable="true" focus="mar_nome">
@@ -25,7 +25,7 @@
                                     <h:inputHidden id="mar_id" value="#{mbMarca.marca.mar_id}"/> 
 
                                     <h:outputText value="Marca.:"/>
-                                    <p:inputText id="mar_nome" size="40" maxlength="60" value="#{mbMarca.marca.mar_nome}"
+                                    <p:inputText id="mar_nome" size="40" maxlength="50" value="#{mbMarca.marca.mar_nome}"
                                                  required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio."/>
 
                                     <h:outputText value="Flag.:" />  

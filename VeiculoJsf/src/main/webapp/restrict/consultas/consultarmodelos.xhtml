@@ -12,6 +12,7 @@
         <h:form>
             <p:growl id="msg0"/>
             <p:dataTable id="idTabela" var="modelo" value="#{mbModelo.modelos}"
+                         selectionMode="multiple" selection="#{mbModelo.consultaModelos}" rowKey="#{modelo.mod_id}"
                          paginator="true" rows="50" paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -24,21 +25,25 @@
                     </p:outputPanel>
                 </f:facet>
 
-                <p:column headerText="Id" filterBy="#{modelo.mod_id}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Id" filterBy="#{modelo.mod_id}">
                     <h:outputText value="#{modelo.mod_id}"/>
                 </p:column>
 
-                <p:column headerText="Modelo" filterBy="#{modelo.mod_nome}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Modelo" filterBy="#{modelo.mod_nome}">
                     <h:outputText value="#{modelo.mod_nome}"/>
                 </p:column>
 
-                <p:column headerText="Flag" filterBy="#{modelo.mod_flag}"  footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{modelo.mod_flag}"/>
+                <p:column headerText="Flag" filterBy="#{modelo.mod_flag == '1' ? 'Sim' : 'N&atilde;o'}">
+                    <h:outputText value="#{modelo.mod_flag == '1' ? 'Sim' : 'N&atilde;o'}"/>
                 </p:column>
 
-                <p:column headerText="Marca" filterBy="#{modelo.marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
+                <p:column headerText="Marca" filterBy="#{modelo.marca.mar_nome}">
                     <h:outputText value="#{modelo.marca.mar_nome}"/>
                 </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton process="idTabela" style="float: left; margin-top: -45px; position: relative;" update=":form:infoModelo" icon="ui-icon-search" value="View" oncomplete="PF('modeloDialog').show()" />
+                </f:facet>
 
 
             </p:dataTable>
@@ -65,6 +70,24 @@
 
 
         </h:form>
+
+
+        <h:form id="form">
+            <p:dialog header="Informa&ccedil;&otilde;es sobre a Modelo" widgetVar="modeloDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                <p:outputPanel id="infoModelo">
+                    <ui:repeat value="#{mbModelo.consultaModelos}" var="modelo">
+                        <h:outputText value=" Id: #{modelo.mod_id}" style="display:block"/>
+                        <h:outputText value=" Marca: #{modelo.marca.mar_nome}" style="display:block"/>
+                        <h:outputText value=" Modelo: #{modelo.mod_nome}" style="display:block"/>
+                        <h:outputText value=" Flag: #{modelo.mod_flag == '1' ? 'Sim' : 'Nao'}" style="display:block"/>
+                        <br />
+                    </ui:repeat>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+
+
+
     </ui:define>
 
 </ui:composition>

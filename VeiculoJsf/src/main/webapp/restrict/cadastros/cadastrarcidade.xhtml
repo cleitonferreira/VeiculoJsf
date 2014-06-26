@@ -10,104 +10,105 @@
 
     <ui:define name="tarefas">
         <p:fieldset>
-        
-        <p:tabView id="tbv1" dynamic="true" cache="true">
-            <p:tab title="Formul&aacute;rio de Cadastro [Cidade]">
-                <h:form prependId="false" id="formCidade">
 
-                    <p:commandButton value="Novo Resgistro" action="#{mbCidade.limpCidade}" 
-                                     onclick="PF('viewCidade').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Formul&aacute;rio de Cadastro [Cidade]">
+                    <h:form prependId="false" id="formCidade">
 
-                    <div align="center">
-                        <p:dialog header="View Cidade" widgetVar="viewCidade" minimizable="true" maximizable="true" focus="cid_nome">
-                            <h:panelGrid columns="2" cellpadding="5" >
+                        <p:commandButton value="Novo Registro" action="#{mbCidade.limpCidade}" 
+                                         onclick="PF('viewCidade').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
-                                <h:outputLabel/>
-                            <h:inputHidden id="cid_id" value="#{mbCidade.cidade.cid_id}"/> 
+                        <div align="center">
+                            <p:dialog header="View Cidade" widgetVar="viewCidade" minimizable="true" maximizable="true" focus="cid_nome">
+                                <h:panelGrid columns="2" cellpadding="5" >
 
-                            <h:outputText value="Estado.:"/>
-                            <p:selectOneMenu id="est_id" value="#{mbCidade.cidade.estado.est_id}" required="true" 
-                                             requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio" >
-                                <f:selectItem itemLabel="Selecione" />
-                                <f:selectItems value="#{bbEstado.estados}" var="estado"
-                                               itemValue="#{estado.est_id}" itemLabel="#{estado.est_nome}"/>
-                            </p:selectOneMenu>
+                                    <h:outputLabel/>
+                                    <h:inputHidden id="cid_id" value="#{mbCidade.cidade.cid_id}"/> 
 
-                            <h:outputText value="Cidade.:"/>
-                            <p:inputText id="cid_nome" size="40" maxlength="225" value="#{mbCidade.cidade.cid_nome}"
-                                         required="true"
-                                         requiredMessage="O campo [Cidade] &eacute; obrigat&oacute;rio."/>
+                                    <h:outputText value="Estado.:"/>
+                                    <h:selectOneMenu id="estado" value="#{mbCidade.estado}" 
+                                                     required="true" requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio" 
+                                                     converter="converterEstado"  >
+                                        <f:selectItem itemLabel="Selecione" />
+                                        <f:selectItems value="#{mbCidade.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.est_uf}" />
+                                    </h:selectOneMenu>
 
-                            </h:panelGrid>
-                            <p:panel style="text-align: center">
-                                <p:commandButton value="Salvar" action="#{mbCidade.addCidade()}"
-                                                 image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                <p:commandButton value="Cancelar" actionListener="#{mbCidade.limpCidade()}" 
-                                                 image="ui-icon ui-icon-close" update="@form"/>
-                            </p:panel>
-                        </p:dialog>
-                    </div>
-                </h:form>
-            </p:tab>
-        </p:tabView>
+                                    <h:outputText value="Cidade.:"/>
+                                    <p:inputText id="cid_nome" size="40" maxlength="50" value="#{mbCidade.cidade.cid_nome}"
+                                                 required="true"
+                                                 requiredMessage="O campo [Cidade] &eacute; obrigat&oacute;rio."/>
 
-
+                                </h:panelGrid>
+                                <p:panel style="text-align: center">
+                                    <p:commandButton value="Salvar" action="#{mbCidade.addCidade()}"
+                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                    <p:commandButton value="Cancelar" actionListener="#{mbCidade.limpCidade()}" 
+                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                </p:panel>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
 
 
 
 
 
 
-        <h:form id="formtable">
-            <p:growl id="msg1"/>
-            <p:dataTable id="idTabela" var="cidade" value="#{mbCidade.cidades}"
-                         paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
-                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15,30,50,100,200">
-
-                <f:facet name="header">Lista de Cidades</f:facet>
-                <p:column headerText="Id" filterBy="#{cidade.cid_id}"  footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{cidade.cid_id}"/>
-                </p:column>
-                <p:column headerText="Cidade" filterBy="#{cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{cidade.cid_nome}"/>
-                </p:column>
-                <p:column headerText="Estado" filterBy="#{cidade.estado.est_uf}"  footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{cidade.estado.est_uf}"/>
-                </p:column>
-
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="A&ccedil;&otilde;es"/>
-                    </f:facet>
-                    <p:commandButton value="Editar" oncomplete="PF('viewCidade').show();" update=":tbv1:formCidade" 
-                                     process="@this"
-                                     image="ui-icon ui-icon-pencil">
-                        <f:setPropertyActionListener target="#{mbCidade.cidade}" value="#{cidade}"/>
-                        <f:setPropertyActionListener value="#{cidade.estado.est_id}" target="#{mbCidade.cidade.estado.est_id}"/>
-                    </p:commandButton>
-
-                    <!-- Excluir -->
-                    <p:commandButton value="Remover" action="#{mbCidade.deleteCidade}" update="@form">
-
-                        <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
-                        <f:setPropertyActionListener target="#{mbCidade.cidade}" value="#{cidade}"/>
-
-                        <!-- DialogConfirm Excluir registro -->
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                            <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                        </p:confirmDialog>
-
-                    </p:commandButton>
 
 
-                </p:column>
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="cidade" value="#{mbCidade.cidades}"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
 
-            </p:dataTable>
+                    <f:facet name="header">Lista de Cidades</f:facet>
+                    <p:column headerText="Id" filterBy="#{cidade.cid_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{cidade.cid_id}"/>
+                    </p:column>
+                    <p:column headerText="Cidade" filterBy="#{cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{cidade.cid_nome}"/>
+                    </p:column>
+                    <p:column headerText="Estado" filterBy="#{cidade.estado.est_uf}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{cidade.estado.est_uf}"/>
+                    </p:column>
 
-        </h:form>
+                    <p:column style="width: 12%;">
+                        <f:facet name="header">
+                            <h:outputText value="A&ccedil;&otilde;es"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" oncomplete="PF('viewCidade').show();" update=":tbv1:formCidade" 
+                                         process="@this"
+                                         image="ui-icon ui-icon-pencil">
+                            <f:setPropertyActionListener target="#{mbCidade.cidade}" value="#{cidade}"/>
+                            <f:setPropertyActionListener target="#{mbCidade.cidade.cid_id}" value="#{cidade.cid_id}"/>
+                            <f:setPropertyActionListener target="#{mbCidade.estado}" value="#{cidade.estado}"/>
+                        </p:commandButton>
+
+                        <!-- Excluir -->
+                        <p:commandButton value="Remover" action="#{mbCidade.deleteCidade}" update="@form">
+
+                            <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{mbCidade.cidade}" value="#{cidade}"/>
+
+                            <!-- DialogConfirm Excluir registro -->
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:commandButton>
+
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
 
 
         </p:fieldset>

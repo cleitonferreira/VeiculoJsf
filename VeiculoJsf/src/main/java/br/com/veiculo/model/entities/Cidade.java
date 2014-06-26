@@ -32,7 +32,7 @@ public class Cidade implements Serializable {
     @GeneratedValue
     @Column(name = "cid_id", nullable = false)
     private Integer cid_id;
-    @Column(name = "cid_nome", nullable = false, length = 255)
+    @Column(name = "cid_nome", nullable = false, length = 50)
     private String cid_nome;
 
     //relacionamento com estado

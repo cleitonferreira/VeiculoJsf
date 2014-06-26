@@ -7,13 +7,16 @@ package br.com.veiculo.controller;
 
 import br.com.veiculo.model.dao.HibernateDAO;
 import br.com.veiculo.model.dao.InterfaceDAO;
+import br.com.veiculo.model.dao.MeuDaoImpl;
+import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -21,18 +24,31 @@ import javax.faces.context.FacesContext;
  * @author cleiton
  */
 @ManagedBean(name = "mbModelo")
-@SessionScoped
+@ViewScoped
 public class MbModelo implements Serializable {
 
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Modelo modelo = new Modelo();
     public List<Modelo> modelos;
     private List<Modelo> filteredModelos;
+    private List<Modelo> consultaModelos;
+
+    ///// Objetos para o Combo Marca \\\\\
+    //private final MeuDaoImpl mmdao = new MeuDaoImpl();
+    private final MeuDaoImpl dao = new MeuDaoImpl();
+    private List<Marca> marcas;
+    private Marca marca;
+    ////////////////////////////////////////////////////////
 
     public MbModelo() {
     }
-    
+
+    @PostConstruct
+    public void init() {
+        marcas = dao.consultaTodasMarcas();
+    }
+
     private InterfaceDAO<Modelo> modeloDAO() {
         InterfaceDAO<Modelo> modeloDAO = new HibernateDAO<Modelo>(Modelo.class, FacesContextUtil.getRequestSession());
         return modeloDAO;
@@ -61,6 +77,7 @@ public class MbModelo implements Serializable {
     private void insertModelo() {
 
         try {
+            modelo.setMarca(marca);
             modeloDAO().save(modelo);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
@@ -76,6 +93,7 @@ public class MbModelo implements Serializable {
 
     private void updateModelo() {
         try {
+            modelo.setMarca(marca);
             modeloDAO().update(modelo);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
@@ -117,13 +135,38 @@ public class MbModelo implements Serializable {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
-    
+
     public List<Modelo> getFilteredModelos() {
         return filteredModelos;
     }
- 
+
     public void setFilteredModelos(List<Modelo> filteredModelos) {
         this.filteredModelos = filteredModelos;
     }
 
+    public List<Marca> getMarcas() {
+        return marcas;
+    }
+
+    public void setMarcas(List<Marca> marcas) {
+        this.marcas = marcas;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public List<Modelo> getConsultaModelos() {
+        return consultaModelos;
+    }
+
+    public void setConsultaModelos(List<Modelo> consultaModelos) {
+        this.consultaModelos = consultaModelos;
+    }
+
+    
 }

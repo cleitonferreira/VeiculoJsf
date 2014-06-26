@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <p:fieldset>
+
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Formul&aacute;rio de Cadastro [Pessoa/Ve&iacute;culo]">
+                    <h:form prependId="false" id="formPessoa">
+
+                        <p:commandButton value="Novo Registro" onclick="PF('viewPessoa').show();" 
+                                         action="#{mbPessoaVeiculo.limpPessoa()}" type="button" 
+                                         styleClass="" icon="ui-icon-extlink" />
+
+                        <div align="center">
+                            <p:dialog header="View Pessoa" widgetVar="viewPessoa" minWidth="500" width="500" height="610" minimizable="true" maximizable="true">
+
+
+                                <p:wizard nextLabel="Pr&oacute;xima Aba" backLabel="Aba Anterior" flowListener="#{mbPessoaVeiculo.onFlowProcess}">
+                                    <p:tab title="Informa&ccedil;&otilde;es B&aacute;sicas" id="infoPessoal">
+                                        <p:panel header="Informa&ccedil;&otilde;es B&aacute;sicas da Pessoa">
+                                            <p:growl id="msg0"/>
+                                            <h:panelGrid styleClass="panelGrid">
+
+                                                <h:outputLabel/>
+                                                <h:inputHidden id="idpessoa" value="#{mbPessoaVeiculo.pessoa.pes_id}"/> 
+
+                                                <h:outputLabel for="pes_nome" value="Nome.:"/>
+                                                <p:inputText id="nomePessoa" size="40" maxlength="80" value="#{mbPessoaVeiculo.pessoa.pes_nome}"
+                                                             required="true" requiredMessage="O campo [Nome] &eacute; obrigat&oacute;rio"
+                                                             onkeyup="this.value = this.value.toUpperCase()"/>
+
+                                                <h:outputLabel for="telefone" value="Telefone.:"/>
+                                                <p:inputMask id="telefone" size="40" maxlength="14" mask="(99) 9999-9999"
+                                                             value="#{mbPessoaVeiculo.pessoa.pes_tel}" />
+
+                                                <h:outputLabel for="celular" value="Celular.:"/>
+                                                <p:inputMask id="celular" size="40" maxlength="14" mask="(99) 9999-9999"
+                                                             value="#{mbPessoaVeiculo.pessoa.pes_cel}" />
+
+                                                <h:outputLabel for="cpf" value="CPF.:"/>
+                                                <p:inputMask id="cpf" size="40" maxlength="14"  mask="999.999.999-99" value="#{mbPessoaVeiculo.pessoa.pes_cpf}"
+                                                             disabled="#{mbPessoaVeiculo.pessoa.pes_cpf != null}" required="true" requiredMessage="O campo [CPF] &eacute; obrigat&oacute;rio">
+                                                    <f:validator validatorId="cpfValidator"/>
+                                                    <f:converter converterId="converter.CpfConverter" />
+                                                </p:inputMask>
+
+                                                <h:outputLabel for="rg" value="RG.:"/>
+                                                <p:inputText id="rg" size="40" maxlength="12" value="#{mbPessoaVeiculo.pessoa.pes_rg}"
+                                                             required="true" requiredMessage="O campo [RG] &eacute; obrigat&oacute;rio">
+                                                </p:inputText>
+
+
+                                                <p:outputLabel for="estado" value="Estado:" />
+                                                <p:selectOneMenu id="estado" value="#{mbPessoaVeiculo.estado}" style="width:200px"
+                                                                 required="true" requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio" 
+                                                                 converter="converterEstado"  >
+                                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{mbPessoaVeiculo.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.est_nome}" />
+                                                    <p:ajax listener="#{mbPessoaVeiculo.listaCidades}" event="change" update="cidade" />
+                                                </p:selectOneMenu>
+
+
+                                                <p:outputLabel for="cidade" value="Cidade:" />
+                                                <p:selectOneMenu id="cidade" value="#{mbPessoaVeiculo.cidade}" converter="converterCidade" required="true" style="width:200px" effect="fade" panelStyle="width:180px"
+                                                                 requiredMessage="O campo [Cidade] &eacute; obrigat&oacute;rio" filter="true" filterMatchMode="startsWith">
+                                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{mbPessoaVeiculo.cidades}" var="cidade" itemValue="#{cidade}" itemLabel="#{cidade.cid_nome}" />
+                                                </p:selectOneMenu>
+
+
+
+                                            </h:panelGrid>
+
+                                        </p:panel>
+                                    </p:tab>
+
+                                    <p:tab title="Informa&ccedil;&otilde;es do Ve&iacute;culo" id="infoVeiculo">
+                                        <p:panel header="Informa&ccedil;&otilde;es do Ve&iacute;culo">
+                                            <p:growl id="msg1"/>
+                                            <h:panelGrid columns="2" cellpadding="10" styleClass="panelGrid">
+
+                                                <h:outputLabel for="ano" value="Ano.:"/>
+                                                <p:inputMask id="ano" size="6" maxlength="4" mask="9999" value="#{mbPessoaVeiculo.veiculo.veic_ano}"
+                                                             required="true" requiredMessage="O campo [Ano] &eacute; obrigat&oacute;rio"/>
+
+                                                <h:outputLabel for="cor" value="Cor.:"/>
+                                                <p:inputText id="cor" size="40" maxlength="20" value="#{mbPessoaVeiculo.veiculo.veic_cor}"
+                                                             required="true" requiredMessage="O campo [Cor] &eacute; obrigat&oacute;rio"
+                                                             onkeyup="this.value = this.value.toUpperCase()"/>
+
+                                                <h:outputLabel for="placa" value="Placa.:"/>
+                                                <p:inputMask id="placa" size="40" maxlength="8" mask="aaa-9999" value="#{mbPessoaVeiculo.veiculo.veic_placa}"
+                                                             disabled="#{mbPessoaVeiculo.veiculo.veic_placa != null}"
+                                                             required="true" requiredMessage="O campo [Placa] &eacute; obrigat&oacute;rio"/>
+
+                                                <p:outputLabel for="marca" value="Marca:" />
+                                                <p:selectOneMenu id="marca" value="#{mbPessoaVeiculo.marca}" style="width:200px"
+                                                                 required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio" 
+                                                                 converter="converterMarca"  >
+                                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{mbPessoaVeiculo.marcas}" var="marca" itemValue="#{marca}" itemLabel="#{marca.mar_nome}" />
+                                                    <p:ajax listener="#{mbPessoaVeiculo.listaModelos}" event="change" update="modelo" />
+                                                </p:selectOneMenu>
+
+
+                                                <p:outputLabel for="modelo" value="Modelo:" />
+                                                <p:selectOneMenu id="modelo" value="#{mbPessoaVeiculo.modelo}" converter="converterModelo" required="true" style="width:200px" effect="fade" panelStyle="width:180px"
+                                                                 requiredMessage="O campo [Modelo] &eacute; obrigat&oacute;rio" filter="true" filterMatchMode="startsWith">
+                                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{mbPessoaVeiculo.modelos}" var="modelo" itemValue="#{modelo}" itemLabel="#{modelo.mod_nome}" />
+                                                </p:selectOneMenu>
+
+                                            </h:panelGrid>
+
+                                            <p:panel>
+                                                <p:commandButton value="Salvar" action="#{mbPessoaVeiculo.addPessoa}"
+                                                                 image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                                <p:commandButton value="Cancelar" actionListener="#{mbPessoaVeiculo.limpPessoa()}" 
+                                                                 image="ui-icon ui-icon-close" update="@form"/>
+                                            </p:panel>
+
+
+                                        </p:panel>
+                                    </p:tab>
+
+
+                                </p:wizard>
+
+                            </p:dialog>
+                        </div>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+
+
+
+
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="pessoa" value="#{mbPessoaVeiculo.pessoas}"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+
+                    <f:facet name="header">Lista de Pessoas</f:facet>
+                    <p:column headerText="Id[Pessoa]" filterBy="#{pessoa.pes_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_id}"/>
+                    </p:column>
+                    <p:column headerText="Pessoa" filterBy="#{pessoa.pes_nome}"  footerText="contains" filterMatchMode="contains" width="20%">
+                        <h:outputText value="#{pessoa.pes_nome}"/>
+                    </p:column>
+                    <p:column headerText="Cpf" filterBy="#{pessoa.pes_cpf}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_cpf}"/>
+                    </p:column>
+                    <p:column headerText="Rg" filterBy="#{pessoa.pes_rg}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_rg}"/>
+                    </p:column>
+                    <p:column headerText="Tel" filterBy="#{pessoa.pes_tel}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_tel}"/>
+                    </p:column>
+                    <p:column headerText="Cel" filterBy="#{pessoa.pes_cel}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_cel}"/>
+                    </p:column>
+                    <p:column headerText="Estado" filterBy="#{pessoa.estado.est_uf}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.estado.est_uf}"/>
+                    </p:column>
+                    <p:column headerText="Cidade" filterBy="#{pessoa.cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.cidade.cid_nome}"/>
+                    </p:column>
+                    <p:column headerText="Id[Ve&iacute;culo]" filterBy="#{pessoa.veiculo.veic_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.veiculo.veic_id}"/>
+                    </p:column>
+                    <p:column headerText="Placa" filterBy="#{pessoa.veiculo.veic_placa}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.veiculo.veic_placa}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

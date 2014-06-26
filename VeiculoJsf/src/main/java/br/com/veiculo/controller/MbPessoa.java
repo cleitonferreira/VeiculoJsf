@@ -10,10 +10,7 @@ import br.com.veiculo.model.dao.InterfaceDAO;
 import br.com.veiculo.model.dao.MeuDaoImpl;
 import br.com.veiculo.model.entities.Cidade;
 import br.com.veiculo.model.entities.Estado;
-import br.com.veiculo.model.entities.Marca;
-import br.com.veiculo.model.entities.Modelo;
 import br.com.veiculo.model.entities.Pessoa;
-import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,25 +18,25 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author cleiton
  */
 @ManagedBean(name = "mbPessoa")
-@SessionScoped
+@ViewScoped
 public class MbPessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Pessoa pessoa = new Pessoa();
-    private Veiculo veiculo = new Veiculo();
     private List<Pessoa> pessoas;
-    private List<Veiculo> veiculos;
     private List<Pessoa> filteredPessoas;
+    private List<Pessoa> consultaPessoas;
 
     ///// Objetos para os ComBos Estado Cidade \\\\\
     private final MeuDaoImpl dao = new MeuDaoImpl();
@@ -49,29 +46,17 @@ public class MbPessoa implements Serializable {
     private Estado estado;
     //////////////////////////////////
 
-    ///// Objetos para os ComBos Marcas e Modelos \\\\\
-//    private final MeuDaoImpl mmdao = new MeuDaoImpl();
-    private List<Marca> marcas;
-    private List<Modelo> modelos;
-    private Marca marca;
-    private Modelo modelo;
-    //////////////////////////////////
-
     public MbPessoa() {
     }
 
     @PostConstruct
     public void init() {
-        marcas = dao.consultaTodasMarcas();
         estados = dao.consultaTodosEstados();
     }
 
     public void listaCidades(AjaxBehaviorEvent event) {
+//        System.out.println("Busca Cidade>>>>>>>>>>>>");
         cidades = dao.consultaCidades(estado);
-    }
-
-    public void listaModelos(AjaxBehaviorEvent event) {
-        modelos = dao.consultaModelos(marca);
     }
 
     private InterfaceDAO<Pessoa> pessoaDAO() {
@@ -79,14 +64,14 @@ public class MbPessoa implements Serializable {
         return pessoaDAO;
     }
 
-    private InterfaceDAO<Veiculo> veiculoDAO() {
-        InterfaceDAO<Veiculo> veiculoDAO = new HibernateDAO<Veiculo>(Veiculo.class, FacesContextUtil.getRequestSession());
-        return veiculoDAO;
+    public void reset() {
+        RequestContext.getCurrentInstance().reset("@form :formPessoa");
     }
 
     public String limpPessoa() {
         pessoa = new Pessoa();
-        veiculo = new Veiculo();
+        estado = new Estado();
+        cidade = new Cidade();
         return editPessoa();
     }
 
@@ -109,11 +94,11 @@ public class MbPessoa implements Serializable {
 
         String cpf = pessoa.getPes_cpf();
         ArrayList results = (ArrayList) dao.consultaCpf(cpf);
-//        System.out.println("Resultsss>>>>" + results.toString());
+        System.out.println("Resultsss>>>>" + results.toString());
 
-        if (results.contains(cpf)) {
+        if (results.toString().equals("[1]")) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao C[adastrar], no Banco de Dados!!!", ""));
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Cadastrar], no Banco de Dados!!!", ""));
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN, "Cpf já se encontra cadastrado no sistema", "" + cpf));
         } else {
@@ -122,11 +107,6 @@ public class MbPessoa implements Serializable {
                 pessoa.setEstado(estado);
                 pessoa.setCidade(cidade);
                 pessoaDAO().save(pessoa);
-
-                veiculo.setPessoa(pessoa);
-                veiculo.setMarca(marca);
-                veiculo.setModelo(modelo);
-                veiculoDAO().save(veiculo);
 
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_INFO, "Gravação efetuada com sucesso", ""));
@@ -145,17 +125,13 @@ public class MbPessoa implements Serializable {
     private void updatePessoa() {
         String cpf = pessoa.getPes_cpf();
         ArrayList results = (ArrayList) dao.consultaCpf(cpf);
-//        System.out.println("Resultsss>>>>" + results.toString());
+        System.out.println("Resultsss>>>>" + results.toString());
 
-        if (results.contains(cpf)) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados!!!", ""));
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Cpf já se encontra cadastrado no sistema", "" + cpf));
-        } else {
+        if (results.toString().equals("[1]")) {
             try {
+                pessoa.setEstado(estado);
+                pessoa.setCidade(cidade);
                 pessoaDAO().update(pessoa);
-                veiculoDAO().update(veiculo);
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
             } catch (Exception ex) {
@@ -164,13 +140,19 @@ public class MbPessoa implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
             }
+
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados!!!", ""));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Por Favor, não altere o cpf do pessoa", "" + cpf));
+
         }
     }
 
     public void deletePessoa() {
         try {
             pessoaDAO().remove(pessoa);
-            veiculoDAO().remove(veiculo);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
         } catch (Exception ex) {
@@ -187,11 +169,6 @@ public class MbPessoa implements Serializable {
     public List<Pessoa> getPessoas() {
         pessoas = pessoaDAO().getEntities();
         return pessoas;
-    }
-
-    public List<Veiculo> getVeiculos() {
-        veiculos = veiculoDAO().getEntities();
-        return veiculos;
     }
 
     ////////////////////////////////////////////
@@ -239,50 +216,6 @@ public class MbPessoa implements Serializable {
         this.cidades = cidades;
     }
 
-    public Veiculo getVeiculo() {
-        return veiculo;
-    }
-
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
-    }
-
-    public void setVeiculos(List<Veiculo> veiculos) {
-        this.veiculos = veiculos;
-    }
-
-    public List<Marca> getMarcas() {
-        return marcas;
-    }
-
-    public void setMarcas(List<Marca> marcas) {
-        this.marcas = marcas;
-    }
-
-    public List<Modelo> getModelos() {
-        return modelos;
-    }
-
-    public void setModelos(List<Modelo> modelos) {
-        this.modelos = modelos;
-    }
-
-    public Marca getMarca() {
-        return marca;
-    }
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
-
-    public Modelo getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(Modelo modelo) {
-        this.modelo = modelo;
-    }
-
     public List<Pessoa> getFilteredPessoas() {
         return filteredPessoas;
     }
@@ -290,6 +223,13 @@ public class MbPessoa implements Serializable {
     public void setFilteredPessoas(List<Pessoa> filteredPessoas) {
         this.filteredPessoas = filteredPessoas;
     }
-    
+
+    public List<Pessoa> getConsultaPessoas() {
+        return consultaPessoas;
+    }
+
+    public void setConsultaPessoas(List<Pessoa> consultaPessoas) {
+        this.consultaPessoas = consultaPessoas;
+    }
 
 }

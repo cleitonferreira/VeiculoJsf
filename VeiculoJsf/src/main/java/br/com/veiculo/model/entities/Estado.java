@@ -32,9 +32,9 @@ public class Estado implements Serializable {
     @GeneratedValue
     @Column(name = "est_id", nullable = false)
     private Integer est_id;
-    @Column(name = "est_nome", nullable = false, length = 255)
+    @Column(name = "est_nome", nullable = false, length = 50)
     private String est_nome;
-    @Column(name = "est_uf", nullable = false, length = 3)//RJ, MG, SP
+    @Column(name = "est_uf", nullable = false, length = 2)//RJ, MG, SP
     private String est_uf;
     
     //relacionamento com pais

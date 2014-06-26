@@ -30,13 +30,13 @@ public class Usuario implements Serializable {
     @GeneratedValue
     @Column(name = "usu_id", nullable = false)
     private Integer usu_id;
-    @Column(name = "usu_nome", nullable = false, length = 50)
+    @Column(name = "usu_nome", nullable = false, length = 80)
     private String usu_nome;
     @Column(name = "usu_email", unique = true, nullable = false, length = 50)
     private String usu_email;
     @Column(name = "usu_senha", length = 40)
     private String usu_senha;
-    @Column(name = "usu_permisao", length = 36)
+    @Column(name = "usu_permisao", length = 20)
     private String usu_permissao;
     @Column(name = "usu_tel", nullable = false, length = 14)//(34)-8888-8888
     private String usu_tel;
@@ -115,13 +115,13 @@ public class Usuario implements Serializable {
     public void setUsu_permissao(String usu_permissao) {
         this.usu_permissao = usu_permissao;
     }
-    
-    
 
+    
+    
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + (this.usu_id != null ? this.usu_id.hashCode() : 0);
+        int hash = 5;
+        hash = 67 * hash + (this.usu_id != null ? this.usu_id.hashCode() : 0);
         return hash;
     }
 
@@ -139,5 +139,9 @@ public class Usuario implements Serializable {
         }
         return true;
     }
+    
+    
+
+
 
 }

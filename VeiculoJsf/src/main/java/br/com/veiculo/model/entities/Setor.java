@@ -85,15 +85,13 @@ public class Setor implements Serializable {
     }
 
     
-
-
-
+    
     
     
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + (this.set_id != null ? this.set_id.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + (this.set_id != null ? this.set_id.hashCode() : 0);
         return hash;
     }
 
@@ -111,5 +109,11 @@ public class Setor implements Serializable {
         }
         return true;
     }
+
+    
+
+
+
+
 
 }
