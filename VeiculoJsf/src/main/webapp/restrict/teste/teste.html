@@ -18,7 +18,7 @@
 
                     <p:dialog header="Dynamic Focus" widgetVar="viewSetor" focus="setor">
                         <h:panelGrid columns="2" cellpadding="5">
-                            
+
                             <h:outputLabel/>
                             <h:inputHidden id="idsetor" value="#{mbSetor.setor.set_id}"/> 
 
@@ -35,95 +35,95 @@
                             <p:inputText id="responsavel" size="40" value="#{mbSetor.setor.set_responsavel}"
                                          onkeyup="this.value = this.value.toUpperCase()" required="true"
                                          requiredMessage="O campo [Responsável] &eacute; obrigat&oacute;rio."/>
-                            
-                            
+
+
                             <p:panel style="text-align: center">
                                 <p:commandButton value="Salvar" action="#{mbSetor.addSetor()}"
                                                  image="ui-icon ui-icon-disk" update="@form :formtable"/>
                                 <p:commandButton value="Cancelar" actionListener="#{mbSetor.limpSetor()}" 
                                                  image="ui-icon ui-icon-close" update="@form"/>
                             </p:panel>
-                            
+
                         </h:panelGrid>
                     </p:dialog>
 
                 </h:form>
             </p:tab>
         </p:tabView>
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         <h:form id="formtable">
-                <p:growl id="msg1"/>
-                <p:dataTable id="idTabela" var="setor" value="#{mbSetor.setores}"
-                             paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
-                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+            <p:growl id="msg1"/>
+            <p:dataTable id="idTabela" var="setor" value="#{mbSetor.setores}"
+                         paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15,30,50,100,200">
 
-                    <f:facet name="header">Lista de Setores</f:facet>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Id"/>
-                        </f:facet>
-                        <h:outputText value="#{setor.set_id}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Setor"/>
-                        </f:facet>
-                        <h:outputText value="#{setor.set_nome}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Ramal"/>
-                        </f:facet>
-                        <h:outputText value="#{setor.set_ramal}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Respons&aacute;vel"/>
-                        </f:facet>
-                        <h:outputText value="#{setor.set_responsavel}"/>
-                    </p:column>
+                <f:facet name="header">Lista de Setores</f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Id"/>
+                    </f:facet>
+                    <h:outputText value="#{setor.set_id}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Setor"/>
+                    </f:facet>
+                    <h:outputText value="#{setor.set_nome}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ramal"/>
+                    </f:facet>
+                    <h:outputText value="#{setor.set_ramal}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Respons&aacute;vel"/>
+                    </f:facet>
+                    <h:outputText value="#{setor.set_responsavel}"/>
+                </p:column>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="A&ccedil;&otilde;es"/>
-                        </f:facet>
-                        <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
-                                         process="@this" update=":tbv1:formSetor" onclick="PF('viewSetor').show();">
-                            <f:setPropertyActionListener target="#{mbSetor.setor}"
-                                                         value="#{setor}"/>
-                        </p:commandButton>
-                        <p:commandButton value="Remover" action="#{mbSetor.deleteSetor()}"
-                                         image="ui-icon ui-icon-close" update="@form">
-                            <f:setPropertyActionListener target="#{mbSetor.setor}"
-                                                         value="#{setor}"/>
-                        </p:commandButton>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="A&ccedil;&otilde;es"/>
+                    </f:facet>
+                    <p:commandButton value="Editar" image="ui-icon ui-icon-pencil"
+                                     process="@this" update=":tbv1:formSetor" onclick="PF('viewSetor').show();">
+                        <f:setPropertyActionListener target="#{mbSetor.setor}"
+                                                     value="#{setor}"/>
+                    </p:commandButton>
+                    <p:commandButton value="Remover" action="#{mbSetor.deleteSetor()}"
+                                     image="ui-icon ui-icon-close" update="@form">
+                        <f:setPropertyActionListener target="#{mbSetor.setor}"
+                                                     value="#{setor}"/>
+                    </p:commandButton>
 
-                    </p:column>
+                </p:column>
 
-                </p:dataTable>
+            </p:dataTable>
 
-            </h:form>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        </h:form>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </ui:define>

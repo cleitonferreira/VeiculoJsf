@@ -17,34 +17,34 @@
                     <p:commandButton value="Novo Resgistro" action="#{mbSetor.limpSetor}" onclick="PF('viewSetor').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
                     <div align="center">
-                    <p:dialog header="View Setor" widgetVar="viewSetor" minimizable="true" maximizable="true" focus="set_nome">
-                        <h:panelGrid columns="2" cellpadding="5" >
+                        <p:dialog header="View Setor" widgetVar="viewSetor" minimizable="true" maximizable="true" focus="set_nome">
+                            <h:panelGrid columns="2" cellpadding="5" >
 
-                            <h:outputLabel/>
-                            <h:inputHidden id="idsetor" value="#{mbSetor.setor.set_id}"/> 
+                                <h:outputLabel/>
+                                <h:inputHidden id="idsetor" value="#{mbSetor.setor.set_id}"/> 
 
-                            <h:outputText value="Setor.:"/>
-                            <p:inputText id="set_nome" size="40" value="#{mbSetor.setor.set_nome}"
-                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
-                                         requiredMessage="O campo [Setor] &eacute; obrigat&oacute;rio."/>
+                                <h:outputText value="Setor.:"/>
+                                <p:inputText id="set_nome" size="40" value="#{mbSetor.setor.set_nome}"
+                                             onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                             requiredMessage="O campo [Setor] &eacute; obrigat&oacute;rio."/>
 
-                            <h:outputText value="Ramal.:"/>
-                            <p:inputMask id="set_ramal" size="40" mask="9999" maxlength="4" value="#{mbSetor.setor.set_ramal}"
-                                         required="true" requiredMessage="O campo [Ramal] &eacute; obrigat&oacute;rio."/>
+                                <h:outputText value="Ramal.:"/>
+                                <p:inputMask id="set_ramal" size="40" mask="9999" maxlength="4" value="#{mbSetor.setor.set_ramal}"
+                                             required="true" requiredMessage="O campo [Ramal] &eacute; obrigat&oacute;rio."/>
 
-                            <h:outputText value="Respons&aacute;vel pelo Setor.:"/>
-                            <p:inputText id="set_responsavel" size="40" value="#{mbSetor.setor.set_responsavel}"
-                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
-                                         requiredMessage="O campo [Respons&aacute;vel] &eacute; obrigat&oacute;rio."/>
+                                <h:outputText value="Respons&aacute;vel pelo Setor.:"/>
+                                <p:inputText id="set_responsavel" size="40" value="#{mbSetor.setor.set_responsavel}"
+                                             onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                             requiredMessage="O campo [Respons&aacute;vel] &eacute; obrigat&oacute;rio."/>
 
-                        </h:panelGrid>
-                        <p:panel style="text-align: center;">
-                            <p:commandButton value="Salvar" style="background-color: red;" action="#{mbSetor.addSetor}"
-                                             image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                            <p:commandButton value="Cancelar" actionListener="#{mbSetor.limpSetor}" update="@form"
-                                             image="ui-icon ui-icon-close" />
-                        </p:panel>
-                    </p:dialog>
+                            </h:panelGrid>
+                            <p:panel style="text-align: center;">
+                                <p:commandButton value="Salvar" style="background-color: red;" action="#{mbSetor.addSetor}"
+                                                 image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                <p:commandButton value="Cancelar" actionListener="#{mbSetor.limpSetor}" update="@form"
+                                                 image="ui-icon ui-icon-close" />
+                            </p:panel>
+                        </p:dialog>
                     </div>
                 </h:form>
             </p:tab>

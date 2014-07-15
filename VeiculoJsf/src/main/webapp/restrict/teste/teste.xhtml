@@ -9,58 +9,58 @@
                 template="./../../resources/main.xhtml">
 
     <ui:define name="tarefas">
-        
-        
-        
-        
-<h:body>
-        <h:form id="form" > 
-            <p:panel header="Combos Aninhados com JSF2 e Primefaces" >
-                <h:panelGrid columns="3" >
-                    <h:outputLabel value="Estado: *" />
-                    <h:selectOneMenu id="estado" value="#{meuBean.estado}" required="true" requiredMessage="Campo obrigat&oacute;rio" converter="converterEstado" style="width: 250px;" >
-                        <f:selectItem itemLabel="Selecione" />
-                        <f:selectItems value="#{meuBean.estados}" var="e" itemValue="#{e}" itemLabel="#{e.est_nome}" />
-                        <f:ajax render="cidade" event="change" listener="#{meuBean.listaCidades}" />
-                    </h:selectOneMenu>
-                    <p:message for="estado" />
 
-                    <h:outputLabel value="Cidade: *" />
-                    <h:selectOneMenu id="cidade" value="#{meuBean.cidade}" required="true" requiredMessage="Campo obrigat&oacute;rio" converter="converterCidade" style="width: 250px;" >
-                        <f:selectItem itemLabel="Selecione" />
-                        <f:selectItems value="#{meuBean.cidades}" var="c" itemValue="#{c}" itemLabel="#{c.cid_nome}" />
-                    </h:selectOneMenu>
-                    <p:message for="cidade" />
-                </h:panelGrid>
-                <p:commandButton id="btnSelecionar" value="Selecionar" update="form" style="margin-left: 80px; margin-bottom: 20px;" />
 
-                <p:fieldset id="fieldset" legend="Selecionados" >
-                    <h:panelGrid columns="2" >
-                        <h:outputLabel value="Estado: " />
-                        <h:outputText value="#{meuBean.estado.est_nome} / #{meuBean.estado.est_id}" />
-                        <h:outputLabel value="Cidade: " />
-                        <h:outputText value="#{meuBean.cidade.cid_nome} / #{meuBean.cidade.cid_id}" />
-                        <h:outputText value="" />
+
+
+        <h:body>
+            <h:form id="form" > 
+                <p:panel header="Combos Aninhados com JSF2 e Primefaces" >
+                    <h:panelGrid columns="3" >
+                        <h:outputLabel value="Estado: *" />
+                        <h:selectOneMenu id="estado" value="#{meuBean.estado}" required="true" requiredMessage="Campo obrigat&oacute;rio" converter="converterEstado" style="width: 250px;" >
+                            <f:selectItem itemLabel="Selecione" />
+                            <f:selectItems value="#{meuBean.estados}" var="e" itemValue="#{e}" itemLabel="#{e.est_nome}" />
+                            <f:ajax render="cidade" event="change" listener="#{meuBean.listaCidades}" />
+                        </h:selectOneMenu>
+                        <p:message for="estado" />
+
+                        <h:outputLabel value="Cidade: *" />
+                        <h:selectOneMenu id="cidade" value="#{meuBean.cidade}" required="true" requiredMessage="Campo obrigat&oacute;rio" converter="converterCidade" style="width: 250px;" >
+                            <f:selectItem itemLabel="Selecione" />
+                            <f:selectItems value="#{meuBean.cidades}" var="c" itemValue="#{c}" itemLabel="#{c.cid_nome}" />
+                        </h:selectOneMenu>
+                        <p:message for="cidade" />
                     </h:panelGrid>
-                </p:fieldset>
-            </p:panel>
-        </h:form>
-    </h:body>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                    <p:commandButton id="btnSelecionar" value="Selecionar" update="form" style="margin-left: 80px; margin-bottom: 20px;" />
+
+                    <p:fieldset id="fieldset" legend="Selecionados" >
+                        <h:panelGrid columns="2" >
+                            <h:outputLabel value="Estado: " />
+                            <h:outputText value="#{meuBean.estado.est_nome} / #{meuBean.estado.est_id}" />
+                            <h:outputLabel value="Cidade: " />
+                            <h:outputText value="#{meuBean.cidade.cid_nome} / #{meuBean.cidade.cid_id}" />
+                            <h:outputText value="" />
+                        </h:panelGrid>
+                    </p:fieldset>
+                </p:panel>
+            </h:form>
+        </h:body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </ui:define>
 
 </ui:composition>
