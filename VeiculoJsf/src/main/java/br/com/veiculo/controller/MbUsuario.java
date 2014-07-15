@@ -41,7 +41,7 @@ public class MbUsuario implements Serializable {
     private List<Setor> setores;
     private Setor setor;
     ////////////////////////////////////////////////////////
-    
+
     public MbUsuario() {
     }
 
@@ -57,6 +57,7 @@ public class MbUsuario implements Serializable {
 
     public String limpUsuario() {
         usuario = new Usuario();
+        setor = new Setor();
         return editUsuario();
     }
 
@@ -171,6 +172,5 @@ public class MbUsuario implements Serializable {
     public void setConsultaUsuarios(List<Usuario> consultaUsuarios) {
         this.consultaUsuarios = consultaUsuarios;
     }
-    
 
 }

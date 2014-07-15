@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <link href="../resources/restrict/css/layout.css" rel="stylesheet" type="text/css" />
+        <link href="../resources/restrict/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/bootstrap/js/bootstrap.js" type="text/javascript" />
+        <!--        <link href="public/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />-->
+        <title>Acesso Negado</title>
+    </h:head>
+
+    <!--         redirecionar para a pagina - SISUTEC - com Tempo -->
+    <script type="text/javascript">
+        window.setTimeout("location.href='http://192.168.254.18:8080/VeiculoJsf/login.faces';", 4000);
+    </script>
+
+    <h:body style="ba" onload="dialog">
+
+        <div id="topo">
+            <div id="logotipo">
+                <img src="images/logo_1600_200.png" class="img-rounded"> </img>
+            </div>
+        </div> 
+
+        <p>
+            <img style="margin-top: 0.5%;" src="images/tela_marcas_preto_branco.png" class="img-rounded"> </img>
+        </p>
+
+
+        <p:dialog header="Acesso Negado!!"
+                  id="dialog"  
+                  modal="true"
+                  minWidth="500"
+                  width="500"
+                  position="center"
+                  widgetVar="modalLogin"
+                  showEffect="explode"
+                  hideEffect="bounce"
+                  draggable="false"
+                  resizable="false"
+                  visible="true">
+
+            <div style="text-align: center;">
+                <img src="images/cesva.png" class="img-rounded"> </img>
+            </div>
+            
+            <h1 style="color: #0174df; font-weight: bold; font-size: 40px; text-align: center;">Acesso Negado!</h1>
+            <small style="color: #0174df; font-weight: bold;">Entre em contato com Administrador!!!</small><br />
+            <small style="color: #0174df; font-weight: bold;">Ramal: 0789</small><br />
+            <small style="color: #0174df; font-weight: bold;">Nucleo de Tecnologia da Informa&ccedil;&atilde;o</small>
+            
+
+        </p:dialog>  
+
+
+
+    </h:body>
+</html>

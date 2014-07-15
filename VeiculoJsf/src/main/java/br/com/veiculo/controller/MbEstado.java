@@ -56,6 +56,7 @@ public class MbEstado implements Serializable {
 
     public String limpEstado() {
         estado = new Estado();
+        pais = new Pais();
         return editEstado();
     }
 

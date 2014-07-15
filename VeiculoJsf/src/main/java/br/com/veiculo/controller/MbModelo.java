@@ -56,6 +56,7 @@ public class MbModelo implements Serializable {
 
     public String limpModelo() {
         modelo = new Modelo();
+        marca = new Marca();
         return editModelo();
     }
 
@@ -168,5 +169,4 @@ public class MbModelo implements Serializable {
         this.consultaModelos = consultaModelos;
     }
 
-    
 }

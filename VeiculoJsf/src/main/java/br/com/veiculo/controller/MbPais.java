@@ -132,8 +132,5 @@ public class MbPais implements Serializable {
     public void setConsultaPaises(List<Pais> consultaPaises) {
         this.consultaPaises = consultaPaises;
     }
-    
-    
-    
 
 }

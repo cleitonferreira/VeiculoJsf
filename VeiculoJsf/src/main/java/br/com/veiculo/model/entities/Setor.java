@@ -40,6 +40,10 @@ public class Setor implements Serializable {
     @OneToMany(mappedBy = "setor", fetch = FetchType.LAZY)
     @ForeignKey(name = "SetorUsuario")
     private List<Usuario> usuarios;
+    
+    @OneToMany(mappedBy = "setor", fetch = FetchType.LAZY)
+    @ForeignKey(name = "SetorControle")
+    private List<Controle> controles;
 
     public Setor() {
     }
@@ -82,6 +86,14 @@ public class Setor implements Serializable {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public List<Controle> getControles() {
+        return controles;
+    }
+
+    public void setControles(List<Controle> controles) {
+        this.controles = controles;
     }
 
     

@@ -17,43 +17,43 @@
 
                         <p:commandButton value="Novo Registro" action="#{mbUsuario.limpUsuario}" 
                                          onclick="PF('viewUsuario').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                        
+                        <p:button style="margin-left: 10px;" outcome="cadastrarusuario" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
 
                         <div align="center">
                             <p:dialog header="View Usu&aacute;rio" widgetVar="viewUsuario" minimizable="true" maximizable="true" focus="usu_nome">
-                                <h:panelGrid columns="2" cellpadding="5" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
 
-                                    <h:outputLabel/>
+                                    <p:outputLabel/>
                                     <h:inputHidden id="usu_id" value="#{mbUsuario.usuario.usu_id}"/> 
 
-                                    <h:outputLabel value="Setor:" />
-                                    <h:selectOneMenu id="setor" value="#{mbUsuario.setor}" 
+                                    <p:outputLabel value="Setor:" />
+                                    <p:selectOneMenu id="setor" value="#{mbUsuario.setor}" 
                                                      required="true" requiredMessage="O campo [Setor] &eacute; obrigat&oacute;rio" 
                                                      converter="converterSetor"  >
                                         <f:selectItem itemLabel="Selecione" />
                                         <f:selectItems value="#{mbUsuario.setores}" var="setor" itemValue="#{setor}" itemLabel="#{setor.set_nome}" />
-                                    </h:selectOneMenu>
+                                    </p:selectOneMenu>
 
-                                    <h:outputText value="Usu&aacute;rio.:"/>
+                                    <p:outputLabel value="Usu&aacute;rio.:"/>
                                     <p:inputText id="usu_nome" size="40" maxlength="80" value="#{mbUsuario.usuario.usu_nome}"
                                                  onkeyup="this.value = this.value.toUpperCase()" required="true"
                                                  requiredMessage="O campo [Usu&aacute;rio] &eacute; obrigat&oacute;rio."/>
 
-                                    <h:outputText value="Telefone.:"/>
-                                    <p:inputMask id="usu_tel" size="40" maxlength="14" mask="(99) 9999-9999" value="#{mbUsuario.usuario.usu_tel}" 
-                                                 required="true" requiredMessage="O campo [Telefone] &eacute; obrigat&oacute;rio" />
+                                    <p:outputLabel value="Telefone.:"/>
+                                    <p:inputMask id="usu_tel" size="40" maxlength="14" mask="(99) 9999-9999" value="#{mbUsuario.usuario.usu_tel}" />
 
-                                    <h:outputText value="Celular.:"/>
-                                    <p:inputMask id="usu_cel" size="40" maxlength="15" mask="(99) 99999-9999" value="#{mbUsuario.usuario.usu_cel}"
-                                                 required="true" requiredMessage="O campo [Celular] &eacute; obrigat&oacute;rio"/>
+                                    <p:outputLabel value="Celular.:"/>
+                                    <p:inputMask id="usu_cel" size="40" maxlength="15" mask="(99) 99999-9999" value="#{mbUsuario.usuario.usu_cel}" />
 
-                                    <h:outputLabel for="email" value="E-mail.:"/>
+                                    <p:outputLabel value="E-mail.:"/>
                                     <p:inputText id="email" size="40" maxlength="50" value="#{mbUsuario.usuario.usu_email}"
                                                  onkeyup="this.value = this.value.toLowerCase()" required="true"
                                                  requiredMessage="O campo [Email] &eacute; obrigat&oacute;rio.">
                                         <f:validator validatorId="emailValidator"/>
                                     </p:inputText>
 
-                                    <h:outputText value="Senha.:"/>
+                                    <p:outputLabel value="Senha.:"/>
                                     <p:password id="usu_senha" size="40" maxlength="40" value="#{mbUsuario.usuario.usu_senha}"
                                                 required="true" requiredMessage="O campo [Senha] &eacute; obrigat&oacute;rio." feedback="true" 
                                                 promptLabel="Por favor, digite a senha!!!" weakLabel="Fraco"  
@@ -63,8 +63,9 @@
                                 <p:panel style="text-align: center">
                                     <p:commandButton value="Salvar" action="#{mbUsuario.addUsuario()}"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                    <p:commandButton value="Cancelar" actionListener="#{mbUsuario.limpUsuario()}" 
-                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                    <p:commandButton value="Limpar" disabled="#{mbUsuario.usuario.usu_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
                                 </p:panel>
                             </p:dialog>
                         </div>

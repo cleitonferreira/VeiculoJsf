@@ -9,13 +9,13 @@
 
         <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/login.faces" access="permitAll" />
-<!--        <intercept-url pattern="/restrict/**" access="isAuthenticated()" />-->
-        <intercept-url pattern="/restrict/**" access="permitAll" />
+        <intercept-url pattern="/restrict/**" access="isAuthenticated()" />
+<!--        <intercept-url pattern="/restrict/**" access="permitAll" />-->
         <intercept-url pattern="/public/**" access="permitAll"/>
     
-        <form-login login-page="/login.faces" authentication-failure-url="/login.faces?erro=true"
+        <form-login login-page="/login.faces" authentication-failure-url="/public/acessonegado.faces"
                     default-target-url="/restrict/home.faces"/>		
-        <access-denied-handler error-page="/acessonegado.faces" />
+        <access-denied-handler error-page="/public/acessonegado.faces" />
     </http>                
 
     <!-- NO PROJETO SEMERU PADRÃO FIZEMOS DESSA FORMA -->  

@@ -18,18 +18,20 @@
                         <p:commandButton value="Novo Registro" action="#{mbVeiculo.limpVeiculo}" 
                                          onclick="PF('viewVeiculo').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
+                        <p:button style="margin-left: 10px;" outcome="cadastrarveiculo" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
+
                         <div align="center">
                             <p:dialog header="View Ve&iacute;culo" widgetVar="viewVeiculo" minimizable="true" maximizable="true" focus="pes_nome">
-                                <h:panelGrid>
+                                <h:panelGrid id="panel">
 
 
-                                    <h:outputLabel/>
+                                    <p:outputLabel/>
                                     <h:inputHidden id="veic_id" value="#{mbVeiculo.veiculo.veic_id}"/> 
 
 
                                     <!-- Auto Complete Pessoa -->
 
-                                    <h:outputLabel for="pessoa" value="Pessoa.:"/>
+                                    <p:outputLabel value="Pessoa.:"/>
                                     <p:autoComplete id="pes_nome" value="#{mbVeiculo.selected}"
                                                     completeMethod="#{mbVeiculo.completePessoa()}"
                                                     converter="pessoaConverter"
@@ -45,21 +47,21 @@
                                     </script>
 
 
-                                    <h:outputLabel for="ano" value="Ano.:"/>
+                                    <p:outputLabel value="Ano.:"/>
                                     <p:inputMask id="veic_ano" size="6" maxlength="4" mask="9999" value="#{mbVeiculo.veiculo.veic_ano}"
                                                  required="true" requiredMessage="O campo [Ano] &eacute; obrigat&oacute;rio"/>
 
-                                    <h:outputLabel for="cor" value="Cor.:"/>
+                                    <p:outputLabel value="Cor.:"/>
                                     <p:inputText id="veic_cor" size="40" maxlength="20" value="#{mbVeiculo.veiculo.veic_cor}"
                                                  required="true" requiredMessage="O campo [Cor] &eacute; obrigat&oacute;rio"
                                                  onkeyup="this.value = this.value.toUpperCase()"/>
 
-                                    <h:outputLabel for="placa" value="Placa.:"/>
+                                    <p:outputLabel value="Placa.:"/>
                                     <p:inputMask id="veic_placa" size="40" maxlength="8" mask="aaa-9999" value="#{mbVeiculo.veiculo.veic_placa}"
                                                  disabled="#{mbVeiculo.veiculo.veic_placa != null}" onkeyup="Up()"
                                                  required="true" requiredMessage="O campo [Placa] &eacute; obrigat&oacute;rio"/>
 
-                                    <p:outputLabel for="marca" value="Marca:" />
+                                    <p:outputLabel value="Marca:" />
                                     <p:selectOneMenu id="marca" value="#{mbVeiculo.marca}" style="width:200px"
                                                      required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio" 
                                                      converter="converterMarca"  >
@@ -69,7 +71,7 @@
                                     </p:selectOneMenu>
 
 
-                                    <p:outputLabel for="modelo" value="Modelo:" />
+                                    <p:outputLabel value="Modelo:" />
                                     <p:selectOneMenu id="modelo" value="#{mbVeiculo.modelo}" converter="converterModelo" required="true" style="width:200px" effect="fade" panelStyle="width:180px"
                                                      requiredMessage="O campo [Modelo] &eacute; obrigat&oacute;rio" filter="true" filterMatchMode="startsWith">
                                         <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
@@ -82,7 +84,9 @@
                                 <p:panel style="text-align: center">
                                     <p:commandButton value="Salvar" action="#{mbVeiculo.addVeiculo()}" onclick="PF('notificacao').hide()"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                    <p:commandButton value="Cancelar" update="@form :formtable" process="@this" actionListener="#{mbVeiculo.reset}" />
+                                    <p:commandButton value="Limpar" disabled="#{mbVeiculo.veiculo.veic_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
                                 </p:panel>
                             </p:dialog>
                         </div>

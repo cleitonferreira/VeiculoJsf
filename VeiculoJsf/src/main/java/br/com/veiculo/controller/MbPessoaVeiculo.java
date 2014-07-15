@@ -24,7 +24,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 
 /**
@@ -41,7 +40,8 @@ public class MbPessoaVeiculo implements Serializable {
     private Veiculo veiculo = new Veiculo();
     private List<Pessoa> pessoas;
     private List<Veiculo> veiculos;
-    private List<Pessoa> filteredPessoas;
+    private List<Veiculo> filteredVeiculos;
+    private List<Veiculo> consultaVeiculos;
 
     ///// Objetos para os ComBos Estado Cidade \\\\\
     private final MeuDaoImpl dao = new MeuDaoImpl();
@@ -86,10 +86,6 @@ public class MbPessoaVeiculo implements Serializable {
         return veiculoDAO;
     }
 
-    public void reset() {
-        RequestContext.getCurrentInstance().reset("@form :formPessoa");
-    }
-
     //metodo Primefaces 5.0
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
@@ -97,7 +93,11 @@ public class MbPessoaVeiculo implements Serializable {
 
     public String limpPessoa() {
         pessoa = new Pessoa();
+        estado = new Estado();
+        cidade = new Cidade();
         veiculo = new Veiculo();
+        marca = new Marca();
+        modelo = new Modelo();
         return editPessoa();
     }
 
@@ -170,54 +170,54 @@ public class MbPessoaVeiculo implements Serializable {
         } //fim do else cpf pessoa
 
     }
-/*
-    private void updatePessoa() {
-        //Verfica Cpf da pessoa foi alterada
-        String cpf = pessoa.getPes_cpf();
-        ArrayList results = (ArrayList) dao.consultaCpf(cpf);
-        System.out.println("Resultsss>>>>" + results.toString());
+    /*
+     private void updatePessoa() {
+     //Verfica Cpf da pessoa foi alterada
+     String cpf = pessoa.getPes_cpf();
+     ArrayList results = (ArrayList) dao.consultaCpf(cpf);
+     System.out.println("Resultsss>>>>" + results.toString());
 
-        if (results.toString().equals("[1]")) {
+     if (results.toString().equals("[1]")) {
 
-            //Verfica Placa do veiculo foi alterada
-            String placa = veiculo.getVeic_placa();
-            ArrayList resultado = (ArrayList) dao.consultaPlaca(placa);
-            System.out.println("Resultado>>>>" + resultado.toString());
+     //Verfica Placa do veiculo foi alterada
+     String placa = veiculo.getVeic_placa();
+     ArrayList resultado = (ArrayList) dao.consultaPlaca(placa);
+     System.out.println("Resultado>>>>" + resultado.toString());
 
-            if (resultado.toString().equals("[1]")) {
-                try {
-                    pessoa.setEstado(estado);
-                    pessoa.setCidade(cidade);
-                    pessoaDAO().update(pessoa);
+     if (resultado.toString().equals("[1]")) {
+     try {
+     pessoa.setEstado(estado);
+     pessoa.setCidade(cidade);
+     pessoaDAO().update(pessoa);
 
-                    veiculo.setPessoa(pessoa);
-                    veiculo.setMarca(marca);
-                    veiculo.setModelo(modelo);
-                    veiculoDAO().update(veiculo);
-                    FacesContext.getCurrentInstance().addMessage(null,
-                            new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
-                } catch (Exception ex) {
-                    FacesContext.getCurrentInstance().addMessage(null,
-                            new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados", "" + ex));
-                    FacesContext.getCurrentInstance().addMessage(null,
-                            new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
-                }
-            } else { //else Placa veiculo
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados!!!", ""));
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Por Favor, não altere a placa do veículo", "" + placa));
-            } //fim do else Placa veiculo
+     veiculo.setPessoa(pessoa);
+     veiculo.setMarca(marca);
+     veiculo.setModelo(modelo);
+     veiculoDAO().update(veiculo);
+     FacesContext.getCurrentInstance().addMessage(null,
+     new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualização efetuada com sucesso", ""));
+     } catch (Exception ex) {
+     FacesContext.getCurrentInstance().addMessage(null,
+     new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados", "" + ex));
+     FacesContext.getCurrentInstance().addMessage(null,
+     new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+     }
+     } else { //else Placa veiculo
+     FacesContext.getCurrentInstance().addMessage(null,
+     new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados!!!", ""));
+     FacesContext.getCurrentInstance().addMessage(null,
+     new FacesMessage(FacesMessage.SEVERITY_WARN, "Por Favor, não altere a placa do veículo", "" + placa));
+     } //fim do else Placa veiculo
 
-        } else { //else Cpf pessoa
+     } else { //else Cpf pessoa
 
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados!!!", ""));
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Cpf já se encontra cadastrado no sistema", "" + cpf));
-        } //fim do else Cpf
-    }
-    */
+     FacesContext.getCurrentInstance().addMessage(null,
+     new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Atualizar], no Banco de Dados!!!", ""));
+     FacesContext.getCurrentInstance().addMessage(null,
+     new FacesMessage(FacesMessage.SEVERITY_WARN, "Cpf já se encontra cadastrado no sistema", "" + cpf));
+     } //fim do else Cpf
+     }
+     */
 
 //    public void deletePessoa() {
 //        try {
@@ -233,7 +233,6 @@ public class MbPessoaVeiculo implements Serializable {
 //        }
 //
 //    }
-
     //tomar cuidado com esses dois get aqui
     //realizar as modificações.
     public List<Pessoa> getPessoas() {
@@ -335,12 +334,22 @@ public class MbPessoaVeiculo implements Serializable {
         this.modelo = modelo;
     }
 
-    public List<Pessoa> getFilteredPessoas() {
-        return filteredPessoas;
+    public List<Veiculo> getFilteredVeiculos() {
+        return filteredVeiculos;
     }
 
-    public void setFilteredPessoas(List<Pessoa> filteredPessoas) {
-        this.filteredPessoas = filteredPessoas;
+    public void setFilteredPessoas(List<Veiculo> filteredVeiculos) {
+        this.filteredVeiculos = filteredVeiculos;
     }
+
+    public List<Veiculo> getConsultaVeiculos() {
+        return consultaVeiculos;
+    }
+
+    public void setConsultaVeiculos(List<Veiculo> consultaVeiculos) {
+        this.consultaVeiculos = consultaVeiculos;
+    }
+    
+    
 
 }

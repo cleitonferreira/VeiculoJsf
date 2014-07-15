@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"                
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <p:fieldset>
+
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Formul&aacute;rio de Cadastro [Controle de Cargas]">
+                    <h:form prependId="false" id="formControle">
+
+                        <p:commandButton value="Novo Registro" action="#{mbControle.limpControle}" 
+                                         onclick="PF('viewControle').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                        
+                        <p:button style="margin-left: 10px;" outcome="cadastrarveiculocarga" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
+                        
+                        <div align="center">
+                            <p:dialog header="View Ve&iacute;culo" widgetVar="viewControle" width="20%" minimizable="true" maximizable="true" focus="emp_nomefantasia">
+                                <h:panelGrid id="panel" >
+
+
+                                    <p:outputLabel/>
+                                    <h:inputHidden id="contr_id" value="#{mbControle.controle.contr_id}"/> 
+
+                                    <!-- Auto Complete Empresa -->
+
+                                    <p:outputLabel value="Empresa.:"/>
+                                    <p:autoComplete id="emp_nomefantasia" value="#{mbControle.selected}"
+                                                    completeMethod="#{mbControle.completeEmpresa()}"
+                                                    converter="empresaConverter"
+                                                    var="empresa" itemValue="#{empresa}" itemLabel="#{empresa.emp_nomefantasia}" 
+                                                    forceSelection="true" />
+
+                                    <!-- Fim do Auto Complete -->
+
+
+                                    <h:outputLabel value="Entrada.:"/>
+                                    <p:calendar id="contr_entrada" value="#{mbControle.controle.contr_entrada}"
+                                                required="true" requiredMessage="O campo [Entrada] &eacute; obrigat&oacute;rio"
+                                                locale="pt_BR" navigator="true" effect="explode" pattern="dd/MM/yyyy HH:mm:ss" />
+
+
+                                    <p:outputLabel value="Motorista.:"/>
+                                    <p:inputText id="nomeMotorista" size="70" maxlength="80" value="#{mbControle.controle.contr_motorista}"
+                                                 required="true" requiredMessage="O campo [Motorista] &eacute; obrigat&oacute;rio"
+                                                 onkeyup="this.value = this.value.toUpperCase()"/>
+
+
+                                    <p:outputLabel value="Placa.:"/>
+                                    <p:inputMask id="contr_placa" size="70" maxlength="8" mask="aaa-9999" value="#{mbControle.controle.contr_placa}"
+                                                 onkeyup="Up()" required="true" requiredMessage="O campo [Placa] &eacute; obrigat&oacute;rio"/>
+
+
+                                    <p:outputLabel value="Setor.:" />
+                                    <p:selectOneMenu id="setor" value="#{mbControle.setor}" style="width:220px; margin-bottom: 10px;"
+                                                     required="true" requiredMessage="O campo [Setor] &eacute; obrigat&oacute;rio" 
+                                                     converter="converterSetor"  >
+                                        <f:selectItem itemLabel="Selecione" />
+                                        <f:selectItems value="#{mbControle.setores}" var="setor" itemValue="#{setor}" itemLabel="#{setor.set_nome}" />
+                                    </p:selectOneMenu>
+
+
+                                    <h:outputLabel value="Sa&iacute;da.:"/>
+                                    <p:calendar id="contr_saida" value="#{mbControle.controle.contr_saida}"
+                                                required="true" requiredMessage="O campo [Sa&iacute;da] &eacute; obrigat&oacute;rio"
+                                                locale="pt_BR" navigator="true" effect="explode" pattern="dd/MM/yyyy HH:mm:ss" />
+
+                                    <p:outputLabel value="Obs.:"/>
+                                    <p:inputTextarea id="age_obs" rows="5" cols="30" counter="display" maxlength="500" value="#{mbControle.controle.contr_obs}"
+                                                     counterTemplate="{0} caracteres restantes." autoResize="false" >
+
+                                    </p:inputTextarea>
+                                    <br /><h:outputText id="display" />
+
+
+                                </h:panelGrid>
+                                <p:panel style="text-align: center">
+                                    <p:commandButton value="Salvar" action="#{mbControle.addControle()}" onclick="PF('notificacao').hide()"
+                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                    <p:commandButton value="Limpar" disabled="#{mbControle.controle.contr_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
+                                </p:panel>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+
+            <style>
+                .ui-notificationbar{
+                    height: 2%;
+                }
+            </style>
+
+            <p:notificationBar position="top" effect="slide" widgetVar="notificacao">
+                <h:outputText value="Por Favor, pressione o bot&atilde;o [Editar] 2 vezes para o carregamento das informa&ccedil;&otilde;es!" style="font-size:15px;" />
+            </p:notificationBar>
+
+
+
+
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="controle" value="#{mbControle.controles}"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+
+                    <f:facet name="header">Controle de Entrada e Sa&iacute;da de Ve&iacute;culos de Carga</f:facet>
+                    <p:column headerText="Id" filterBy="#{controle.contr_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{controle.contr_id}"/>
+                    </p:column>
+                    <p:column headerText="Empresa" filterBy="#{controle.empresa.emp_nomefantasia}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{controle.empresa.emp_nomefantasia}"/>
+                    </p:column>
+                    <p:column headerText="Setor" filterBy="#{controle.setor.set_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{controle.setor.set_nome}"/>
+                    </p:column>
+                    <p:column headerText="Entrada" filterBy="#{controle.contr_entrada}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{controle.contr_entrada}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/> 
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Motorista" filterBy="#{controle.contr_motorista}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{controle.contr_motorista}"/>
+                    </p:column>
+                    <p:column headerText="Placa" filterBy="#{controle.contr_placa}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{controle.contr_placa}"/>
+                    </p:column>
+                    <p:column headerText="Sa&iacute;da" filterBy="#{controle.contr_saida}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{controle.contr_saida}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column style="width: 12%;">
+                        <f:facet name="header">
+                            <h:outputText value="A&ccedil;&otilde;es"/>
+                        </f:facet>
+                        <p:commandButton update=":tbv1:formControle" oncomplete="PF('viewControle').show();"  
+                                         onclick="PF('notificacao').show()"
+                                         image="ui-icon ui-icon-pencil" value="Editar">
+                            <f:setPropertyActionListener target="#{mbControle.controle}" value="#{controle}"/>
+                            <f:setPropertyActionListener target="#{mbControle.selected}" value="#{controle.empresa}"/>
+                            <f:setPropertyActionListener target="#{mbControle.setor}" value="#{controle.setor}"/>
+                        </p:commandButton>
+
+                        <!-- Excluir -->
+                        <p:commandButton value="Remover" action="#{mbControle.deleteControle}" update="@form">
+
+                            <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{mbControle.controle}" value="#{controle}"/>
+
+                            <!-- DialogConfirm Excluir registro -->
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:commandButton>
+
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

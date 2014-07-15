@@ -18,26 +18,28 @@
                         <p:commandButton value="Novo Registro" action="#{mbModelo.limpModelo}" 
                                          onclick="PF('viewModelo').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
+                        <p:button style="margin-left: 10px;" outcome="cadastrarmodelo" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
+
                         <div align="center">
                             <p:dialog header="View Modelo" widgetVar="viewModelo" minimizable="true" maximizable="true" focus="mod_nome">
-                                <h:panelGrid columns="2" cellpadding="5" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
 
-                                    <h:outputLabel/>
+                                    <p:outputLabel/>
                                     <h:inputHidden id="mod_id" value="#{mbModelo.modelo.mod_id}"/> 
 
-                                    <h:outputText value="Marca.:"/>
-                                    <h:selectOneMenu id="marca" value="#{mbModelo.marca}" 
+                                    <p:outputLabel value="Marca.:"/>
+                                    <p:selectOneMenu id="marca" value="#{mbModelo.marca}" 
                                                      required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio" 
                                                      converter="converterMarca"  >
                                         <f:selectItem itemLabel="Selecione" />
                                         <f:selectItems value="#{mbModelo.marcas}" var="marca" itemValue="#{marca}" itemLabel="#{marca.mar_nome}" />
-                                    </h:selectOneMenu>
+                                    </p:selectOneMenu>
 
-                                    <h:outputText value="Modelo.:"/>
+                                    <p:outputLabel value="Modelo.:"/>
                                     <p:inputText id="mod_nome" size="40" maxlength="50" value="#{mbModelo.modelo.mod_nome}"
                                                  required="true" requiredMessage="O campo [Modelo] &eacute; obrigat&oacute;rio."/>
 
-                                    <h:outputText value="Flag.:" />  
+                                    <p:outputLabel value="Flag.:" />  
                                     <p:selectOneRadio id="mod_flag" value="#{mbModelo.modelo.mod_flag}" required="true" 
                                                       requiredMessage="O campo [Flag] &eacute; obrigat&oacute;rio.">  
                                         <f:selectItem itemLabel="Sim" itemValue="1" />  
@@ -48,8 +50,9 @@
                                 <p:panel style="text-align: center">
                                     <p:commandButton value="Salvar" action="#{mbModelo.addModelo()}"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                    <p:commandButton value="Cancelar" actionListener="#{mbModelo.limpModelo()}" 
-                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                    <p:commandButton value="Limpar" disabled="#{mbModelo.modelo.mod_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
                                 </p:panel>
                             </p:dialog>
                         </div>
@@ -79,8 +82,8 @@
                     <p:column headerText="Modelo" filterBy="#{modelo.mod_nome}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{modelo.mod_nome}"/>
                     </p:column>
-                    <p:column headerText="Email" filterBy="#{modelo.mod_flag}"  footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{modelo.mod_flag}"/>
+                    <p:column headerText="Flag" filterBy="#{modelo.mod_flag == '1' ? 'Sim' : 'N&atilde;o'}">
+                        <h:outputText value="#{modelo.mod_flag == '1' ? 'Sim' : 'N&atilde;o'}"/>
                     </p:column>
                     <p:column headerText="Marca" filterBy="#{modelo.marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{modelo.marca.mar_nome}"/>

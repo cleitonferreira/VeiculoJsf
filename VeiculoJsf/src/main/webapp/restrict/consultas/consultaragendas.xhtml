@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <h:form>
+            <p:growl id="msg0"/>
+            <p:dataTable id="idTabela" var="agenda" value="#{mbAgenda.agendas}" 
+                         selectionMode="multiple" selection="#{mbAgenda.consultaAgendas}" rowKey="#{agenda.age_id}"
+                         paginator="true" rows="50" paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         widgetVar="agendaTable" rowsPerPageTemplate="50,100,200"
+                         emptyMessage="Nenhum registro encontrado!" filteredValue="#{mbAgenda.filteredAgendas}">
+
+                <f:facet name="header">Lista de Agendas
+                    <p:outputPanel style=" float: right;">Pesquisar:
+                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('agendaTable').filter()" placeholder="..."/>
+                    </p:outputPanel>
+                </f:facet>
+
+
+                <p:column headerText="Id" filterBy="#{agenda.age_id}">
+                    <h:outputText value="#{agenda.age_id}"/>
+                </p:column>
+                <p:column headerText="Categoria" filterBy="#{agenda.categoria.cat_nome}">
+                    <h:outputText value="#{agenda.categoria.cat_nome}"/>
+                </p:column>
+                <p:column headerText="Nome" filterBy="#{agenda.age_nome}">
+                    <h:outputText value="#{agenda.age_nome}"/>
+                </p:column>
+                <p:column headerText="Tel" filterBy="#{agenda.age_tel}">
+                    <h:outputText value="#{agenda.age_tel}"/>
+                </p:column>
+                <p:column headerText="Tel2" filterBy="#{agenda.age_tel2}">
+                    <h:outputText value="#{agenda.age_tel2}"/>
+                </p:column>
+                <p:column headerText="Cel" filterBy="#{agenda.age_cel}">
+                    <h:outputText value="#{agenda.age_cel}"/>
+                </p:column>
+                <p:column headerText="Cel2" filterBy="#{agenda.age_cel2}">
+                    <h:outputText value="#{agenda.age_cel2}"/>
+                </p:column>
+                <p:column headerText="Cel2" filterBy="#{agenda.age_obs}">
+                    <h:outputText value="#{agenda.age_obs}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton process="idTabela" style="float: left; margin-top: -45px; position: relative;" update=":form:infoAgenda" icon="ui-icon-search" value="View" oncomplete="PF('agendaDialog').show()" />
+                </f:facet>
+
+            </p:dataTable>
+
+            <h:commandLink>  
+                <p:graphicImage value="./../../resources/icons/excel.png" />  
+                <p:dataExporter type="xls" target="idTabela" fileName="agendas"  />  
+            </h:commandLink>  
+            &nbsp;
+            <h:commandLink>  
+                <p:graphicImage value="./../../resources/icons/pdf.png" />  
+                <p:dataExporter type="pdf" target="idTabela" fileName="agendas"/>  
+            </h:commandLink>  
+            &nbsp;
+            <h:commandLink>  
+                <p:graphicImage value="./../../resources/icons/xls.png" />  
+                <p:dataExporter type="csv" target="idTabela" fileName="agendas" />  
+            </h:commandLink>  
+            &nbsp;
+            <h:commandLink>  
+                <p:graphicImage value="./../../resources/icons/xml.png" />  
+                <p:dataExporter type="xml" target="idTabela" fileName="agendas" />  
+            </h:commandLink> 
+
+
+        </h:form>
+
+
+
+        <h:form id="form">
+            <p:dialog header="Informa&ccedil;&otilde;es sobre a Agenda" widgetVar="agendaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                <p:outputPanel id="infoAgenda">
+                    <ui:repeat value="#{mbAgenda.consultaAgendas}" var="agenda">
+                        <h:outputText value=" Id: #{agenda.age_id}" style="display:block"/>
+                        <h:outputText value=" Categoria: #{agenda.categoria.cat_nome}" style="display:block"/>
+                        <h:outputText value=" Nome: #{agenda.age_nome}" style="display:block"/>
+                        <h:outputText value=" Tel: #{agenda.age_tel}" style="display:block"/>
+                        <h:outputText value=" Tel2: #{agenda.age_tel2}" style="display:block"/>
+                        <h:outputText value=" Cel: #{agenda.age_cel}" style="display:block"/>
+                        <h:outputText value=" Cel2: #{agenda.age_cel2}" style="display:block"/>
+                        <h:outputText value=" Obs: #{agenda.age_obs}" style="display:block"/>
+                        <br />
+                    </ui:repeat>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

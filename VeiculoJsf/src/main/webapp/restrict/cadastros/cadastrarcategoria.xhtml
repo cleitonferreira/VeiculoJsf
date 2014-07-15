@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../../resources/main.xhtml">
+
+    <ui:define name="tarefas">
+        <p:fieldset>
+
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Formul&aacute;rio de Cadastro [Categoria]">
+                    <h:form prependId="false" id="formCategoria">
+
+                        <p:commandButton value="Novo Registro" action="#{mbCategoria.limpCategoria}" onclick="PF('viewCategoria').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+
+                        <p:button style="margin-left: 10px;" outcome="cadastrarcategoria" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
+
+                        <p:growl id="msg0"/>
+                        <div align="center">
+                            <p:dialog header="View Categoria" width="30%" widgetVar="viewCategoria" minimizable="true" maximizable="true" focus="cat_nome">
+                                <h:panelGrid id="panel" columns="2" cellpadding="4" >
+
+                                    <h:outputLabel/>
+                                    <h:inputHidden id="idcategoria" value="#{mbCategoria.categoria.cat_id}"/> 
+
+                                    <p:outputLabel value="Categoria.:"/>
+                                    <p:inputText id="cat_nome" size="50" maxlength="80" value="#{mbCategoria.categoria.cat_nome}"
+                                                 onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                                 requiredMessage="O campo [Categoria] &eacute; obrigat&oacute;rio."/>
+
+                                    <p:outputLabel value="Flag.:" />  
+                                    <p:selectOneRadio id="cat_flag" value="#{mbCategoria.categoria.cat_flag}" required="true" 
+                                                      requiredMessage="O campo [Flag] &eacute; obrigat&oacute;rio."> 
+                                        <f:selectItem itemLabel="Sim" itemValue="1" /> &nbsp; &nbsp; &nbsp; &nbsp;
+                                        <f:selectItem itemLabel="N&atilde;o" itemValue="0" />   
+                                    </p:selectOneRadio>
+
+                                    <p:outputLabel value="Obs.:"/>
+                                    <p:inputTextarea id="cat_obs" rows="5" cols="30" counter="display" maxlength="250" value="#{mbCategoria.categoria.cat_obs}"
+                                                     counterTemplate="{0} caracteres restantes." autoResize="false" >
+                                    
+                                    </p:inputTextarea>
+                                    <br /><h:outputText id="display" />
+                                </h:panelGrid>
+                                <p:panel style="text-align: center;">
+                                    <p:commandButton value="Salvar" style="background-color: red;" action="#{mbCategoria.addCategoria}"
+                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                    <p:commandButton value="Limpar" disabled="#{mbCategoria.categoria.cat_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
+                                </p:panel>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+
+
+
+
+
+
+
+
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="categoria" value="#{mbCategoria.categorias}"
+                             paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
+
+                    <f:facet name="header">Lista de Categorias</f:facet>
+                    <p:column headerText="Id" filterBy="#{categoria.cat_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{categoria.cat_id}"/>
+                    </p:column>
+                    <p:column headerText="Categoria" filterBy="#{categoria.cat_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{categoria.cat_nome}"/>
+                    </p:column>
+                    <p:column headerText="Flag" filterBy="#{categoria.cat_flag}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{categoria.cat_flag == '1' ? 'Sim' : 'N&atilde;o'}"/>
+                    </p:column>
+                    <p:column headerText="Obs" filterBy="#{categoria.cat_obs}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{categoria.cat_obs}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="A&ccedil;&otilde;es"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" oncomplete="PF('viewCategoria').show();" update=":tbv1:formCategoria" 
+                                         process="@this"
+                                         image="ui-icon ui-icon-pencil">
+                            <f:setPropertyActionListener target="#{mbCategoria.categoria}" value="#{categoria}"/>
+                        </p:commandButton>
+
+                        <!-- Excluir -->
+                        <p:commandButton value="Remover" action="#{mbCategoria.deleteCategoria}" update="@form">
+
+                            <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{mbCategoria.categoria}" value="#{categoria}"/>
+
+                            <!-- DialogConfirm Excluir registro -->
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:commandButton>
+
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+        </p:fieldset>
+    </ui:define>
+
+</ui:composition>

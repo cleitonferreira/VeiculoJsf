@@ -7,6 +7,11 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui"
                 template="./../../resources/main.xhtml">
+    <style>
+        .ui-button-text-only .ui-button-text{padding: 0.3em;}
+
+    </style>
+
 
     <ui:define name="tarefas">
         <p:fieldset>
@@ -18,41 +23,61 @@
                         <p:commandButton value="Novo Registro" action="#{mbPessoa.limpPessoa()}" process="@none" update="@form"
                                          onclick="PF('viewPessoa').show();" type="button" styleClass="" icon="ui-icon-extlink" />
 
+                        <p:button style="margin-left: 10px;" outcome="cadastrarpessoa" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
+
+                        <br /><br />
+                        <small style="font-weight: bold;">Perfil: Funcion&aacute;rio[FC] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Professor[PF] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Aluno[AL] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Visitante[VS] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </small>
+
+
                         <div align="center">
                             <p:dialog header="View Pessoa" widgetVar="viewPessoa" minimizable="true" maximizable="true" focus="nomePessoa">
-                                <h:panelGrid columns="2" cellpadding="5" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
 
-                                    <h:outputLabel/>
+                                    <p:outputLabel/>
                                     <h:inputHidden id="idpessoa" value="#{mbPessoa.pessoa.pes_id}"/> 
 
-                                    <h:outputLabel for="nomePessoa" value="Nome.:"/>
+
+                                    <h:outputText value="Perfil:" />
+                                    <p:selectOneButton value="#{mbPessoa.pessoa.pes_perfil}">
+                                        <f:selectItem itemLabel="Funcion&aacute;rio" itemValue="FC" />
+                                        <f:selectItem itemLabel="Professor" itemValue="PF" />
+                                        <f:selectItem itemLabel="Aluno" itemValue="AL" />
+                                        <f:selectItem itemLabel="Visitante" itemValue="VS" />
+                                    </p:selectOneButton>
+
+
+                                    <p:outputLabel value="Nome.:"/>
                                     <p:inputText id="nomePessoa" size="40" maxlength="80" value="#{mbPessoa.pessoa.pes_nome}"
                                                  required="true" requiredMessage="O campo [Nome] &eacute; obrigat&oacute;rio"
                                                  onkeyup="this.value = this.value.toUpperCase()"/>
 
-                                    <h:outputLabel for="telefone" value="Telefone.:"/>
+                                    <p:outputLabel value="Telefone.:"/>
                                     <p:inputMask id="telefone" size="40" maxlength="14" mask="(99) 9999-9999"
                                                  value="#{mbPessoa.pessoa.pes_tel}" />
 
-                                    <h:outputLabel for="celular" value="Celular.:"/>
+                                    <p:outputLabel value="Celular.:"/>
                                     <p:inputMask id="celular" size="40" maxlength="14" mask="(99) 9999-9999"
                                                  value="#{mbPessoa.pessoa.pes_cel}" />
 
-                                    <h:outputLabel for="cpf" value="CPF.:"/>
+                                    <p:outputLabel value="CPF.:"/>
                                     <p:inputMask id="cpf" size="40" maxlength="14" mask="999.999.999-99" value="#{mbPessoa.pessoa.pes_cpf}"
                                                  disabled="#{mbPessoa.pessoa.pes_cpf != null}" required="true" requiredMessage="O campo [CPF] &eacute; obrigat&oacute;rio">
-                                        <f:validator validatorId="cpfValidator"/>
+                                        <f:validator validatorId="validators.CPFValidator"/> 
                                         <f:converter converterId="converter.CpfConverter" />
                                     </p:inputMask>
 
-                                    <h:outputLabel for="rg" value="RG.:"/>
+                                    <p:outputLabel value="RG.:"/>
                                     <p:inputText id="rg" size="40" maxlength="12" value="#{mbPessoa.pessoa.pes_rg}"
                                                  required="true" requiredMessage="O campo [RG] &eacute; obrigat&oacute;rio">
                                     </p:inputText>
 
 
-                                    <p:outputLabel for="estado" value="Estado:" />
-                                    <p:selectOneMenu id="estado" value="#{mbPessoa.estado}" style="width:200px"
+                                    <p:outputLabel value="Estado:" />
+                                    <p:selectOneMenu id="estado" value="#{mbPessoa.estado}" style="width:220px"
                                                      required="true" requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio" 
                                                      converter="converterEstado"  >
                                         <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
@@ -61,21 +86,23 @@
                                     </p:selectOneMenu>
 
 
-                                    <p:outputLabel for="cidade" value="Cidade:" />
-                                    <p:selectOneMenu id="cidade" value="#{mbPessoa.cidade}" converter="converterCidade" required="true" style="width:200px" effect="fade" panelStyle="width:180px"
+                                    <p:outputLabel value="Cidade:" />
+                                    <p:selectOneMenu id="cidade" value="#{mbPessoa.cidade}" converter="converterCidade" required="true" style="width:220px" effect="fade" panelStyle="width:180px"
                                                      requiredMessage="O campo [Cidade] &eacute; obrigat&oacute;rio" filter="true" filterMatchMode="startsWith">
                                         <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                         <f:selectItems value="#{mbPessoa.cidades}" var="cidade" itemValue="#{cidade}" itemLabel="#{cidade.cid_nome}" />
                                     </p:selectOneMenu>
 
-<!--                                    <h:outputText value="#{mbPessoa.estado.est_id}" />
-                                    <h:outputText value="#{mbPessoa.cidade.cid_id}"/>-->
+                                    <h:outputText value="#{mbPessoa.estado.est_id}" />
+                                    <h:outputText value="#{mbPessoa.cidade.cid_id}"/>
 
                                 </h:panelGrid>
                                 <p:panel style="text-align: center">
                                     <p:commandButton value="Salvar" action="#{mbPessoa.addPessoa()}" onclick="PF('notificacao').hide()"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                    <p:commandButton value="Cancelar" update="@form :formtable" process="@this" actionListener="#{mbPessoa.reset}" />
+                                    <p:commandButton value="Limpar" disabled="#{mbPessoa.pessoa.pes_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
                                 </p:panel>
                             </p:dialog>
                         </div>
@@ -93,7 +120,7 @@
                 <h:outputText value="Por Favor, pressione o bot&atilde;o [Editar] 2 vezes para o carregamento das informa&ccedil;&otilde;es!" style="font-size:15px;" />
             </p:notificationBar>
 
-            <!--            <p:commandButton value="Fechar a Notifica&ccedil;&atilde;o" onclick="PF('notificacao').hide()" type="button" icon="ui-icon-arrow-1-n"/>-->
+<!--            <p:commandButton value="Fechar a Notifica&ccedil;&atilde;o" onclick="PF('notificacao').hide()" type="button" icon="ui-icon-arrow-1-n"/>-->
 
 
             <h:form id="formtable">
@@ -107,6 +134,9 @@
                     <f:facet name="header">Lista de Pessoas</f:facet>
                     <p:column headerText="Id" filterBy="#{pessoa.pes_id}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{pessoa.pes_id}"/>
+                    </p:column>
+                    <p:column headerText="Perfil" filterBy="#{pessoa.pes_perfil}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pessoa.pes_perfil}"/>
                     </p:column>
                     <p:column headerText="Pessoa" filterBy="#{pessoa.pes_nome}"  footerText="contains" filterMatchMode="contains" width="20%">
                         <h:outputText value="#{pessoa.pes_nome}"/>
@@ -143,13 +173,13 @@
                             <f:setPropertyActionListener target="#{mbPessoa.cidade}" value="#{pessoa.cidade}" />
                         </p:commandButton>
 
-                        <!-- Excluir -->
-                        <p:commandButton value="Remover" action="#{mbPessoa.deletePessoa}" update="@form">
+                        <!--                         Excluir -->
+                        <p:commandButton value="Remover" onclick="PF('notificacao').show()" action="#{mbPessoa.deletePessoa}" update=":tbv1:formPessoa">
 
                             <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
                             <f:setPropertyActionListener target="#{mbPessoa.pessoa}" value="#{pessoa}"/>
 
-                            <!-- DialogConfirm Excluir registro -->
+                            <!--                             DialogConfirm Excluir registro -->
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                 <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
@@ -163,7 +193,6 @@
                 </p:dataTable>
 
             </h:form>
-
 
         </p:fieldset>
     </ui:define>

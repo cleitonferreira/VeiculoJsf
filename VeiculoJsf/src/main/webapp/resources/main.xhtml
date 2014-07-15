@@ -34,9 +34,12 @@
 
             <div id="logoff" style="text-align: right;">
                 <br/>
-                <h5 style="text-align: right; color: white; font-size: 10px;"><h:outputText value="SEJA BEM VINDO(A)!!!"/></h5>
+                <h5 style="text-align: right; color: white;margin-top: 20px; font-size: 10px;">
+                    <h:outputText value="SEJA BEM VINDO(A)!!!" />
+                </h5>
+                <p style="text-align: right; margin-top: -10px; color: white;"><h:outputText value="#{bbUsuarioLogado.procuraUsuario().getUsu_nome()}" /></p>
                 <br/>
-                <a style="" href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+                <a href="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
                     <button class="btn btn-mini" type="button">Desconectar</button>
                 </a>
 
@@ -58,7 +61,7 @@
 
                     <p:menuitem  value="Home" url="/restrict/home.faces"/>
                     <p:submenu label="Cadastros">
-                        <p:menuitem  value="Pessoa" action="/restrict/cadastros/cadastrarpessoa.faces" ajax="false"/>
+                        <p:menuitem  value="Pessoa / Ve&iacute;culo" action="#{mbPessoaVeiculo.limpPessoa}" ajax="false"/>
                         <p:menuitem  value="Setores" url="/restrict/cadastros/cadastrarsetor.faces"/>
                         <p:menuitem  value="Usuarios" url="/restrict/cadastros/cadastrarusuario.faces"/>
                         <p:menuitem  value="Paises" url="/restrict/cadastros/cadastrarpais.faces"/>
@@ -66,7 +69,7 @@
                         <p:menuitem  value="Cidades" url="/restrict/cadastros/cadastrarcidade.faces"/>
                         <p:menuitem  value="Marcas" url="/restrict/cadastros/cadastrarmarca.faces"/>
                         <p:menuitem  value="Modelos" url="/restrict/cadastros/cadastrarmodelo.faces"/>  
-                        <p:menuitem  value="Pessoa / Ve&iacute;culo" action="#{mbPessoaVeiculo.limpPessoa}" ajax="false"/>
+                        <p:menuitem  value="Pessoa" action="/restrict/cadastros/cadastrarpessoa.faces" ajax="false"/>
                         <p:menuitem  value="Veiculo" url="/restrict/cadastros/cadastrarveiculo.faces"/>
                     </p:submenu> 
                     <p:submenu label="Consultas">  
@@ -79,23 +82,25 @@
                         <p:menuitem value="Paises" url="/restrict/consultas/consultarpaises.faces"/>
                         <p:menuitem value="Setores" url="/restrict/consultas/consultarsetores.faces"/>
                         <p:menuitem value="Usuarios" url="/restrict/consultas/consultarusuarios.faces"/>
-                    </p:submenu> 
-                    <p:submenu label="Teste">
-                        <p:menuitem  value="Teste" url="/restrict/teste/teste.faces" />
-                        <p:menuitem  value="TestePessoa" url="/restrict/teste/testepessoa.faces"/>
-                        <p:menuitem  value="AutoComplete" url="/restrict/teste/autoComplete.faces"/>
-                        <p:menuitem  value="TesteDialog" url="/restrict/teste/testedialog.faces"/>
-                        <p:menuitem  value="Combos Aninhados" url="/restrict/teste/combosaninhados.faces"/>
+                        <p:menuitem value="Pessoas / Ve&iacute;culos" url="/restrict/consultas/consultarpessoaveiculos.faces"/>
                     </p:submenu>
-                    <p:menuitem  value="Equipe" url="/restrict/equipe.faces"/>
+                    <p:submenu label="Ve&iacute;culo de Cargas">
+                        <p:menuitem  value="Empresa" url="/restrict/cadastros/cadastrarempresa.faces"/>
+                        <p:menuitem  value="Controle de Carga" url="/restrict/cadastros/cadastrarveiculocarga.faces"/>
+                        <p:menuitem  value="Consulta de Empresa" url="/restrict/consultas/consultarempresas.faces"/>
+                        <p:menuitem  value="Consult. Entrada/Sa&iacute;da" url="/restrict/consultas/consultarveiculocargas.faces"/>
+                    </p:submenu>
+                    <p:submenu label="Agenda Telef&ocirc;nica">
+                        <p:menuitem  value="Categoria" url="/restrict/cadastros/cadastrarcategoria.faces"/>
+                        <p:menuitem  value="Agenda" url="/restrict/cadastros/cadastraragenda.faces"/>
+                        <p:menuitem value="Consulta Categoria" url="/restrict/consultas/consultarcategorias.faces"/>
+                        <p:menuitem value="Consulta Agenda" url="/restrict/consultas/consultaragendas.faces"/>
+                    </p:submenu>
+                    <p:menuitem  value="Equipe" onclick="PF('dlg3').show();" />
+                    
                 </p:menubar> 
             </h:form>           
         </div>
-
-        <!-- Menu ########################################## Menu -->
-
-        <!--        <br/><br/><br/><br/>
-                <center><a href="#"><img src="./../resources/restrict/images/Analise_Sistemas.png" /></a></center>-->
 
         <div id="tarefas">
             <ui:insert name="tarefas"></ui:insert>
@@ -104,16 +109,34 @@
 
     </h:body>
 
+    <p:dialog header="Equipe" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="500">
+        <h4 style="color: #0174df; text-align: center;">FAA - Funda&ccedil;&atilde;o Educacional D. Andr&eacute; Arcoverde</h4>
+        <h4 style="color: #0174df; text-align: center;">Centro de Ensino Superior de Valen&ccedil;a</h4>
 
-    <!--            <div id="footer">
-    
-                <a href="http://www.veiculojsf.com.br/"><img width="10%" height="10%" src="./../resources/restrict/images/Analise_Sistemas.png" /></a>
-    
-                <div class="container">
-                    <center> <p class="muted credit"> <a href="#">VeiculoJsf - An&aacute;lise e Desenvolvimento de Sistemas - &copy; Copyright TI FAA 2014</a></p></center>
-                </div>
-            </div>-->
-
+        <center>
+            <p:column colspan="2">  
+                <p:graphicImage url="../resources/imagens/Analise_Sistemas.png" />  
+            </p:column>  
+            <p:column colspan="2">  
+                <p:graphicImage url="../../resources/imagens/Analise_Sistemas.png" />  
+            </p:column>  
+        </center>
+        <br /><br />
+        <p style="color: #0174df; font-weight: bold;"><small>Desenvolvido pelo Nucleo de Tecnologia da Informa&ccedil;&atilde;o</small></p>
+        <p style="color: #0174df; font-weight: bold;"><small>Tel: (24) 2453-1888</small></p>
+        <p style="color: #0174df; font-weight: bold;"><small>Ramal: 0789</small></p>
+        <br />
+        
+    </p:dialog>
 
 
 </html>
+
+
+<!--                    <p:submenu label="Teste">
+                        <p:menuitem  value="Teste" url="/restrict/teste/teste.faces" />
+                        <p:menuitem  value="TestePessoa" url="/restrict/teste/testepessoa.faces"/>
+                        <p:menuitem  value="AutoComplete" url="/restrict/teste/autoComplete.faces"/>
+                        <p:menuitem  value="TesteDialog" url="/restrict/teste/testedialog.faces"/>
+                        <p:menuitem  value="Combos Aninhados" url="/restrict/teste/combosaninhados.faces"/>
+                    </p:submenu>-->

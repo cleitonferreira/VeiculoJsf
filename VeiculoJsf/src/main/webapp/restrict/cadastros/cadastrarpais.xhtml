@@ -10,101 +10,105 @@
 
     <ui:define name="tarefas">
         <p:fieldset>
-        
-        <p:tabView id="tbv1" dynamic="true" cache="true">
-            <p:tab title="Formul&aacute;rio de Cadastro [Pais]">
-                <h:form prependId="false" id="formPais">
 
-                    <p:commandButton value="Novo Registro" action="#{mbPais.limpPais}" onclick="PF('viewPais').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+            <p:tabView id="tbv1" dynamic="true" cache="true">
+                <p:tab title="Formul&aacute;rio de Cadastro [Pais]">
+                    <h:form prependId="false" id="formPais">
 
-                    <div align="center">
-                        <p:dialog header="View Pais" widgetVar="viewPais" minimizable="true" maximizable="true" focus="pa_nome">
-                            <h:panelGrid columns="2" cellpadding="5" >
+                        <p:commandButton value="Novo Registro" action="#{mbPais.limpPais}" onclick="PF('viewPais').show();" 
+                                         type="button" styleClass="" icon="ui-icon-extlink" />
+                        
+                        <p:button style="margin-left: 10px;" outcome="cadastrarpais" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
 
-                                <h:outputLabel/>
-                            <h:inputHidden id="pa_id" value="#{mbPais.pais.pa_id}"/> 
+                        <div align="center">
+                            <p:dialog header="View Pais" widgetVar="viewPais" minimizable="true" maximizable="true" focus="pa_nome">
+                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
 
-                            <h:outputText value="Pais.:"/>
-                            <p:inputText id="pa_nome" size="40" maxlength="50" value="#{mbPais.pais.pa_nome}"
-                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
-                                         requiredMessage="O campo [Pais] &eacute; obrigat&oacute;rio."/>
-                            
-                            
-                            <h:outputText value="Sigla.:"/>
-                            <p:inputText id="pa_sigla" size="5" maxlength="3" value="#{mbPais.pais.pa_sigla}"
-                                         onkeyup="this.value = this.value.toUpperCase()" required="true"
-                                         requiredMessage="O campo [Sigla] &eacute; obrigat&oacute;rio."/>
-                            
+                                    <p:outputLabel/>
+                                    <h:inputHidden id="pa_id" value="#{mbPais.pais.pa_id}"/> 
 
-                            </h:panelGrid>
-                            <p:panel style="text-align: center;">
-                                <p:commandButton value="Salvar" style="background-color: red;" action="#{mbPais.addPais}"
-                                                 image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                <p:commandButton value="Cancelar" actionListener="#{mbPais.limpPais}" update="@form"
-                                                 image="ui-icon ui-icon-close" />
-                            </p:panel>
-                        </p:dialog>
-                    </div>
-                </h:form>
-            </p:tab>
-        </p:tabView>
+                                    <p:outputLabel value="Pa&iacute;s.:"/>
+                                    <p:inputText id="pa_nome" size="40" maxlength="50" value="#{mbPais.pais.pa_nome}"
+                                                 onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                                 requiredMessage="O campo [Pa&iacute;s] &eacute; obrigat&oacute;rio."/>
 
 
+                                    <p:outputLabel value="Sigla.:"/>
+                                    <p:inputText id="pa_sigla" size="5" maxlength="3" value="#{mbPais.pais.pa_sigla}"
+                                                 onkeyup="this.value = this.value.toUpperCase()" required="true"
+                                                 requiredMessage="O campo [Sigla] &eacute; obrigat&oacute;rio."/>
+
+
+                                </h:panelGrid>
+                                <p:panel style="text-align: center;">
+                                    <p:commandButton value="Salvar" style="background-color: red;" action="#{mbPais.addPais}"
+                                                     image="ui-icon ui-icon-disk" update="@form :formtable"/>
+                                    <p:commandButton value="Limpar" disabled="#{mbPais.pais.pa_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
+                                </p:panel>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
 
 
 
 
 
 
-        <h:form id="formtable">
-            <p:growl id="msg1"/>
-            <p:dataTable id="idTabela" var="pais" value="#{mbPais.paises}"
-                         paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
-                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15,30,50,100,200">
-
-                <f:facet name="header">Lista de Paises</f:facet>
-                <p:column headerText="Id" filterBy="#{pais.pa_id}"  footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{pais.pa_id}"/>
-                </p:column>
-                <p:column headerText="Pais" filterBy="#{pais.pa_nome}"  footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{pais.pa_nome}"/>
-                </p:column>
-                <p:column headerText="Flag" filterBy="#{pais.pa_sigla}"  footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{pais.pa_sigla}"/>
-                </p:column>
-
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="A&ccedil;&otilde;es"/>
-                    </f:facet>
-                    <p:commandButton value="Editar" oncomplete="PF('viewPais').show();" update=":tbv1:formPais" 
-                                     process="@this"
-                                     image="ui-icon ui-icon-pencil">
-                        <f:setPropertyActionListener target="#{mbPais.pais}" value="#{pais}"/>
-                    </p:commandButton>
-
-                    <!-- Excluir -->
-                    <p:commandButton value="Remover" action="#{mbPais.deletePais}" update="@form">
-
-                        <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
-                        <f:setPropertyActionListener target="#{mbPais.pais}" value="#{pais}"/>
-
-                        <!-- DialogConfirm Excluir registro -->
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                            <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                        </p:confirmDialog>
-
-                    </p:commandButton>
 
 
-                </p:column>
+            <h:form id="formtable">
+                <p:growl id="msg1"/>
+                <p:dataTable id="idTabela" var="pais" value="#{mbPais.paises}"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15,30,50,100,200">
 
-            </p:dataTable>
+                    <f:facet name="header">Lista de Paises</f:facet>
+                    <p:column headerText="Id" filterBy="#{pais.pa_id}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pais.pa_id}"/>
+                    </p:column>
+                    <p:column headerText="Pais" filterBy="#{pais.pa_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pais.pa_nome}"/>
+                    </p:column>
+                    <p:column headerText="Flag" filterBy="#{pais.pa_sigla}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{pais.pa_sigla}"/>
+                    </p:column>
 
-        </h:form>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="A&ccedil;&otilde;es"/>
+                        </f:facet>
+                        <p:commandButton value="Editar" oncomplete="PF('viewPais').show();" update=":tbv1:formPais" 
+                                         process="@this"
+                                         image="ui-icon ui-icon-pencil">
+                            <f:setPropertyActionListener target="#{mbPais.pais}" value="#{pais}"/>
+                        </p:commandButton>
+
+                        <!-- Excluir -->
+                        <p:commandButton value="Remover" action="#{mbPais.deletePais}" update="@form">
+
+                            <p:confirm header="Excluir Registro" message="Voc&ecirc; gostaria de deletar o registro?" icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{mbPais.pais}" value="#{pais}"/>
+
+                            <!-- DialogConfirm Excluir registro -->
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="N&atilde;o" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:commandButton>
+
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
 
 
         </p:fieldset>

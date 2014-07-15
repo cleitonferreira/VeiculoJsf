@@ -21,7 +21,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -62,10 +61,6 @@ public class MbPessoa implements Serializable {
     private InterfaceDAO<Pessoa> pessoaDAO() {
         InterfaceDAO<Pessoa> pessoaDAO = new HibernateDAO<Pessoa>(Pessoa.class, FacesContextUtil.getRequestSession());
         return pessoaDAO;
-    }
-
-    public void reset() {
-        RequestContext.getCurrentInstance().reset("@form :formPessoa");
     }
 
     public String limpPessoa() {

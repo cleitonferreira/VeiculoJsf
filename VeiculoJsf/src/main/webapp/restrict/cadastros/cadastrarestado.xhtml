@@ -15,29 +15,32 @@
                 <p:tab title="Formul&aacute;rio de Cadastro [Estado]">
                     <h:form prependId="false" id="formEstado">
 
-                        <p:commandButton value="Novo Registro" action="#{mbEstado.limpEstado}" onclick="PF('viewEstado').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                        <p:commandButton value="Novo Registro" action="#{mbEstado.limpEstado}" onclick="PF('viewEstado').show();" 
+                                         type="button" styleClass="" icon="ui-icon-extlink" />
+                        
+                        <p:button style="margin-left: 10px;" outcome="cadastrarestado" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
 
                         <div align="center">
                             <p:dialog header="View Estado" widgetVar="viewEstado" minimizable="true" maximizable="true" focus="est_nome">
-                                <h:panelGrid columns="2" cellpadding="5" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
 
-                                    <h:outputLabel/>
+                                    <p:outputLabel/>
                                     <h:inputHidden id="est_id" value="#{mbEstado.estado.est_id}"/> 
 
-                                    <h:outputLabel value="Pa&iacute;s:" />
-                                    <h:selectOneMenu id="setor" value="#{mbEstado.pais}" 
-                                                     required="true" requiredMessage="O campo [País] &eacute; obrigat&oacute;rio" 
+                                    <p:outputLabel value="Pa&iacute;s:" />
+                                    <p:selectOneMenu id="setor" value="#{mbEstado.pais}" 
+                                                     required="true" requiredMessage="O campo [Pa&iacute;s] &eacute; obrigat&oacute;rio" 
                                                      converter="converterPais"  >
                                         <f:selectItem itemLabel="Selecione" />
                                         <f:selectItems value="#{mbEstado.paises}" var="pais" itemValue="#{pais}" itemLabel="#{pais.pa_sigla}" />
-                                    </h:selectOneMenu>
+                                    </p:selectOneMenu>
 
-                                    <h:outputText value="UF.:"/>
+                                    <p:outputLabel value="UF.:"/>
                                     <p:inputText id="est_uf" size="4" maxlength="2" value="#{mbEstado.estado.est_uf}"
                                                  onkeyup="this.value = this.value.toUpperCase()" required="true"
                                                  requiredMessage="O campo [UF] &eacute; obrigat&oacute;rio."/>
 
-                                    <h:outputText value="Estado.:"/>
+                                    <p:outputLabel value="Estado.:"/>
                                     <p:inputText id="est_nome" size="40" maxlength="50" value="#{mbEstado.estado.est_nome}"
                                                  required="true" 
                                                  requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio."/>
@@ -46,8 +49,9 @@
                                 <p:panel style="text-align: center">
                                     <p:commandButton value="Salvar" action="#{mbEstado.addEstado()}"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                    <p:commandButton value="Cancelar" actionListener="#{mbEstado.limpEstado()}" 
-                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                    <p:commandButton value="Limpar" disabled="#{mbEstado.estado.est_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
                                 </p:panel>
                             </p:dialog>
                         </div>

@@ -15,27 +15,30 @@
                 <p:tab title="Formul&aacute;rio de Cadastro [Setor]">
                     <h:form prependId="false" id="formSetor">
 
-                        <p:commandButton value="Novo Registro" action="#{mbSetor.limpSetor}" onclick="PF('viewSetor').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                        <p:commandButton value="Novo Registro" action="#{mbSetor.limpSetor}" onclick="PF('viewSetor').show();" 
+                                         type="button" styleClass="" icon="ui-icon-extlink" />
+                        
+                        <p:button style="margin-left: 10px;" outcome="cadastrarsetor" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
 
 
                         <p:growl id="msg0"/>
                         <div align="center">
                             <p:dialog header="View Setor" widgetVar="viewSetor" minimizable="true" maximizable="true" focus="set_nome">
-                                <h:panelGrid columns="2" cellpadding="4" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="4" >
 
-                                    <h:outputLabel/>
+                                    <p:outputLabel/>
                                     <h:inputHidden id="idsetor" value="#{mbSetor.setor.set_id}"/> 
 
-                                    <h:outputText value="Setor.:"/>
+                                    <p:outputLabel value="Setor.:"/>
                                     <p:inputText id="set_nome" size="40" maxlength="50" value="#{mbSetor.setor.set_nome}"
                                                  onkeyup="this.value = this.value.toUpperCase()" required="true"
                                                  requiredMessage="O campo [Setor] &eacute; obrigat&oacute;rio."/>
 
-                                    <h:outputText value="Ramal.:"/>
+                                    <p:outputLabel value="Ramal.:"/>
                                     <p:inputMask id="set_ramal" size="40" maxlength="4" mask="9999" value="#{mbSetor.setor.set_ramal}"
                                                  required="true" requiredMessage="O campo [Ramal] &eacute; obrigat&oacute;rio."/>
 
-                                    <h:outputText value="Respons&aacute;vel pelo Setor.:"/>
+                                    <p:outputLabel value="Respons&aacute;vel pelo Setor.:"/>
                                     <p:inputText id="set_responsavel" size="40" maxlength="50" value="#{mbSetor.setor.set_responsavel}"
                                                  onkeyup="this.value = this.value.toUpperCase()" required="true"
                                                  requiredMessage="O campo [Respons&aacute;vel] &eacute; obrigat&oacute;rio."/>
@@ -44,8 +47,9 @@
                                 <p:panel style="text-align: center;">
                                     <p:commandButton value="Salvar" style="background-color: red;" action="#{mbSetor.addSetor}"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                    <p:commandButton value="Cancelar" actionListener="#{mbSetor.limpSetor}" update="@form"
-                                                     image="ui-icon ui-icon-close" />
+                                    <p:commandButton value="Limpar" disabled="#{mbSetor.setor.set_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
                                 </p:panel>
                             </p:dialog>
                         </div>

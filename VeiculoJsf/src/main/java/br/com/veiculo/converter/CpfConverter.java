@@ -19,6 +19,7 @@ public class CpfConverter implements Converter {
     
 //    private final MeuDao dao = new MeuDaoImpl();
     
+      @Override
       public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
          /*
           * Irá converter CPF formatado para um sem pontos e traço.
@@ -32,6 +33,7 @@ public class CpfConverter implements Converter {
           return cpf;
      }
  
+      @Override
      public String getAsString(FacesContext context, UIComponent component, Object value) throws ConverterException {
          /*
           * Irá converter CPF não formatado para um com pontos e traço.

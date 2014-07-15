@@ -8,14 +8,47 @@
         <phase-listener>br.com.veiculo.util.PhaseListenerVeiculo</phase-listener>
     </lifecycle>
     
+<!-- Internacionalização de mensagens com JSF  -->
+    
+<!--    <application>   
+        <resource-bundle>
+            <base-name>com.sample.messages.messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+        <locale-config>
+            <default-locale>pt_BR</default-locale>
+            <supported-locale>en_US</supported-locale>
+        </locale-config>
+        <message-bundle>
+            br.com.veiculo.messages
+        </message-bundle>      
+    </application>-->
+    
+    
+    
+    
+    <!-- Declarando o validator de Cpf no faces-config:-->
+    
     <converter>
         <converter-id>converter.CpfConverter</converter-id>
         <converter-class>br.com.veiculo.converter.CpfConverter</converter-class>
     </converter>
     
     <validator>
-        <validator-id>converter.CPFValidator</validator-id>
+        <validator-id>validators.CPFValidator</validator-id>
         <validator-class>br.com.veiculo.validators.CPFValidator</validator-class>
+    </validator>
+    
+    <!-- Declarando o validator de CNPJ no faces-config:-->
+    
+    <converter>
+        <converter-id>converter.CnpjConverter</converter-id>
+        <converter-class>br.com.veiculo.converter.CnpjConverter</converter-class>
+    </converter>
+    
+    <validator>
+        <validator-id>validators.CnpjValidator</validator-id>
+        <validator-class>br.com.veiculo.validators.CnpjValidator</validator-class>
     </validator>
     
     

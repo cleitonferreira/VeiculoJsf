@@ -15,20 +15,23 @@
                 <p:tab title="Formul&aacute;rio de Cadastro [Marca]">
                     <h:form prependId="false" id="formMarca">
 
-                        <p:commandButton value="Novo Registro" action="#{mbMarca.limpMarca}" onclick="PF('viewMarca').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                        <p:commandButton value="Novo Registro" action="#{mbMarca.limpMarca}" onclick="PF('viewMarca').show();" 
+                                         type="button" styleClass="" icon="ui-icon-extlink" />
+
+                        <p:button style="margin-left: 10px;" outcome="cadastrarmarca" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
 
                         <div align="center">
                             <p:dialog header="View Marca" widgetVar="viewMarca" minimizable="true" maximizable="true" focus="mar_nome">
-                                <h:panelGrid columns="2" cellpadding="5" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
 
-                                    <h:outputLabel/>
+                                    <p:outputLabel/>
                                     <h:inputHidden id="mar_id" value="#{mbMarca.marca.mar_id}"/> 
 
-                                    <h:outputText value="Marca.:"/>
+                                    <p:outputLabel value="Marca.:"/>
                                     <p:inputText id="mar_nome" size="40" maxlength="50" value="#{mbMarca.marca.mar_nome}"
                                                  required="true" requiredMessage="O campo [Marca] &eacute; obrigat&oacute;rio."/>
 
-                                    <h:outputText value="Flag.:" />  
+                                    <p:outputLabel value="Flag.:" />  
                                     <p:selectOneRadio id="mar_flag" value="#{mbMarca.marca.mar_flag}" required="true" 
                                                       requiredMessage="O campo [Flag] &eacute; obrigat&oacute;rio."> 
                                         <f:selectItem itemLabel="Sim" itemValue="1" /> &nbsp; &nbsp;
@@ -39,8 +42,9 @@
                                 <p:panel style="text-align: center">
                                     <p:commandButton value="Salvar" action="#{mbMarca.addMarca()}"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                    <p:commandButton value="Cancelar" actionListener="#{mbMarca.limpMarca()}" 
-                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                    <p:commandButton value="Limpar" disabled="#{mbMarca.marca.mar_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
                                 </p:panel>
                             </p:dialog>
                         </div>
@@ -70,8 +74,8 @@
                     <p:column headerText="Marca" filterBy="#{marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{marca.mar_nome}"/>
                     </p:column>
-                    <p:column headerText="Flag" filterBy="#{marca.mar_flag}"  footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{marca.mar_flag}"/>
+                    <p:column headerText="Flag" filterBy="#{marca.mar_flag == '1' ? 'Sim' : 'N&atilde;o'}">
+                        <h:outputText value="#{marca.mar_flag == '1' ? 'Sim' : 'N&atilde;o'}"/>
                     </p:column>
 
                     <p:column>

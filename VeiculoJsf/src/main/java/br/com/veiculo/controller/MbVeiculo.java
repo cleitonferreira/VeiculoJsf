@@ -22,7 +22,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -66,12 +65,11 @@ public class MbVeiculo implements Serializable {
         return veiculoDAO;
     }
 
-    public void reset() {
-        RequestContext.getCurrentInstance().reset("@form :formVeiculo");
-    }
-
     public String limpVeiculo() {
         veiculo = new Veiculo();
+        selected = new Pessoa();
+        marca = new Marca();
+        modelo = new Modelo();
         return editVeiculo();
     }
 
@@ -153,7 +151,18 @@ public class MbVeiculo implements Serializable {
     }
 
     public void deleteVeiculo() {
-        veiculoDAO().remove(veiculo);
+
+        try {
+            veiculoDAO().remove(veiculo);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro excluído com sucesso", ""));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro ao [Excluir], no Banco de Dados", "" + ex));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Entre em contato com o Administrador", "" + ex));
+        }
+
     }
 
     public Pessoa getSelected() {
@@ -166,7 +175,7 @@ public class MbVeiculo implements Serializable {
 
     // Actions
     public List<Pessoa> completePessoa() {
-        return dao.consultaTodosPessoas();
+        return dao.consultaTodasPessoas();
     }
 
     public String clear() {

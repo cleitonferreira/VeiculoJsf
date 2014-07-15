@@ -17,23 +17,25 @@
 
                         <p:commandButton value="Novo Registro" action="#{mbCidade.limpCidade}" 
                                          onclick="PF('viewCidade').show();" type="button" styleClass="" icon="ui-icon-extlink" />
+                        
+                        <p:button style="margin-left: 10px;" outcome="cadastrarcidade" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
 
                         <div align="center">
                             <p:dialog header="View Cidade" widgetVar="viewCidade" minimizable="true" maximizable="true" focus="cid_nome">
-                                <h:panelGrid columns="2" cellpadding="5" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
 
-                                    <h:outputLabel/>
+                                    <p:outputLabel/>
                                     <h:inputHidden id="cid_id" value="#{mbCidade.cidade.cid_id}"/> 
 
-                                    <h:outputText value="Estado.:"/>
-                                    <h:selectOneMenu id="estado" value="#{mbCidade.estado}" 
+                                    <p:outputLabel value="Estado.:"/>
+                                    <p:selectOneMenu id="estado" value="#{mbCidade.estado}" 
                                                      required="true" requiredMessage="O campo [Estado] &eacute; obrigat&oacute;rio" 
                                                      converter="converterEstado"  >
                                         <f:selectItem itemLabel="Selecione" />
                                         <f:selectItems value="#{mbCidade.estados}" var="estado" itemValue="#{estado}" itemLabel="#{estado.est_uf}" />
-                                    </h:selectOneMenu>
+                                    </p:selectOneMenu>
 
-                                    <h:outputText value="Cidade.:"/>
+                                    <p:outputLabel value="Cidade.:"/>
                                     <p:inputText id="cid_nome" size="40" maxlength="50" value="#{mbCidade.cidade.cid_nome}"
                                                  required="true"
                                                  requiredMessage="O campo [Cidade] &eacute; obrigat&oacute;rio."/>
@@ -42,8 +44,9 @@
                                 <p:panel style="text-align: center">
                                     <p:commandButton value="Salvar" action="#{mbCidade.addCidade()}"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
-                                    <p:commandButton value="Cancelar" actionListener="#{mbCidade.limpCidade()}" 
-                                                     image="ui-icon ui-icon-close" update="@form"/>
+                                    <p:commandButton value="Limpar" disabled="#{mbCidade.cidade.cid_id != null}" >
+                                        <p:ajax update="panel" resetValues="true" />
+                                    </p:commandButton>
                                 </p:panel>
                             </p:dialog>
                         </div>

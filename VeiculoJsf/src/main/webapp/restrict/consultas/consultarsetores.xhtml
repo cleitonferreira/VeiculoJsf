@@ -17,7 +17,7 @@
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          widgetVar="setorTable" rowsPerPageTemplate="50,100,200"
-                         emptyMessage="Registro não encontrado!!" filteredValue="#{mbSetor.filteredSetores}">
+                         emptyMessage="Nenhum registro encontrado!" filteredValue="#{mbSetor.filteredSetores}">
 
                 <f:facet name="header">Lista de Setores
                     <p:outputPanel style=" float: right;">Pesquisar:
@@ -33,11 +33,11 @@
                     <h:outputText value="#{setor.set_nome}"/>
                 </p:column>
 
-                <p:column headerText="Id" filterBy="#{setor.set_ramal}">
+                <p:column headerText="Ramal" filterBy="#{setor.set_ramal}">
                     <h:outputText value="#{setor.set_ramal}"/>
                 </p:column>
 
-                <p:column headerText="Id" filterBy="#{setor.set_responsavel}">
+                <p:column headerText="Respons. Setor" filterBy="#{setor.set_responsavel}">
                     <h:outputText value="#{setor.set_responsavel}"/>
                 </p:column>
 

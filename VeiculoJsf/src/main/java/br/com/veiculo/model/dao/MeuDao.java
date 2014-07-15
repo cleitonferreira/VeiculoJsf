@@ -4,7 +4,9 @@
  */
 package br.com.veiculo.model.dao;
 
+import br.com.veiculo.model.entities.Categoria;
 import br.com.veiculo.model.entities.Cidade;
+import br.com.veiculo.model.entities.Empresa;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
@@ -41,12 +43,18 @@ public interface MeuDao {
 
     public Object consultaPlaca(String placa);
     /////////////////////////////////////////////
-    
 
-    //AutoComplete
+    //AutoComplete Pessoa 
     public Pessoa getByIdPessoa(Integer id);
 
-    public List<Pessoa> consultaTodosPessoas();
+    public List<Pessoa> consultaTodasPessoas();
+    
+    
+    //AutoComplete Empresa 
+    public Empresa getByIdEmpresa(Integer id);
+
+    public List<Empresa> consultaTodasEmpresas();
+    
 
     //Setor  
     public Setor getByIdSetor(Integer id);
@@ -57,5 +65,10 @@ public interface MeuDao {
     public Pais getByIdPais(Integer id);
 
     public List<Pais> consultaTodosPaises();
+
+    //Categoria
+    public Categoria getByIdCategoria(Integer id);
+
+    public List<Categoria> consultaTodasCategorias();
 
 }

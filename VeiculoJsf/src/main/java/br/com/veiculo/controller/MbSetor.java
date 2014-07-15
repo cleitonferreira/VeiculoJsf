@@ -133,7 +133,4 @@ public class MbSetor implements Serializable {
         this.consultaSetores = consultaSetores;
     }
 
-    
-    
-
 }

@@ -6,7 +6,7 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
@@ -43,10 +44,12 @@ public class Pessoa implements Serializable {
     private String pes_tel;
     @Column(name = "pes_cel", nullable = false, length = 15)//(34)-88888-8888
     private String pes_cel;
+    @Column(name = "pes_perfil", nullable = false, length = 2)
+    private String pes_perfil;
 
-    @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
     @ForeignKey(name = "VeiculoPessoa")
-    private Veiculo veiculo;
+    private List<Veiculo> veiculos;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @ForeignKey(name = "EstadoPessoa")
@@ -111,14 +114,14 @@ public class Pessoa implements Serializable {
         this.pes_cel = pes_cel;
     }
 
-    public Veiculo getVeiculo() {
-        return veiculo;
+    public List<Veiculo> getVeiculos() {
+        return veiculos;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
+    public void setVeiculos(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
     }
-
+    
     public Estado getEstado() {
         return estado;
     }
@@ -134,6 +137,15 @@ public class Pessoa implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
+
+    public String getPes_perfil() {
+        return pes_perfil;
+    }
+
+    public void setPes_perfil(String pes_perfil) {
+        this.pes_perfil = pes_perfil;
+    }
+    
     
     
 

@@ -4,7 +4,9 @@
  */
 package br.com.veiculo.model.dao;
 
+import br.com.veiculo.model.entities.Categoria;
 import br.com.veiculo.model.entities.Cidade;
+import br.com.veiculo.model.entities.Empresa;
 import br.com.veiculo.model.entities.Estado;
 import br.com.veiculo.model.entities.Marca;
 import br.com.veiculo.model.entities.Modelo;
@@ -78,8 +80,19 @@ public class MeuDaoImpl implements MeuDao, Serializable {
     }
 
     @Override
-    public List<Pessoa> consultaTodosPessoas() {
+    public List<Pessoa> consultaTodasPessoas() {
         Criteria crit = HibernateCombos.getSession().createCriteria(Pessoa.class);
+        return crit.list();
+    }
+
+    @Override
+    public Empresa getByIdEmpresa(Integer id) {
+        return (Empresa) HibernateCombos.getSession().get(Empresa.class, id);
+    }
+
+    @Override
+    public List<Empresa> consultaTodasEmpresas() {
+        Criteria crit = HibernateCombos.getSession().createCriteria(Empresa.class);
         return crit.list();
     }
 
@@ -100,11 +113,10 @@ public class MeuDaoImpl implements MeuDao, Serializable {
         return results;
     }
 
-
     @Override
     public Object consultaPlaca(String placa) {
         System.out.println("Variavel>>>>>>" + placa);
-        SQLQuery sql = HibernateCombos.getSession().createSQLQuery("SELECT COUNT(*) FROM `veiculo` WHERE `veic_placa` = '" + placa +"'");
+        SQLQuery sql = HibernateCombos.getSession().createSQLQuery("SELECT COUNT(*) FROM `veiculo` WHERE `veic_placa` = '" + placa + "'");
 
         List resultados = new ArrayList();
         resultados = sql.list();
@@ -133,6 +145,17 @@ public class MeuDaoImpl implements MeuDao, Serializable {
     @Override
     public List<Pais> consultaTodosPaises() {
         Criteria crit = HibernateCombos.getSession().createCriteria(Pais.class);
+        return crit.list();
+    }
+
+    @Override
+    public Categoria getByIdCategoria(Integer id) {
+        return (Categoria) HibernateCombos.getSession().get(Categoria.class, id);
+    }
+
+    @Override
+    public List<Categoria> consultaTodasCategorias() {
+        Criteria crit = HibernateCombos.getSession().createCriteria(Categoria.class);
         return crit.list();
     }
 

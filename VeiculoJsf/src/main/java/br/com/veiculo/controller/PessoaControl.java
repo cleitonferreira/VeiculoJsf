@@ -38,7 +38,7 @@ public class PessoaControl implements Serializable {
 
     // Actions
     public List<Pessoa> completePessoa(){
-        return dao.consultaTodosPessoas();
+        return dao.consultaTodasPessoas();
     }
     
     public String clear(){

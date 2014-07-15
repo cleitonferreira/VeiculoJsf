@@ -45,6 +45,10 @@ public class Cidade implements Serializable {
     @ForeignKey(name = "CidadePessoa")
     private List<Pessoa> pessoas;
     
+    @OneToMany(mappedBy = "cidade", fetch = FetchType.LAZY)
+    @ForeignKey(name = "CidadeEmpresa")
+    private List<Empresa> empresas;
+    
     
     public Cidade() {
         this.estado = new Estado();
@@ -81,6 +85,17 @@ public class Cidade implements Serializable {
     public void setPessoas(List<Pessoa> pessoas) {
         this.pessoas = pessoas;
     }
+
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
+    }
+    
+    
+    
     
     
 

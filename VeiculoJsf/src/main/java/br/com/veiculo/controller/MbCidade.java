@@ -56,6 +56,7 @@ public class MbCidade implements Serializable {
 
     public String limpCidade() {
         cidade = new Cidade();
+        estado = new Estado();
         return editCidade();
     }
 
@@ -167,7 +168,5 @@ public class MbCidade implements Serializable {
     public void setConsultaCidades(List<Cidade> consultaCidades) {
         this.consultaCidades = consultaCidades;
     }
-    
-    
 
 }
