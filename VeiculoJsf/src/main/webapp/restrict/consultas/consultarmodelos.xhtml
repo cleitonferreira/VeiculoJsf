@@ -21,12 +21,16 @@
 
                 <f:facet name="header">Lista de Modelos
                     <p:outputPanel style=" float: right;">Pesquisar:
-                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('modeloTable').filter()" placeholder="..."/>
+                        <p:inputText style="height: 15px; text-align: right; margin-bottom: -3px;" id="globalFilter" onkeyup="PF('modeloTable').filter()" placeholder="..."/>
                     </p:outputPanel>
                 </f:facet>
 
                 <p:column headerText="Id" filterBy="#{modelo.mod_id}">
                     <h:outputText value="#{modelo.mod_id}"/>
+                </p:column>
+
+                <p:column headerText="Marca" filterBy="#{modelo.marca.mar_nome}">
+                    <h:outputText value="#{modelo.marca.mar_nome}"/>
                 </p:column>
 
                 <p:column headerText="Modelo" filterBy="#{modelo.mod_nome}">
@@ -35,10 +39,6 @@
 
                 <p:column headerText="Flag" filterBy="#{modelo.mod_flag == '1' ? 'Sim' : 'N&atilde;o'}">
                     <h:outputText value="#{modelo.mod_flag == '1' ? 'Sim' : 'N&atilde;o'}"/>
-                </p:column>
-
-                <p:column headerText="Marca" filterBy="#{modelo.marca.mar_nome}">
-                    <h:outputText value="#{modelo.marca.mar_nome}"/>
                 </p:column>
 
                 <f:facet name="footer">

@@ -6,6 +6,7 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -46,6 +47,10 @@ public class Pessoa implements Serializable {
     private String pes_cel;
     @Column(name = "pes_perfil", nullable = false, length = 2)
     private String pes_perfil;
+    @Column (name="pes_datacad", nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date pes_datacad;
+    
 
     @OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY)
     @ForeignKey(name = "VeiculoPessoa")
@@ -145,6 +150,15 @@ public class Pessoa implements Serializable {
     public void setPes_perfil(String pes_perfil) {
         this.pes_perfil = pes_perfil;
     }
+
+    public Date getPes_datacad() {
+        return pes_datacad;
+    }
+
+    public void setPes_datacad(Date pes_datacad) {
+        this.pes_datacad = pes_datacad;
+    }
+    
     
     
     

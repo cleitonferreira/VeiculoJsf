@@ -22,7 +22,7 @@
 
                         <div align="center">
                             <p:dialog header="View Modelo" widgetVar="viewModelo" minimizable="true" maximizable="true" focus="mod_nome">
-                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="4" >
 
                                     <p:outputLabel/>
                                     <h:inputHidden id="mod_id" value="#{mbModelo.modelo.mod_id}"/> 
@@ -70,7 +70,7 @@
             <h:form id="formtable">
                 <p:growl id="msg1"/>
                 <p:dataTable id="idTabela" var="modelo" value="#{mbModelo.modelos}"
-                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado!"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15,30,50,100,200">
@@ -79,17 +79,17 @@
                     <p:column headerText="Id" filterBy="#{modelo.mod_id}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{modelo.mod_id}"/>
                     </p:column>
+                    <p:column headerText="Marca" filterBy="#{modelo.marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{modelo.marca.mar_nome}"/>
+                    </p:column>
                     <p:column headerText="Modelo" filterBy="#{modelo.mod_nome}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{modelo.mod_nome}"/>
                     </p:column>
                     <p:column headerText="Flag" filterBy="#{modelo.mod_flag == '1' ? 'Sim' : 'N&atilde;o'}">
                         <h:outputText value="#{modelo.mod_flag == '1' ? 'Sim' : 'N&atilde;o'}"/>
                     </p:column>
-                    <p:column headerText="Marca" filterBy="#{modelo.marca.mar_nome}"  footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{modelo.marca.mar_nome}"/>
-                    </p:column>
 
-                    <p:column>
+                    <p:column style="width: 15%; text-align: center;">
                         <f:facet name="header">
                             <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>

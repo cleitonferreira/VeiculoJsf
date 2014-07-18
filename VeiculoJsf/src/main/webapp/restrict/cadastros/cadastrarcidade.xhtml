@@ -17,12 +17,12 @@
 
                         <p:commandButton value="Novo Registro" action="#{mbCidade.limpCidade}" 
                                          onclick="PF('viewCidade').show();" type="button" styleClass="" icon="ui-icon-extlink" />
-                        
+
                         <p:button style="margin-left: 10px;" outcome="cadastrarcidade" value="Limpar Formul&aacute;rio" icon="ui-icon-star" />
 
                         <div align="center">
                             <p:dialog header="View Cidade" widgetVar="viewCidade" minimizable="true" maximizable="true" focus="cid_nome">
-                                <h:panelGrid id="panel" columns="2" cellpadding="5" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="4" >
 
                                     <p:outputLabel/>
                                     <h:inputHidden id="cid_id" value="#{mbCidade.cidade.cid_id}"/> 
@@ -64,7 +64,7 @@
             <h:form id="formtable">
                 <p:growl id="msg1"/>
                 <p:dataTable id="idTabela" var="cidade" value="#{mbCidade.cidades}"
-                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado!"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15,30,50,100,200">
@@ -73,14 +73,14 @@
                     <p:column headerText="Id" filterBy="#{cidade.cid_id}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{cidade.cid_id}"/>
                     </p:column>
-                    <p:column headerText="Cidade" filterBy="#{cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{cidade.cid_nome}"/>
-                    </p:column>
                     <p:column headerText="Estado" filterBy="#{cidade.estado.est_uf}"  footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{cidade.estado.est_uf}"/>
                     </p:column>
+                    <p:column headerText="Cidade" filterBy="#{cidade.cid_nome}"  footerText="contains" filterMatchMode="contains">
+                        <h:outputText value="#{cidade.cid_nome}"/>
+                    </p:column>
 
-                    <p:column style="width: 12%;">
+                    <p:column style="width: 15%; text-align: center;">
                         <f:facet name="header">
                             <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>

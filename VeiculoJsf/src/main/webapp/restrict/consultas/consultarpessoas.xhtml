@@ -20,12 +20,13 @@
                          emptyMessage="Nenhum registro encontrado!" filteredValue="#{mbPessoa.filteredPessoas}">
 
                 <f:facet name="header">Lista de Pessoas
-                    <p:outputPanel style=" float: right;">Pesquisar:
-                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('pessoasTable').filter()" placeholder="..."/>
+                    <p:outputPanel style="float: right;">Pesquisar:
+                        <p:inputText style="height: 15px; text-align: right; margin-bottom: -3px;" 
+                                     id="globalFilter" onkeyup="PF('pessoasTable').filter()" placeholder="..."/>
                     </p:outputPanel>
                 </f:facet>
 
-                <p:column headerText="Nome" filterBy="#{pessoa.pes_nome}">
+                <p:column headerText="Nome" filterBy="#{pessoa.pes_nome}" width="30%">
                     <h:outputText value="#{pessoa.pes_nome}"/>
                 </p:column>
 

@@ -29,21 +29,23 @@
                         </small>
 
                         <div align="center">
-                            <p:dialog header="View Pessoa" widgetVar="viewPessoa" minWidth="500" width="500" height="670" minimizable="true" maximizable="true" focus="nomePessoa">
+                            <p:dialog header="View Pessoa" widgetVar="viewPessoa" minWidth="400" width="500" 
+                                      height="540" minimizable="true" maximizable="true" focus="nomePessoa">
 
 
                                 <p:wizard nextLabel="Pr&oacute;xima Aba" backLabel="Aba Anterior" flowListener="#{mbPessoaVeiculo.onFlowProcess}">
                                     <p:tab title="Informa&ccedil;&otilde;es B&aacute;sicas" id="infoPessoal">
                                         <p:panel header="Informa&ccedil;&otilde;es B&aacute;sicas da Pessoa">
                                             <p:growl id="msg0"/>
-                                            <h:panelGrid styleClass="panelGrid">
+                                            <h:panelGrid styleClass="panelGrid" columns="2" cellpadding="4" >
 
                                                 <p:outputLabel/>
                                                 <h:inputHidden id="idpessoa" value="#{mbPessoaVeiculo.pessoa.pes_id}"/> 
 
 
                                                 <h:outputText value="Perfil:" />
-                                                <p:selectOneButton value="#{mbPessoaVeiculo.pessoa.pes_perfil}">
+                                                <p:selectOneButton style="font-size: 12px;" value="#{mbPessoaVeiculo.pessoa.pes_perfil}" 
+                                                                   rendered="true" requiredMessage="O campo [Perfil] &eacute; obrigat&oacute;rio">
                                                     <f:selectItem itemLabel="Funcion&aacute;rio" itemValue="FC" />
                                                     <f:selectItem itemLabel="Professor" itemValue="PF" />
                                                     <f:selectItem itemLabel="Aluno" itemValue="AL" />
@@ -166,7 +168,7 @@
             <h:form id="formtable">
                 <p:growl id="msg1"/>
                 <p:dataTable id="idTabela" var="veiculo" value="#{mbPessoaVeiculo.veiculos}"
-                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado!"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15,30,50,100,200">

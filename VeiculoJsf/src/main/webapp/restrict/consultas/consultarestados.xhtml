@@ -21,12 +21,16 @@
 
                 <f:facet name="header">Lista de Estados
                     <p:outputPanel style=" float: right;">Pesquisar:
-                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('estadoTable').filter()" placeholder="..."/>
+                        <p:inputText style="height: 15px; text-align: right; margin-bottom: -3px;" id="globalFilter" onkeyup="PF('estadoTable').filter()" placeholder="..."/>
                     </p:outputPanel>
                 </f:facet>
 
                 <p:column headerText="Id" filterBy="#{estado.est_id}">
                     <h:outputText value="#{estado.est_id}"/>
+                </p:column>
+
+                <p:column headerText="Pa&iacute;s" filterBy="#{estado.pais.pa_sigla}">
+                    <h:outputText value="#{estado.pais.pa_sigla}"/>
                 </p:column>
 
                 <p:column headerText="Estado" filterBy="#{estado.est_nome}">
@@ -35,10 +39,6 @@
 
                 <p:column headerText="Uf" filterBy="#{estado.est_uf}">
                     <h:outputText value="#{estado.est_uf}"/>
-                </p:column>
-
-                <p:column headerText="Pa&iacute;s" filterBy="#{estado.pais.pa_sigla}">
-                    <h:outputText value="#{estado.pais.pa_sigla}"/>
                 </p:column>
 
                 <f:facet name="footer">

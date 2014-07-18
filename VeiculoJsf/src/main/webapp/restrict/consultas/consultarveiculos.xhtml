@@ -21,11 +21,11 @@
 
                 <f:facet name="header">Lista de Veiculos
                     <p:outputPanel style=" float: right;">Pesquisar:
-                        <p:inputText style="height: 18px; width:150px; float: right; margin-top: -2.5%;" id="globalFilter" onkeyup="PF('veiculoTable').filter()" placeholder="..."/>
+                        <p:inputText style="height: 15px; text-align: right; margin-bottom: -3px;" id="globalFilter" onkeyup="PF('veiculoTable').filter()" placeholder="..."/>
                     </p:outputPanel>
                 </f:facet>
 
-                <p:column headerText="Pessoa" filterBy="#{veiculo.pessoa.pes_nome}">
+                <p:column headerText="Pessoa" filterBy="#{veiculo.pessoa.pes_nome}" width="30%">
                     <h:outputText value="#{veiculo.pessoa.pes_nome}"/>
                 </p:column>
 

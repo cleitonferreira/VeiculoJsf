@@ -15,6 +15,7 @@ import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -78,8 +79,12 @@ public class MbVeiculo implements Serializable {
     }
 
     public String addVeiculo() {
+        
+        Date date = new Date();
+        
         // verifica a id veio igual a null ou id igual a 0
         if (veiculo.getVeic_id() == null || veiculo.getVeic_id() == 0) {
+            veiculo.setVeic_datacad(date);
             insertVeiculo();
         } else {
             updateVeiculo();

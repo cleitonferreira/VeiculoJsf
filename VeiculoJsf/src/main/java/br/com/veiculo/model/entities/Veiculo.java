@@ -6,6 +6,7 @@
 package br.com.veiculo.model.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -36,6 +38,9 @@ public class Veiculo implements Serializable {
     private String veic_placa;
     @Column(name = "veic_cor", nullable = false, length = 20)
     private String veic_cor;
+        @Column (name="veic_datacad", nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date veic_datacad;
 
     //Relacionamentos
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -115,6 +120,15 @@ public class Veiculo implements Serializable {
         this.modelo = modelo;
     }
 
+    public Date getVeic_datacad() {
+        return veic_datacad;
+    }
+
+    public void setVeic_datacad(Date veic_datacad) {
+        this.veic_datacad = veic_datacad;
+    }
+
+    
 
 
     

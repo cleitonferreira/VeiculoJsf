@@ -17,6 +17,7 @@ import br.com.veiculo.model.entities.Veiculo;
 import br.com.veiculo.util.FacesContextUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -106,8 +107,13 @@ public class MbPessoaVeiculo implements Serializable {
     }
 
     public String addPessoa() {
+        
+        Date date = new Date();
+        
         // verifica a id veio igual a null ou id igual a 0
         if (pessoa.getPes_id() == null || pessoa.getPes_id() == 0) {
+            pessoa.setPes_datacad(date);
+            veiculo.setVeic_datacad(date);
             insertPessoa();
         } else {
             //updatePessoa();

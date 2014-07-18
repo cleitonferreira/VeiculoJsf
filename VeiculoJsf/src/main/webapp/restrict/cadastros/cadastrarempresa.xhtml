@@ -24,7 +24,7 @@
                         <p:growl id="msg0"/>
                         <div align="center">
                             <p:dialog header="View Empresa" widgetVar="viewEmpresa" width="30%" minimizable="true" maximizable="true" focus="emp_razaosocial">
-                                <h:panelGrid id="panel" columns="2" cellpadding="4" >
+                                <h:panelGrid id="panel" columns="2" cellpadding="3" >
 
                                     <p:outputLabel/>
                                     <h:inputHidden id="idempresa" value="#{mbEmpresa.empresa.emp_id}"/> 
@@ -87,7 +87,7 @@
                                                  value="#{mbEmpresa.empresa.emp_tel}" />
 
                                     <p:outputLabel value="Obs.:"/>
-                                    <p:inputTextarea id="emp_obs" rows="5" cols="30" counter="display" maxlength="500" value="#{mbEmpresa.empresa.emp_obs}"
+                                    <p:inputTextarea id="emp_obs" rows="4" cols="20" counter="display" maxlength="500" value="#{mbEmpresa.empresa.emp_obs}"
                                                      counterTemplate="{0} caracteres restantes." autoResize="false" >
 
                                     </p:inputTextarea>
@@ -125,7 +125,7 @@
             <h:form id="formtable">
                 <p:growl id="msg1"/>
                 <p:dataTable id="idTabela" var="empresa" value="#{mbEmpresa.empresas}"
-                             paginator="true" rows="10" emptyMessage="Nenhum registro encontrado"
+                             paginator="true" rows="10" emptyMessage="Nenhum registro encontrado!"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15,30,50,100,200">
@@ -150,7 +150,7 @@
                         <h:outputText value="#{empresa.emp_tel}"/>
                     </p:column>
 
-                    <p:column>
+                    <p:column style="width: 15%; text-align: center;">
                         <f:facet name="header">
                             <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>

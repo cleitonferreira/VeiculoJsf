@@ -72,15 +72,16 @@
                                                 locale="pt_BR" navigator="true" effect="explode" pattern="dd/MM/yyyy HH:mm:ss" />
 
                                     <p:outputLabel value="Obs.:"/>
-                                    <p:inputTextarea id="age_obs" rows="5" cols="30" counter="display" maxlength="500" value="#{mbControle.controle.contr_obs}"
+                                    <p:inputTextarea id="age_obs" rows="3" cols="20" counter="display" maxlength="500" value="#{mbControle.controle.contr_obs}"
                                                      counterTemplate="{0} caracteres restantes." autoResize="false" >
 
                                     </p:inputTextarea>
-                                    <br /><h:outputText id="display" />
+                                    <h:outputText id="display" />
+
 
 
                                 </h:panelGrid>
-                                <p:panel style="text-align: center">
+                                <p:panel style="text-align: center; margin-top: 15px;">
                                     <p:commandButton value="Salvar" action="#{mbControle.addControle()}" onclick="PF('notificacao').hide()"
                                                      image="ui-icon ui-icon-disk" update="@form :formtable"/>
                                     <p:commandButton value="Limpar" disabled="#{mbControle.controle.contr_id != null}" >
@@ -109,7 +110,7 @@
             <h:form id="formtable">
                 <p:growl id="msg1"/>
                 <p:dataTable id="idTabela" var="controle" value="#{mbControle.controles}"
-                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado"
+                             paginator="true" rows="20" emptyMessage="Nenhum registro encontrado!"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15,30,50,100,200">
@@ -141,7 +142,7 @@
                         </h:outputText>
                     </p:column>
 
-                    <p:column style="width: 12%;">
+                    <p:column style="width: 15%; text-align: center;">
                         <f:facet name="header">
                             <h:outputText value="A&ccedil;&otilde;es"/>
                         </f:facet>
